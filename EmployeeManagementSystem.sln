@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagementSystem", "EmployeeManagementSystem\EmployeeManagementSystem.csproj", "{53E1C1B5-7810-46CD-87FD-B4CCFB6C3EB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53E1C1B5-7810-46CD-87FD-B4CCFB6C3EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E1C1B5-7810-46CD-87FD-B4CCFB6C3EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E1C1B5-7810-46CD-87FD-B4CCFB6C3EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E1C1B5-7810-46CD-87FD-B4CCFB6C3EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
