@@ -7,6 +7,8 @@
         x:Class="EmployeeManagementSystem.Views.SettingsView"
         x:DataType="viewModels:SettingsViewModel">
         
-        
+        <StackPanel>
+                <TextBox></TextBox>
+        </StackPanel>
         
 </UserControl>
