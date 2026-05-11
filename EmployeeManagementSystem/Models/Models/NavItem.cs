@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 
@@ -8,10 +9,16 @@ public class NavItem
     public int Id { get; set; }
     public string Title { get; set; }
     public StreamGeometry Icon { get; set; }
+    
+    public Type PageType { get; set; }
+    public Type ViewModelType { get; set; }
 
-    public NavItem(string title, string iconData)
+    public NavItem(int id, string title, Type pageType, Type viewModelType, string iconData)
     {
+        Id = id;
         Title = title;
         Icon = StreamGeometry.Parse(iconData);
+        PageType = pageType;
+        ViewModelType = viewModelType;
     }
 }

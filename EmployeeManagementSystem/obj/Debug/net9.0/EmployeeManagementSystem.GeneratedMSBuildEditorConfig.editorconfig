@@ -24,5 +24,20 @@ build_property.EnableCodeStyleSeverity =
 [/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/BonusView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/SalaryView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/SettingsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/TasksView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
