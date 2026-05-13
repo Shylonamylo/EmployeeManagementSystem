@@ -8,7 +8,23 @@
         x:DataType="viewModels:SettingsViewModel">
         
         <StackPanel>
-                <TextBox></TextBox>
+                <TextBlock>Настройка подключения к базе данных</TextBlock>
+                <Grid RowDefinitions="Auto Auto Auto Auto *" ColumnDefinitions="Auto *">
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0">Адрес</TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Watermark="192.168.200.13" HorizontalAlignment="Left" Text="{Binding Address}" MaxLength="15" Width="300"></TextBox>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0">Порт</TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Watermark="3306" HorizontalAlignment="Left" Text="{Binding Port}" MaxLength="5" Width="300"></TextBox>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0">Логин</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Watermark="login" HorizontalAlignment="Left" Text="{Binding Login}" Width="300"></TextBox>
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0">Пароль</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Watermark="password" HorizontalAlignment="Left" PasswordChar="*" Text="{Binding Password}" Width="300"></TextBox>
+                    
+                    <Button Grid.Row="4" Grid.Column="0" Content="Подключиться" Margin="5,20,5,0" Command="{Binding TestConnectionCommand}"></Button>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ConnectionTestString}"></TextBlock>
+                </Grid>
         </StackPanel>
         
 </UserControl>

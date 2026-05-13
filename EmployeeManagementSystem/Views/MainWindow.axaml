@@ -49,7 +49,7 @@
                 </ListBox>
                 
                 <ListBox Grid.Row="2" ItemsSource="{Binding DownNavItems}"
-                         SelectedItem="{Binding SelectedNavItem}"
+                         SelectedItem="{Binding SelectedDownNavItem}"
                          Background="Transparent"
                          VerticalAlignment="Bottom">
                     <ListBox.ItemTemplate>
