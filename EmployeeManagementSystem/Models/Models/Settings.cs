@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using AvaloniaApplication14_Di_test_1125.Models;
+using MySqlConnector;
+using Tmds.DBus.Protocol;
 
 namespace AvaloniaApplication14_Inventory_300326.Models.Models;
 
@@ -38,5 +40,30 @@ public class Settings
         {
             Console.WriteLine(e);
         }
+    }
+    
+    public bool TestConnection()
+    {
+        if (DatabaseSettings.ConnectionString is not null)
+        {
+            if (DatabaseSettings.ConnectionString.Length != 0)
+            {
+                MySqlConnection connection = new(DatabaseSettings.ConnectionString);
+                try
+                {
+                    connection.Open();
+                    Console.WriteLine(connection.State);
+                    connection.Close();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 }

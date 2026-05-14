@@ -69,9 +69,16 @@ public partial class SettingsViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         _settings = serviceProvider.GetRequiredService<Settings>();
 
-        Address = _settings.DatabaseSettings.ConnectionString.Split(';')[0].Split('=')[1];
-        Port = _settings.DatabaseSettings.ConnectionString.Split(';')[1].Split('=')[1];
-        Login = _settings.DatabaseSettings.ConnectionString.Split(';')[2].Split('=')[1];
-        Password = _settings.DatabaseSettings.ConnectionString.Split(';')[3].Split('=')[1];
+        try
+        {
+            Address = _settings.DatabaseSettings.ConnectionString.Split(';')[0].Split('=')[1];
+            Port = _settings.DatabaseSettings.ConnectionString.Split(';')[1].Split('=')[1];
+            Login = _settings.DatabaseSettings.ConnectionString.Split(';')[2].Split('=')[1];
+            Password = _settings.DatabaseSettings.ConnectionString.Split(';')[3].Split('=')[1];
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }
