@@ -209,3 +209,4 @@ C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSy
 /home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/obj/Debug/net9.0/EmployeeManagementSystem.pdb
 /home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/obj/Debug/net9.0/EmployeeManagementSystem.genruntimeconfig.cache
 /home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/obj/Debug/net9.0/ref/EmployeeManagementSystem.dll
+/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/bin/Debug/net9.0/Avalonia.Controls.DataGrid.dll

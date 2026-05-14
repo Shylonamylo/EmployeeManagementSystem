@@ -22,8 +22,12 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0">Пароль</TextBlock>
                     <TextBox Grid.Row="3" Grid.Column="1" Watermark="password" HorizontalAlignment="Left" PasswordChar="*" Text="{Binding Password}" Width="300"></TextBox>
                     
-                    <Button Grid.Row="4" Grid.Column="0" Content="Подключиться" Margin="5,20,5,0" Command="{Binding TestConnectionCommand}"></Button>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ConnectionTestString}"></TextBlock>
+                    <StackPanel Grid.Row="4" Grid.Column="0">
+                        <Button Content="Подключиться" Margin="5,20,5,0" Command="{Binding TestConnectionCommand}"></Button>
+                        <TextBlock Text="{Binding ConnectionTestString}"></TextBlock>
+                    </StackPanel>
+                    
+                    <Button Grid.Row="4" Grid.Column="1" Content="Сохранить" Margin="5,20,5,0" Command="{Binding SaveSettingsCommand}"></Button>
                 </Grid>
         </StackPanel>
         

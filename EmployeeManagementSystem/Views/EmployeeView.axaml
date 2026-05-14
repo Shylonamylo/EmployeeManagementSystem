@@ -6,5 +6,16 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EmployeeManagementSystem.Views.EmployeeView"
              x:DataType="viewModels:EmployeeViewModel">
-     Welcome to Avalonia!
+            
+    <Grid RowDefinitions="Auto *" ColumnDefinitions="* *">
+        <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Employees}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Должность" Binding="{Binding EmployeePosition.Title}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding BirthDate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата трудоустройства" Binding="{Binding HireDate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

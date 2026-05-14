@@ -1,7 +1,10 @@
 ﻿using Avalonia;
 using System;
+using AvaloniaApplication14_Inventory_300326.Models.Models;
+using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.ViewModels;
 using EmployeeManagementSystem.Views;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -20,6 +23,12 @@ sealed class Program
             {
                 s.AddTransient<MainWindow>();
                 s.AddTransient<MainWindowViewModel>();
+                
+                
+                s.AddTransient<EmployeeRepository>();
+                
+                
+                s.AddSingleton<Settings>();
             }).Build();
         BuildAvaloniaApp(host.Services)
             .StartWithClassicDesktopLifetime(args);

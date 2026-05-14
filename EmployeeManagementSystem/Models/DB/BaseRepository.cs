@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AvaloniaApplication14_Di_test_1125.Models;
+using AvaloniaApplication14_Inventory_300326.Models.Models;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
 
@@ -10,9 +11,9 @@ public abstract class BaseRepository<T> : IRepository<T>, IDisposable where T : 
 {
     protected MySqlConnection connection;
 
-    public BaseRepository(IOptions<DatabaseSettings> ConnectionString)
+    public BaseRepository(Settings Settings)
     {
-        connection = new MySqlConnection(ConnectionString.Value.ConnectionString);
+        connection = new MySqlConnection(Settings.DatabaseSettings.ConnectionString);
     }
 
     public bool OpenConnection()
