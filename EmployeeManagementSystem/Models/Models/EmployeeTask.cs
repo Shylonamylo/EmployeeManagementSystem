@@ -10,4 +10,7 @@ public class EmployeeTask : DBObj
     public int UrgencyId { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    
+    public Employee Employee { get; set; }
+    public Urgency Urgency { get; set; }
 }

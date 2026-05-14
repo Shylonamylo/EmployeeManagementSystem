@@ -6,11 +6,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EmployeeManagementSystem.Views.TasksView"
              x:DataType="viewModels:TasksViewModel">
-    <Grid RowDefinitions="Auto *" ColumnDefinitions="* *">
-        <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding }">
-            <DataGrid.Columns>
-                
-            </DataGrid.Columns>
-        </DataGrid>
+    
+    <Grid RowDefinitions="Auto *" ColumnDefinitions="* * *">
+        
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <DataGrid ItemsSource="{Binding Tasks}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Назначенный работник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Дата начала" Binding="{Binding  StartDate}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Дата конца" Binding="{Binding EndDate}" IsReadOnly="True"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
+            <StackPanel>
+                <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>
+                <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>
