@@ -6,7 +6,7 @@ using MySqlConnector;
 
 namespace EmployeeManagementSystem.Models.DB;
 
-public class EmployeeRepository : BaseRepository<Employee>
+public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 {
     public EmployeeRepository(Settings Settings) : base(Settings)
     {
@@ -55,7 +55,7 @@ public class EmployeeRepository : BaseRepository<Employee>
 
     public override int GetCount()
     {
-        string sql = "SELECT count(e.Id) as result FROM EmployeeManagementSystem.`Employee` e";
+        string sql = "SELECT count(e.Id) as Result FROM EmployeeManagementSystem.`Employee` e";
         try
         {
             using (var mc = new MySqlCommand(sql, connection))
@@ -64,7 +64,7 @@ public class EmployeeRepository : BaseRepository<Employee>
                 {
                     while (reader.Read())
                     {
-                        return reader.GetInt32("result");
+                        return reader.GetInt32("Result");
                     }
                 }
             }

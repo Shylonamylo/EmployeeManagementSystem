@@ -19,11 +19,13 @@
             <views:SettingsView DataContext="{Binding}" />
         </DataTemplate>
     </Window.DataTemplates>
+    
     <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                DisplayMode="CompactInline"
                CompactPaneLength="54"
                OpenPaneLength="250">
         <SplitView.Pane>
+            
             <Grid RowDefinitions="Auto Auto *">
                 <Grid ColumnDefinitions="Auto *">
                     <PathIcon Data="{StaticResource MenuButtonIcon}"></PathIcon>
@@ -64,7 +66,9 @@
                 </ListBox>
                 
             </Grid>
+            
         </SplitView.Pane>
+        
         <SplitView.Content>
             <ContentControl Content="{Binding CurrentPage}"></ContentControl>
         </SplitView.Content>

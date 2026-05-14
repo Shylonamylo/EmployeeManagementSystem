@@ -7,4 +7,6 @@ public class Salary : DBObj
     public decimal Summ { get; set; }
     public int EmployeeId { get; set; }
     public DateTime AppointmentDate { get; set; }
+
+    public Employee Employee { get; set; }
 }

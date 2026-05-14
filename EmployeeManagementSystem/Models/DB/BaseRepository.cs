@@ -85,5 +85,6 @@ public abstract class BaseRepository<T> : IRepository<T>, IDisposable where T : 
     public void Dispose()
     {
         connection.Close();
+        Console.WriteLine("Closed");
     }
 }

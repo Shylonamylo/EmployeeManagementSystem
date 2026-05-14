@@ -46,7 +46,7 @@ public partial class EmployeeViewModel : ViewModelBase
         {
             MaxPage = repo.GetCount();
             MaxPageText = $"Из {MaxPage}";
-            _currentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+            CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
             Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPage-1, CurrentPageSize));
         }
     }

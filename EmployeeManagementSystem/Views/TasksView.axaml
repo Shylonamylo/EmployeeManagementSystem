@@ -9,8 +9,8 @@
     
     <Grid RowDefinitions="Auto *" ColumnDefinitions="* * *">
         
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <DataGrid ItemsSource="{Binding Tasks}">
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>

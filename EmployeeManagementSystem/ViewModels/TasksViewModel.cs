@@ -33,7 +33,7 @@ public partial class TasksViewModel : ViewModelBase
             MaxPageText = $"Из {MaxPage}";
             CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
             
-            Tasks = new ObservableCollection<EmployeeTask>();
+            Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
         }
     }
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
@@ -46,8 +46,8 @@ public partial class TasksViewModel : ViewModelBase
         {
             MaxPage = repo.GetCount();
             MaxPageText = $"Из {MaxPage}";
-            _currentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
-            Tasks = new ObservableCollection<EmployeeTask>();
+            CurrentPage = Math.Clamp(CurrentPage, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+            Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
         }
     }
 
@@ -64,9 +64,7 @@ public partial class TasksViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
 
-        using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
-        {
-            Tasks = new ObservableCollection<EmployeeTask>(repo.GetAll());
-        }
+        CurrentPageSize = 10;
+        CurrentPage = 1;
     }
 }

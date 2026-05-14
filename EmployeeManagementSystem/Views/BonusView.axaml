@@ -7,4 +7,27 @@
              x:Class="EmployeeManagementSystem.Views.BonusView"
              x:DataType="viewModels:BonusViewModel">
     
+    <Grid RowDefinitions="Auto *" ColumnDefinitions="* * *">
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <DataGrid ItemsSource="{Binding Bonuses}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Причина премии" Binding="{Binding Reason}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="ФИО работника" Binding="{Binding Employee.FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Дата назначения" Binding="{Binding AppointmentDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Размер премии" Binding="{Binding AdditionalSalary}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary.AppointmentDate}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
+            <StackPanel>
+                <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>
+                <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
+        </StackPanel>
+    </Grid>
+    
 </UserControl>
