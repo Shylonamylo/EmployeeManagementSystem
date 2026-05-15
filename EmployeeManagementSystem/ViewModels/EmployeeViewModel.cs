@@ -12,6 +12,10 @@ public partial class EmployeeViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
+    private Settings _settings;
+    
+    [ObservableProperty] private bool _developerMode;
+    
     [ObservableProperty] private ObservableCollection<Employee> _employees;
     
     [ObservableProperty] private int _currentPage;
@@ -63,6 +67,10 @@ public partial class EmployeeViewModel : ViewModelBase
     public EmployeeViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        
+        _settings = serviceProvider.GetRequiredService<Settings>();
+        
+        DeveloperMode = _settings.DeveloperMode;
         
         CurrentPageSize = 10;
         CurrentPage = 1;

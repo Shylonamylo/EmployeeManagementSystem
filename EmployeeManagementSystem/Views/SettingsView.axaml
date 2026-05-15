@@ -27,8 +27,13 @@
                         <TextBlock Text="{Binding ConnectionTestString}"></TextBlock>
                     </StackPanel>
                     
-                    <Button Grid.Row="4" Grid.Column="1" Content="Сохранить" Margin="5,20,5,0" Command="{Binding SaveSettingsCommand}"></Button>
                 </Grid>
+            
+                <TextBlock Text="Расширенный режим"></TextBlock>
+                <CheckBox IsChecked="{Binding DeveloperMode}"></CheckBox>
+            
+                <Button Content="Сохранить" Margin="5,20,5,0" Command="{Binding SaveSettingsCommand}"></Button>
+
         </StackPanel>
         
 </UserControl>

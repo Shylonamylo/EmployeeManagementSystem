@@ -7,6 +7,7 @@
         <entry key="EmployeeManagementSystem/Views/BonusView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EmployeeView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/MainWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/SalaryView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/SettingsView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/TasksView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
       </map>

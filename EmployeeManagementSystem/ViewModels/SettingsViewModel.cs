@@ -10,6 +10,7 @@ namespace EmployeeManagementSystem.ViewModels;
 public partial class SettingsViewModel : ViewModelBase
 {
     private Settings _settings;
+    
     private IServiceProvider _serviceProvider;
     
     [ObservableProperty] private string _address;
@@ -17,6 +18,8 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty] private string _login;
     [ObservableProperty] private string _password;
 
+    [ObservableProperty] private bool _developerMode;
+    
     [ObservableProperty] private string _connectionTestString;
 
     [RelayCommand]
@@ -61,6 +64,8 @@ public partial class SettingsViewModel : ViewModelBase
         
         _settings.DatabaseSettings.ConnectionString = sb.ConnectionString;
         
+        _settings.DeveloperMode = DeveloperMode;
+        
         _settings.SaveSettings();
     }
 
@@ -75,6 +80,7 @@ public partial class SettingsViewModel : ViewModelBase
             Port = _settings.DatabaseSettings.ConnectionString.Split(';')[1].Split('=')[1];
             Login = _settings.DatabaseSettings.ConnectionString.Split(';')[2].Split('=')[1];
             Password = _settings.DatabaseSettings.ConnectionString.Split(';')[3].Split('=')[1];
+            DeveloperMode = _settings.DeveloperMode;
         }
         catch (Exception e)
         {

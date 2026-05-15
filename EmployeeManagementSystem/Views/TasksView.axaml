@@ -12,10 +12,12 @@
         <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
             <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер задачи" Binding="{Binding Title}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Название" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Назначенный работник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Назначенный сотрудник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата начала" Binding="{Binding  StartDate}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата конца" Binding="{Binding EndDate}" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>

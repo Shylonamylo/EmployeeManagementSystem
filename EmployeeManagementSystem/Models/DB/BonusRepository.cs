@@ -37,6 +37,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                             AppointmentDate = reader.GetDateTime("AppointmentDate"),
                             Employee = new Employee()
                             {
+                                Id = reader.GetInt32("EmployeeId"),
                                 BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
                                 HireDate = reader.GetDateOnly("EmployeeHireDate"),
                                 PositionId = reader.GetInt32("EmployeePositionId"),
@@ -56,6 +57,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                 EmployeeId = reader.GetInt32("EmployeeId"),
                                 Employee = new Employee()
                                 {
+                                    Id = reader.GetInt32("EmployeeId"),
                                     BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
                                     HireDate = reader.GetDateOnly("EmployeeHireDate"),
                                     PositionId = reader.GetInt32("EmployeePositionId"),
@@ -152,6 +154,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                             AppointmentDate = reader.GetDateTime("AppointmentDate"),
                             Employee = new Employee()
                             {
+                                Id = reader.GetInt32("EmployeeId"),
                                 BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
                                 HireDate = reader.GetDateOnly("EmployeeHireDate"),
                                 PositionId = reader.GetInt32("EmployeePositionId"),
@@ -171,6 +174,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                 EmployeeId = reader.GetInt32("EmployeeId"),
                                 Employee = new Employee()
                                 {
+                                    Id = reader.GetInt32("EmployeeId"),
                                     BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
                                     HireDate = reader.GetDateOnly("EmployeeHireDate"),
                                     PositionId = reader.GetInt32("EmployeePositionId"),

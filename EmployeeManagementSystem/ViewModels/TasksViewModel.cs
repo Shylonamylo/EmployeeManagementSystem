@@ -12,6 +12,10 @@ public partial class TasksViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
+    private Settings _settings;
+    
+    [ObservableProperty] private bool _developerMode;
+    
     [ObservableProperty] private ObservableCollection<EmployeeTask> _tasks;
     
     [ObservableProperty] private int _currentPage;
@@ -62,6 +66,9 @@ public partial class TasksViewModel : ViewModelBase
     
     public TasksViewModel(IServiceProvider serviceProvider)
     {
+        _settings = serviceProvider.GetRequiredService<Settings>();
+        DeveloperMode = _settings.DeveloperMode;
+        
         _serviceProvider = serviceProvider;
 
         CurrentPageSize = 10;

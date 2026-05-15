@@ -12,19 +12,24 @@ public class Settings
 {
     public DatabaseSettings DatabaseSettings {get; set;}
     public TaxSettings TaxSettings {get; set;}
+    public bool DeveloperMode { get; set; }
     
     public void LoadSettings()
     {
         try
         {
-            DatabaseSettings = JsonSerializer.Deserialize<Settings>(File.ReadAllText("appsettings.json")).DatabaseSettings;
-            TaxSettings = JsonSerializer.Deserialize<Settings>(File.ReadAllText("appsettings.json")).TaxSettings;
+            Settings deserialized = JsonSerializer.Deserialize<Settings>(File.ReadAllText("appsettings.json"));
+            
+            DatabaseSettings = deserialized.DatabaseSettings;
+            TaxSettings = deserialized.TaxSettings;
+            DeveloperMode = deserialized.DeveloperMode;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             DatabaseSettings = new DatabaseSettings();
             TaxSettings = new TaxSettings();
+            DeveloperMode = false;
             
             File.WriteAllText("appsettings.json", JsonSerializer.Serialize(this));
         }

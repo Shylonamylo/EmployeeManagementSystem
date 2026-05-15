@@ -11,10 +11,13 @@
         <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <DataGrid ItemsSource="{Binding Bonuses}">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер премии" Binding="{Binding Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Причина премии" Binding="{Binding Reason}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="ФИО работника" Binding="{Binding Employee.FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Employee.FullName}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата назначения" Binding="{Binding AppointmentDate}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Размер премии" Binding="{Binding AdditionalSalary}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер зарплаты" Binding="{Binding Salary.Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary.AppointmentDate}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
