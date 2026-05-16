@@ -62,6 +62,57 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
         return null;
     }
 
+    public override List<Salary>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
+    {
+        string sql = "SELECT s.Id, s.Summ, s.EmployeeId, s.AppointmentDate, e.FullName as EmployeeFullName, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle FROM EmployeeManagementSystem.`Salary` s JOIN EmployeeManagementSystem.`Employee` e ON e.Id = s.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE concat(s.Id, s.Summ, e.Id, e.FullName, e.HireDate, e.BirthDate, e.PositionId, e.Salary, p.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offest";
+        
+        List<Salary> result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@limit", pageSize);
+                mc.Parameters.AddWithValue("@offset", pageNumber*pageSize);
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Salary()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Summ = reader.GetDecimal("Summ"),
+                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            EmployeeId = reader.GetInt32("EmployeeId"),
+                            Employee = new Employee()
+                            {
+                                Id = reader.GetInt32("EmployeeId"),
+                                BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
+                                FullName = reader.GetString("EmployeeFullName"),
+                                HireDate = reader.GetDateOnly("EmployeeHireDate"),
+                                PositionId = reader.GetInt32("EmployeePositionId"),
+                                Salary = reader.GetDecimal("EmployeeSalary"),
+                                EmployeePosition = new Position()
+                                {
+                                    Id = reader.GetInt32("EmployeePositionId"),
+                                    Title = reader.GetString("PositionTitle"),
+                                }
+                            },
+                        });
+                    }
+                }
+            }
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        return null;
+    }
+
     public override Salary? GetById(int id)
     {
         throw new NotImplementedException();

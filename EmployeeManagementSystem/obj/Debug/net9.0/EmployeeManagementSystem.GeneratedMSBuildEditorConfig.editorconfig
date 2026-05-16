@@ -26,7 +26,13 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/BonusEditView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/BonusView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeEditView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeView.axaml]
@@ -35,10 +41,19 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/PositionEditView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/PositionView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/SalaryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/SettingsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/TaskEditView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/TasksView.axaml]

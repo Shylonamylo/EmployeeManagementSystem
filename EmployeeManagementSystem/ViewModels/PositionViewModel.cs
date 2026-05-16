@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,17 +8,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class SalaryViewModel : ViewModelBase
+public partial class PositionViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
     private Settings _settings;
-    
+
     [ObservableProperty] private string _searchString;
     
     [ObservableProperty] private bool _developerMode;
     
-    [ObservableProperty] private ObservableCollection<Salary> _salaries;
+    [ObservableProperty] private ObservableCollection<Position> _positions;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
@@ -27,20 +27,20 @@ public partial class SalaryViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetSalary(CurrentPage, CurrentPage-1);
+        GetPositions(CurrentPage, CurrentPage-1);
     }
     
     partial void OnCurrentPageChanged(int newValue, int oldValue)
     {
-        GetSalary(newValue, oldValue);
+        GetPositions(newValue, oldValue);
     }
 
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        GetSalary(CurrentPage, CurrentPage-1);
+        GetPositions(CurrentPage, CurrentPage-1);
     }
     
-    private void GetSalary(int newValue, int oldValue)
+    private void GetPositions(int newValue, int oldValue)
     {
         if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
@@ -49,12 +49,13 @@ public partial class SalaryViewModel : ViewModelBase
                 return;
             }
 
-            using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+            using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
             {
                 MaxPage = repo.GetCount();
                 MaxPageText = $"Из {MaxPage/CurrentPageSize}";
                 CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-                Salaries = new ObservableCollection<Salary>(repo.GetPage(CurrentPageSize, CurrentPage-1));
+            
+                Positions = new ObservableCollection<Position>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
         }
         else
@@ -64,16 +65,17 @@ public partial class SalaryViewModel : ViewModelBase
                 return;
             }
 
-            using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+            using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
             {
                 MaxPage = repo.GetCount();
                 MaxPageText = $"Из {MaxPage/CurrentPageSize}";
                 CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-                Salaries = new ObservableCollection<Salary>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
+            
+                Positions = new ObservableCollection<Position>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }
     }
-
+    
     [RelayCommand]
     private void ChangePage(string value)
     {
@@ -83,7 +85,7 @@ public partial class SalaryViewModel : ViewModelBase
         }
     }
     
-    public SalaryViewModel(IServiceProvider serviceProvider)
+    public PositionViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
@@ -94,4 +96,5 @@ public partial class SalaryViewModel : ViewModelBase
         CurrentPageSize = 10;
         CurrentPage = 1;
     }
+    
 }

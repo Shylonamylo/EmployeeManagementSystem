@@ -1,27 +1,21 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EmployeeManagementSystem.Views.BonusView"
-             x:DataType="viewModels:BonusViewModel">
+             x:Class="EmployeeManagementSystem.Views.PositionView"
+             x:DataType="viewModels:PositionViewModel">
     
     <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
         
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
         
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <DataGrid ItemsSource="{Binding Bonuses}">
+            <DataGrid ItemsSource="{Binding Positions}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Номер премии" Binding="{Binding Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Причина премии" Binding="{Binding Reason}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Employee.FullName}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Дата назначения" Binding="{Binding AppointmentDate}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Размер премии" Binding="{Binding AdditionalSalary}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Номер зарплаты" Binding="{Binding Salary.Id}" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary.AppointmentDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер должности" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название должности" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
@@ -35,5 +29,4 @@
             <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
         </StackPanel>
     </Grid>
-    
 </UserControl>

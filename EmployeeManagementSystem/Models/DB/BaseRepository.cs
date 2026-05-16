@@ -47,6 +47,7 @@ public abstract class BaseRepository<T> : IRepository<T>, IDisposable where T : 
     public abstract List<T>? GetAll();
     public abstract int GetCount();
     public abstract List<T>? GetPage(int pageSize, int pageNumber);
+    public abstract List<T>? GetPageWithSearch(int pageSize, int pageNumber, string searchString);
     public abstract T? GetById(int id);
     public abstract bool Delete(int id);
     public abstract bool Update(T item);

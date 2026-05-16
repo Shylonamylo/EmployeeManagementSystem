@@ -13,6 +13,8 @@ public partial class BonusViewModel : ViewModelBase
     private IServiceProvider _serviceProvider;
     
     private Settings _settings;
+
+    [ObservableProperty] private string _searchString;
     
     [ObservableProperty] private bool _developerMode;
     
@@ -22,36 +24,53 @@ public partial class BonusViewModel : ViewModelBase
     [ObservableProperty] private int _maxPage;
     [ObservableProperty] private string _maxPageText;
     [ObservableProperty] private int _currentPageSize;
-    
+
+    partial void OnSearchStringChanged(string? oldValue, string newValue)
+    {
+        GetBonuses(CurrentPage, CurrentPage-1);
+    }
     partial void OnCurrentPageChanged(int newValue, int oldValue)
     {
-        
-        if (newValue == oldValue)
-        {
-            return;
-        }
-        
-        using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
-        {
-            MaxPage = repo.GetCount();
-            MaxPageText = $"Из {MaxPage}";
-            CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-            
-            Bonuses = new ObservableCollection<Bonus>(repo.GetPage(CurrentPageSize, CurrentPage-1));
-        }
+        GetBonuses(newValue, oldValue);
     }
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        if (newValue == oldValue)
+        GetBonuses(CurrentPage, CurrentPage-1);
+    }
+    
+    private void GetBonuses(int newValue, int oldValue)
+    {
+        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
-            return;
+            if (newValue == oldValue)
+            {
+                return;
+            }
+
+            using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+            {
+                MaxPage = repo.GetCount();
+                MaxPageText = $"Из {MaxPage}";
+                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+            
+                Bonuses = new ObservableCollection<Bonus>(repo.GetPage(CurrentPageSize, CurrentPage-1));
+            }
         }
-        using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+        else
         {
-            MaxPage = repo.GetCount();
-            MaxPageText = $"Из {MaxPage}";
-            CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
-            Bonuses = new ObservableCollection<Bonus>(repo.GetPage(CurrentPageSize, CurrentPage-1));
+            if (newValue == oldValue)
+            {
+                return;
+            }
+
+            using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+            {
+                MaxPage = repo.GetCount();
+                MaxPageText = $"Из {MaxPage}";
+                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+            
+                Bonuses = new ObservableCollection<Bonus>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
+            }
         }
     }
 

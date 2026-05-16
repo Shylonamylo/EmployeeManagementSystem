@@ -7,12 +7,14 @@
              x:Class="EmployeeManagementSystem.Views.TasksView"
              x:DataType="viewModels:TasksViewModel">
     
-    <Grid RowDefinitions="Auto *" ColumnDefinitions="* * *">
+    <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
         
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
+        
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
             <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Номер задачи" Binding="{Binding Title}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер задачи" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Название" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
@@ -24,7 +26,7 @@
             </DataGrid>
         </ScrollViewer>
         
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>
                 <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>

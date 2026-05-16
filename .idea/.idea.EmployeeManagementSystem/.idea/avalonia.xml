@@ -4,11 +4,16 @@
     <option name="projectPerEditor">
       <map>
         <entry key="EmployeeManagementSystem/App.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/BonusEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/EmployeeEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EmployeeView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/MainWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/PositionEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/PositionView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/SalaryView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/SettingsView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/TaskEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/TasksView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
       </map>
     </option>

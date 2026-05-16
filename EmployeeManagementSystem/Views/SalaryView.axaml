@@ -6,8 +6,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EmployeeManagementSystem.Views.SalaryView"
              x:DataType="viewModels:SalaryViewModel">
-    <Grid RowDefinitions="Auto *" ColumnDefinitions="* * *">
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+    
+    <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
+        
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <DataGrid ItemsSource="{Binding Salaries}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
@@ -17,7 +21,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>
                 <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>

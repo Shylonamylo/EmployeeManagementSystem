@@ -84,6 +84,11 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
         return null;
     }
 
+    public override List<Bonus>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
+    {
+        throw new NotImplementedException();
+    }
+
     public override Bonus? GetById(int id)
     {
         throw new NotImplementedException();

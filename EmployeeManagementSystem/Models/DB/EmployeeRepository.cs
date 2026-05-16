@@ -77,7 +77,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
         return -1;
     }
 
-    public override List<Employee>? GetPage(int pageNumber, int pageSize)
+    public override List<Employee>? GetPage(int pageSize, int pageNumber)
     {
         string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId LIMIT @limit OFFSET @offset";
         List<Employee> result = new();
@@ -88,6 +88,50 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
             {
                 mc.Parameters.AddWithValue("@limit", pageSize);
                 mc.Parameters.AddWithValue("@offset", pageNumber*pageSize); 
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Employee()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            FullName = reader.GetString("FullName"),
+                            BirthDate = reader.GetDateOnly("BirthDate"),
+                            HireDate = reader.GetDateOnly("HireDate"),
+                            PositionId = reader.GetInt32("PositionId"),
+                            Salary = reader.GetDecimal("Salary"),
+                            EmployeePosition = new Position()
+                            {
+                                Id = reader.GetInt32("PositionId"),
+                                Title = reader.GetString("Title")
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        
+        return result;
+    }
+
+    public override List<Employee>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
+    {
+        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE concat(e.Id, e.FullName, e.HireDate, e.BirthDate, e.PositionId, e.Salary, p.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
+        
+        List<Employee> result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@limit", pageSize);
+                mc.Parameters.AddWithValue("@offset", pageNumber*pageSize); 
+                mc.Parameters.AddWithValue("@searchString", searchString);
                 using (var reader = mc.ExecuteReader())
                 {
                     while (reader.Read())

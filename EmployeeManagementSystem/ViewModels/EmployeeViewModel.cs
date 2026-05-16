@@ -14,6 +14,8 @@ public partial class EmployeeViewModel : ViewModelBase
     
     private Settings _settings;
     
+    [ObservableProperty] private string _searchString;
+    
     [ObservableProperty] private bool _developerMode;
     
     [ObservableProperty] private ObservableCollection<Employee> _employees;
@@ -22,36 +24,51 @@ public partial class EmployeeViewModel : ViewModelBase
     [ObservableProperty] private int _maxPage;
     [ObservableProperty] private string _maxPageText;
     [ObservableProperty] private int _currentPageSize;
-    
+
+    partial void OnSearchStringChanged(string? oldValue, string newValue)
+    {
+        GetEmployees(_currentPage, _currentPage-1);
+    }
     partial void OnCurrentPageChanged(int newValue, int oldValue)
     {
-        
-        if (newValue == oldValue)
-        {
-            return;
-        }
-        
-        using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
-        {
-            MaxPage = repo.GetCount();
-            MaxPageText = $"Из {MaxPage}";
-            CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-            
-            Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPage-1, CurrentPageSize));
-        }
+        GetEmployees(newValue, oldValue);
     }
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        if (newValue == oldValue)
+        GetEmployees(CurrentPage, CurrentPage-1);
+    }
+
+    private void GetEmployees(int newValue, int oldValue)
+    {
+        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
-            return;
+            if (newValue == oldValue)
+            {
+                return;
+            }
+
+            using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+            {
+                MaxPage = repo.GetCount();
+                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
+                CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+                Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPageSize, CurrentPage-1));
+            }
         }
-        using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+        else
         {
-            MaxPage = repo.GetCount();
-            MaxPageText = $"Из {MaxPage}";
-            CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
-            Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPage-1, CurrentPageSize));
+            if (newValue == oldValue)
+            {
+                return;
+            }
+
+            using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+            {
+                MaxPage = repo.GetCount();
+                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
+                CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+                Employees = new ObservableCollection<Employee>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1,SearchString));
+            }
         }
     }
 
