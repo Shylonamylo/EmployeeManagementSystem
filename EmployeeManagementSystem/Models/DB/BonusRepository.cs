@@ -86,7 +86,77 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
 
     public override List<Bonus>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {
-        throw new NotImplementedException();
+        string sql = "SELECT b.Id, b.Reason, b.EmployeeId, b.AppointmentDate, b.AdditionalSalary, b.SalaryId,  e.FullName as EmployeeFullName, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle, s.Summ as SalarySumm, s.AppointmentDate as SalaryAppointmentDate FROM EmployeeManagementSystem.Bonus b JOIN EmployeeManagementSystem.`Employee` e ON e.Id = b.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId JOIN EmployeeManagementSystem.`Salary` s ON s.Id  = b.SalaryId WHERE concat(b.Id, b.Reason, b.EmployeeId, b.AppointmentDate, b.AdditionalSalary, b.SalaryId, s.Summ, s.AppointmentDate, e.FullName, e.HireDate, e.BirthDate, e.PositionId, e.Salary, p.Title) LIKE concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
+        
+        List<Bonus> result = new List<Bonus>();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@limit", pageSize);
+                mc.Parameters.AddWithValue("@offset", pageNumber*pageSize);
+                mc.Parameters.AddWithValue("@searchString", searchString);
+                
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Bonus()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Reason = reader.GetString("Reason"),
+                            EmployeeId = reader.GetInt32("EmployeeId"),
+                            AdditionalSalary = reader.GetDecimal("AdditionalSalary"),
+                            SalaryId = reader.GetInt32("SalaryId"),
+                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            Employee = new Employee()
+                            {
+                                Id = reader.GetInt32("EmployeeId"),
+                                BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
+                                HireDate = reader.GetDateOnly("EmployeeHireDate"),
+                                PositionId = reader.GetInt32("EmployeePositionId"),
+                                FullName = reader.GetString("EmployeeFullName"),
+                                Salary = reader.GetDecimal("Salary"),
+                                EmployeePosition = new Position()
+                                {
+                                    Id = reader.GetInt32("EmployeePositionId"),
+                                    Title = reader.GetString("PositionTitle"),
+                                }
+                            },
+                            Salary = new Salary()
+                            {
+                                Id = reader.GetInt32("SalaryId"),
+                                Summ = reader.GetDecimal("SalarySumm"),
+                                AppointmentDate = reader.GetDateTime("SalaryAppointmentDate"),
+                                EmployeeId = reader.GetInt32("EmployeeId"),
+                                Employee = new Employee()
+                                {
+                                    Id = reader.GetInt32("EmployeeId"),
+                                    BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
+                                    HireDate = reader.GetDateOnly("EmployeeHireDate"),
+                                    PositionId = reader.GetInt32("EmployeePositionId"),
+                                    FullName = reader.GetString("EmployeeFullName"),
+                                    Salary = reader.GetDecimal("Salary"),
+                                    EmployeePosition = new Position()
+                                    {
+                                        Id = reader.GetInt32("EmployeePositionId"),
+                                        Title = reader.GetString("PositionTitle"),
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+
+        return null;
     }
 
     public override Bonus? GetById(int id)
@@ -106,7 +176,28 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
 
     public override bool Add(Bonus item)
     {
-        throw new NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.Bonus (Reason, EmployeeId, AppointmentDate, AdditionalSalary, SalaryId) VALUES(@reason, @employeeId, @appointmentDate, @additionalSalary, @salaryId)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@appointmentDate", item.AppointmentDate);
+                mc.Parameters.AddWithValue("@additionalSalary", item.AdditionalSalary);
+                mc.Parameters.AddWithValue("@salaryId", item.SalaryId);
+
+                mc.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            
+            return false;
+        }
     }
 
     public override int GetCount()

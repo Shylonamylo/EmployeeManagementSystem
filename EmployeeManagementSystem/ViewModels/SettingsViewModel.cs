@@ -2,6 +2,7 @@ using System;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
 
@@ -12,6 +13,8 @@ public partial class SettingsViewModel : ViewModelBase
     private Settings _settings;
     
     private IServiceProvider _serviceProvider;
+    
+    private MainWindow _mainWindow;
     
     [ObservableProperty] private string _address;
     [ObservableProperty] private string _port;
@@ -69,8 +72,10 @@ public partial class SettingsViewModel : ViewModelBase
         _settings.SaveSettings();
     }
 
-    public SettingsViewModel(IServiceProvider serviceProvider)
+    public SettingsViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
+        _mainWindow = mainWindow;
+        
         _serviceProvider = serviceProvider;
         _settings = serviceProvider.GetRequiredService<Settings>();
 

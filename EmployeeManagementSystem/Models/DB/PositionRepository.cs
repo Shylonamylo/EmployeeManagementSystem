@@ -44,6 +44,37 @@ public class PositionRepository : BaseRepository<Position>, IDisposable
         }
         return null;
     }
+    public List<Position>? GetAllUnSafe()
+    {
+        string sql = "SELECT p.Id, p.Title FROM EmployeeManagementSystem.`Position` p";
+
+        List<Position> result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Position()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Title = reader.GetString("Title")
+                        });
+                    }
+                }
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        return null;
+    }
 
     public override List<Position>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {

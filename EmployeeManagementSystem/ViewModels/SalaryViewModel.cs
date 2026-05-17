@@ -4,6 +4,7 @@ using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
+using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
@@ -13,6 +14,8 @@ public partial class SalaryViewModel : ViewModelBase
     private IServiceProvider _serviceProvider;
     
     private Settings _settings;
+    
+    private MainWindow _mainWindow;
     
     [ObservableProperty] private string _searchString;
     
@@ -83,8 +86,10 @@ public partial class SalaryViewModel : ViewModelBase
         }
     }
     
-    public SalaryViewModel(IServiceProvider serviceProvider)
+    public SalaryViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
+        _mainWindow = mainWindow;
+        
         _serviceProvider = serviceProvider;
         
         _settings = serviceProvider.GetRequiredService<Settings>();

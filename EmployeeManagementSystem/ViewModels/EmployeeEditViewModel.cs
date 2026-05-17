@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using EmployeeManagementSystem.Models.DB;
+using EmployeeManagementSystem.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -12,14 +17,63 @@ public partial class EmployeeEditViewModel : ViewModelBase
     
     private bool _edit;
     
+    private EmployeeEditWindow _currentWindow;
+    
     [ObservableProperty] private string _fullName;
+    [ObservableProperty] private decimal _salary;
+    [ObservableProperty] private DateTimeOffset _birthDate;
+    [ObservableProperty] private DateTimeOffset _hireDate;
+    
+    [ObservableProperty] private ObservableCollection<Position> _positions;
+    [ObservableProperty] private Position _selectedPosition;
+
+    [RelayCommand]
+    private void Save()
+    {
+        if (_edit)
+        {
+            
+        }
+        else
+        {
+            _employee.FullName = _fullName;
+            _employee.Salary = _salary;
+            _employee.BirthDate = new DateOnly(_birthDate.Year, _birthDate.Month, _birthDate.Day);
+            _employee.HireDate = new DateOnly(_hireDate.Year, _hireDate.Month, _hireDate.Day);
+            _employee.PositionId = _selectedPosition.Id;
+            
+            using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+            {
+                repo.Add(_employee);
+            }
+        }
+        
+        _currentWindow.Close();
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        _currentWindow.Close();
+    }
 
     public EmployeeEditViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
         _employee = new Employee();
+        
+        BirthDate = DateTimeOffset.Now;
+        HireDate = DateTimeOffset.Now;
+        
         _edit = false;
+
+        using (var repo = _serviceProvider.GetService<PositionRepository>())
+        {
+            Positions = new ObservableCollection<Position>(repo.GetAllUnSafe());
+        }
+        
+        SelectedPosition = Positions[0];
     }
     
     public EmployeeEditViewModel(IServiceProvider serviceProvider, Employee employee)
@@ -28,6 +82,23 @@ public partial class EmployeeEditViewModel : ViewModelBase
 
         _employee = employee;
         
+        FullName = employee.FullName;
+        Salary = employee.Salary;
+        BirthDate = new DateTimeOffset(employee.BirthDate, TimeOnly.FromDateTime(DateTime.Now), TimeSpan.Zero);
+        HireDate = new DateTimeOffset(employee.HireDate, TimeOnly.FromDateTime(DateTime.Now), TimeSpan.Zero);
+        
         _edit = true;
+        
+        using (var repo = _serviceProvider.GetService<PositionRepository>())
+        {
+            Positions = new ObservableCollection<Position>(repo.GetAllUnSafe());
+        }
+        
+        SelectedPosition = Positions[0];
+    }
+
+    public void SetWindow(EmployeeEditWindow window)
+    {
+        _currentWindow = window;
     }
 }

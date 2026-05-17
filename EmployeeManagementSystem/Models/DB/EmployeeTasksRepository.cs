@@ -145,7 +145,28 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override bool Add(EmployeeTask item)
     {
-        throw new System.NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.Task (Title, Description, EmployeeId, UrgencyId, StartDate, EndDate) VALUES(@title, @description, @employeeId, @urgencyId, @startDate, @endDate)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@title", item.Title);
+                mc.Parameters.AddWithValue("@description", item.Description);
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@urgencyId", item.UrgencyId);
+                mc.Parameters.AddWithValue("@startDate", item.StartDate);
+                mc.Parameters.AddWithValue("@endDate", item.EndDate);
+                
+                mc.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override int GetCount()

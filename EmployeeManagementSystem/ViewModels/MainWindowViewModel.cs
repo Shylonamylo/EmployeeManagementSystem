@@ -55,13 +55,13 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             if (_settings.TestConnection())
             {
-                CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider);
+                CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider, _currentWindow);
                 SelectedDownNavItem = null;
             }
             else
             {
                 _ = ThrowDBErrorWindow();
-                CurrentPage = (ViewModelBase)Activator.CreateInstance(typeof(SettingsViewModel), _serviceProvider);
+                CurrentPage = (ViewModelBase)Activator.CreateInstance(typeof(SettingsViewModel), _serviceProvider, _currentWindow);
                 SelectedDownNavItem = null;
             }
         }
@@ -72,20 +72,20 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             if (value.ViewModelType == typeof(SettingsViewModel))
             {
-                CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider);
+                CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider, _currentWindow);
                 SelectedNavItem = null;
             }
             else
             {
                 if (_settings.TestConnection())
                 {
-                    CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider);
+                    CurrentPage = (ViewModelBase)Activator.CreateInstance(value.ViewModelType, _serviceProvider, _currentWindow);
                     SelectedNavItem = null;
                 }
                 else
                 {
                     _ = ThrowDBErrorWindow();
-                    CurrentPage = (ViewModelBase)Activator.CreateInstance(typeof(SettingsViewModel), _serviceProvider);
+                    CurrentPage = (ViewModelBase)Activator.CreateInstance(typeof(SettingsViewModel), _serviceProvider, _currentWindow);
                     SelectedNavItem = null;
                 }
             }

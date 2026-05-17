@@ -180,7 +180,27 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public override bool Add(Employee item)
     {
-        throw new System.NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.Employee (PositionId, Salary, FullName, BirthDate, HireDate) VALUES(@positionId, @salary, @fullName, @birthDate, @hireDate)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@positionId", item.PositionId);
+                mc.Parameters.AddWithValue("@salary", item.Salary);
+                mc.Parameters.AddWithValue("@fullName", item.FullName);
+                mc.Parameters.AddWithValue("@birthDate", item.BirthDate);
+                mc.Parameters.AddWithValue("@hireDate", item.HireDate);
+                
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            
+            return false;
+        }
     }
 
     public void Dispose()

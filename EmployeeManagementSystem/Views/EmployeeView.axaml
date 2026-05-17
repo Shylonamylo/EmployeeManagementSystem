@@ -24,11 +24,15 @@
             </DataGrid>
         </ScrollViewer>
         
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}"></Button>
+        </StackPanel>
+        
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>
                 <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>
-                <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center" Margin="10"></TextBlock>
             </StackPanel>
             <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
         </StackPanel>
