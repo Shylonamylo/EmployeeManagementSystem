@@ -7,7 +7,7 @@ namespace EmployeeManagementSystem.Views;
 
 public partial class EmployeeEditWindow : Window
 {
-    public EmployeeEditWindow(EmployeeEditViewModel vm)
+    public EmployeeEditWindow(EmployeeEditWindowViewModel vm)
     {
         DataContext = vm;
         InitializeComponent();

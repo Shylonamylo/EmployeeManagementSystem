@@ -17,6 +17,8 @@ public partial class MainWindowViewModel : ViewModelBase
     
     private MainWindow _currentWindow;
     
+    private (int, double) asd = new(10, 10);
+    
     IServiceProvider _serviceProvider;
     private Settings _settings;
     
@@ -41,6 +43,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void OpenSetting()
     {
+        
         SelectedDownNavItem = null;
         SelectedNavItem = null;
         CurrentPage = (ViewModelBase)_serviceProvider.GetService(typeof(ViewModelBase));

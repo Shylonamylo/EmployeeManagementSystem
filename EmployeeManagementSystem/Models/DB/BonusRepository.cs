@@ -34,7 +34,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             AdditionalSalary = reader.GetDecimal("AdditionalSalary"),
                             SalaryId = reader.GetInt32("SalaryId"),
-                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            AppointmentDate = reader.GetDateOnly("AppointmentDate"),
                             Employee = new Employee()
                             {
                                 Id = reader.GetInt32("EmployeeId"),
@@ -109,7 +109,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             AdditionalSalary = reader.GetDecimal("AdditionalSalary"),
                             SalaryId = reader.GetInt32("SalaryId"),
-                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            AppointmentDate = reader.GetDateOnly("AppointmentDate"),
                             Employee = new Employee()
                             {
                                 Id = reader.GetInt32("EmployeeId"),
@@ -247,7 +247,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             AdditionalSalary = reader.GetDecimal("AdditionalSalary"),
                             SalaryId = reader.GetInt32("SalaryId"),
-                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            AppointmentDate = reader.GetDateOnly("AppointmentDate"),
                             Employee = new Employee()
                             {
                                 Id = reader.GetInt32("EmployeeId"),

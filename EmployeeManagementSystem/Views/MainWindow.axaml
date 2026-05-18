@@ -71,7 +71,9 @@
         </SplitView.Pane>
         
         <SplitView.Content>
+            
             <ContentControl Content="{Binding CurrentPage}"></ContentControl>
+            
         </SplitView.Content>
     </SplitView>
 </Window>

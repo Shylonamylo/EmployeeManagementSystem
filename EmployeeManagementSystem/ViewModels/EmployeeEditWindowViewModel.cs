@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class EmployeeEditViewModel : ViewModelBase
+public partial class EmployeeEditWindowViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
@@ -57,7 +57,13 @@ public partial class EmployeeEditViewModel : ViewModelBase
         _currentWindow.Close();
     }
 
-    public EmployeeEditViewModel(IServiceProvider serviceProvider)
+    [RelayCommand]
+    private void OpenPositionSelector()
+    {
+        var vm = ActivatorUtilities.CreateInstance<SelectorWindowViewModel>(_serviceProvider);
+        var win = ActivatorUtilities.CreateInstance<SelectorWindow>(_serviceProvider, vm);
+    }
+    public EmployeeEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
@@ -76,7 +82,7 @@ public partial class EmployeeEditViewModel : ViewModelBase
         SelectedPosition = Positions[0];
     }
     
-    public EmployeeEditViewModel(IServiceProvider serviceProvider, Employee employee)
+    public EmployeeEditWindowViewModel(IServiceProvider serviceProvider, Employee employee)
     {
         _serviceProvider = serviceProvider;
 

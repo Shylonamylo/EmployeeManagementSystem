@@ -3,7 +3,7 @@ using AvaloniaApplication14_Inventory_300326.Models.Models;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class PositionEditViewModel : ViewModelBase
+public partial class PositionEditWindowViewModel : ViewModelBase
 {
     IServiceProvider _serviceProvider;
     
@@ -11,7 +11,7 @@ public partial class PositionEditViewModel : ViewModelBase
 
     private bool _isEdit;
     
-    public PositionEditViewModel(IServiceProvider serviceProvider)
+    public PositionEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
@@ -19,7 +19,7 @@ public partial class PositionEditViewModel : ViewModelBase
         _isEdit = false;
     }
     
-    public PositionEditViewModel(IServiceProvider serviceProvider, Position position)
+    public PositionEditWindowViewModel(IServiceProvider serviceProvider, Position position)
     {
         _serviceProvider = serviceProvider;
         

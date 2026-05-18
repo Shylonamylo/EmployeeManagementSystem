@@ -5,6 +5,7 @@
       <map>
         <entry key="EmployeeManagementSystem/App.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/BonusEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EmployeeEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EmployeeEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />

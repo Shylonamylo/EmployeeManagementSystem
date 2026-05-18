@@ -88,14 +88,14 @@ public partial class EmployeeViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenEditWindow(Employee? item = null)
     {
-        EmployeeEditViewModel vm;
+        EmployeeEditWindowViewModel vm;
         if (item == null)
         {
-            vm = ActivatorUtilities.CreateInstance<EmployeeEditViewModel>(_serviceProvider);
+            vm = ActivatorUtilities.CreateInstance<EmployeeEditWindowViewModel>(_serviceProvider);
         }
         else
         {
-            vm = ActivatorUtilities.CreateInstance<EmployeeEditViewModel>(_serviceProvider, item);
+            vm = ActivatorUtilities.CreateInstance<EmployeeEditWindowViewModel>(_serviceProvider, item);
         }
 
         var win = ActivatorUtilities.CreateInstance<EmployeeEditWindow>(_serviceProvider, vm);
