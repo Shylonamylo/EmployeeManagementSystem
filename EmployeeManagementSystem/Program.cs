@@ -25,9 +25,6 @@ sealed class Program
                 s.AddTransient<MainWindowViewModel>();
                 s.AddTransient<EmployeeEditWindow>();
                 s.AddTransient<EmployeeEditWindowViewModel>();
-                s.AddTransient<BonusEditWindow>();
-                s.AddTransient<BonusEditWindowViewModel>();
-                s.AddTransient<SelectorWindow>();
                 
                 s.AddTransient<EmployeeRepository>();
                 s.AddTransient<EmployeeTasksRepository>();

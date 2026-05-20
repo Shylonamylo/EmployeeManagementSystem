@@ -4,4 +4,10 @@ public class Position : DBObj
 {
     public string Title { get; set; }
     
+    public bool IsSelected { get; set; }
+
+    public override string ToString()
+    {
+        return Id + Title;
+    }
 }

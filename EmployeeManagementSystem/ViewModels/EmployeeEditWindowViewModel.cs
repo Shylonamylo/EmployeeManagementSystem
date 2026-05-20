@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -58,10 +60,36 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenPositionSelector()
+    private async Task OpenPositionSelector()
     {
-        var vm = ActivatorUtilities.CreateInstance<SelectorWindowViewModel>(_serviceProvider);
-        var win = ActivatorUtilities.CreateInstance<SelectorWindow>(_serviceProvider, vm);
+        List<Position> positions;
+        using (var repo = _serviceProvider.GetService<PositionRepository>())
+        {
+            positions = repo.GetAllUnSafe();   
+        }
+        var vm = ActivatorUtilities.CreateInstance<PositionSelectorWindowViewModel>(_serviceProvider, positions);
+        var win = ActivatorUtilities.CreateInstance<PositionSelectorWindow>(_serviceProvider, vm);
+        
+        Position result = new();
+        
+        win.Closing += (s, e) =>
+        {
+            result = vm.Result;
+        };
+        
+        await win.ShowDialog(_currentWindow);
+        
+        if (result is not null)
+        {
+            if (result.IsSelected)
+            {
+                SelectedPosition = result; 
+            }
+            else
+            {
+                SelectedPosition = positions[0];
+            }
+        }
     }
     public EmployeeEditWindowViewModel(IServiceProvider serviceProvider)
     {

@@ -11,8 +11,8 @@
         SizeToContent="WidthAndHeight">
     
     <Grid RowDefinitions="Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
-                <Button Grid.Row="4" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
-                <Button Grid.Row="4" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
-        </Grid>
+        <Button Grid.Row="4" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
+        <Button Grid.Row="4" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
+    </Grid>
         
 </Window>

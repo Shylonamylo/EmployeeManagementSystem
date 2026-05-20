@@ -22,8 +22,10 @@
                 
                 <Label Grid.Row="3" Grid.Column="0" Content="Дата трудоустроства" Margin="5,0,10,10"></Label>
                 <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" SelectedDate="{Binding HireDate}" Margin="0,0,5,10"></DatePicker>
-            
-                <Button Grid.Row="4" Grid.Column="0" Content="Нажми ска" Command="{Binding OpenPositionSelectorCommand}"></Button>
+                
+                <Label Grid.Row="4" Grid.Column="0" Content="Должность: "></Label>
+                <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedPosition.Title}"></Label>
+                <Button Grid.Row="4" Grid.Column="2" Content="Выбрать" Command="{Binding OpenPositionSelectorCommand}"></Button>
                 
                 <Button Grid.Row="5" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
                 <Button Grid.Row="5" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>

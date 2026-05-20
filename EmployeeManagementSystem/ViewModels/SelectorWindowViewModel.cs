@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security.Principal;
+using Avalonia.Controls;
 using AvaloniaApplication14_autoTest_190326.Models;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,43 +12,47 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class SelectorWindowViewModel : ViewModelBase
+public partial class SelectorWindowViewModel<T> : ViewModelBase where T : new()
 {
-    private IServiceProvider _serviceProvider;
-    private SelectorWindow _currentWindow;
-    private Type _repository;
-    
-    [ObservableProperty] private DBObj _selectedItem;
-    [ObservableProperty] private ObservableCollection<DBObj> _items;
-    [ObservableProperty] private string _searchText;
+    protected IServiceProvider _serviceProvider;
+    protected Window _currentWindow;
+    protected List<T> _baseItems;
 
-    [RelayCommand]
-    private void Save()
-    {
-        _currentWindow.Close();
-    }
+    public T Result { get; protected set; } = new T();
+    
+    [ObservableProperty] private T _selectedItem;
+    [ObservableProperty] private ObservableCollection<T> _items;
+    [ObservableProperty] private string _searchText;
 
     partial void OnSearchTextChanged(string? oldValue, string newValue)
     {
-        if (!string.IsNullOrEmpty(newValue)&&!string.IsNullOrWhiteSpace(newValue))
+        if (string.IsNullOrEmpty(newValue)||string.IsNullOrWhiteSpace(newValue))
         {
-            Type type = typeof(MainWindow);
-            using (var rep = (IDisposable)Activator.CreateInstance(_repository, _serviceProvider))
-            {
-                rep.
-            }
-
-            
+            Items = new ObservableCollection<T>(_baseItems);
         }
         else
         {
-            
+            ObservableCollection<T> fillingCollection = new();
+            _baseItems.ForEach(a =>
+            {
+                if (a.ToString().Contains(newValue))
+                {
+                    fillingCollection.Add(a);
+                }
+            });
+            Items = new ObservableCollection<T>(fillingCollection);
         }
     }
-
-    public SelectorWindowViewModel(IServiceProvider serviceProvider, Type repository)
+    
+    public SelectorWindowViewModel(IServiceProvider serviceProvider, List<T> items)
     {
         _serviceProvider = serviceProvider;
-        _repository = repository;
+        _baseItems = items;
+        Items = new ObservableCollection<T>(_baseItems);
+    }
+
+    public void SetWindow(Window window)
+    {
+        _currentWindow = window;
     }
 }

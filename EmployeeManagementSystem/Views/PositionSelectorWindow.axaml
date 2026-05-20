@@ -1,0 +1,30 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
+        xmlns:models="clr-namespace:AvaloniaApplication14_Inventory_300326.Models.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="EmployeeManagementSystem.Views.PositionSelectorWindow"
+        Title="PositionSelectorWindow"
+        x:DataType="viewModels:PositionSelectorWindowViewModel">
+        
+        <Grid RowDefinitions="Auto * Auto" ColumnDefinitions="* *">
+                
+                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchText}"></TextBox>
+                
+                <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Items}">
+                        <ListBox.DataTemplates>
+                                <DataTemplate x:DataType="models:Position">
+                                        <StackPanel Orientation="Horizontal">
+                                                <RadioButton GroupName="1" IsChecked="{Binding IsSelected}"></RadioButton>
+                                                <TextBlock Text="{Binding Title}"></TextBlock>
+                                        </StackPanel>
+                                </DataTemplate>
+                        </ListBox.DataTemplates>
+                </ListBox>
+                
+                <Button Grid.Row="2" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Margin="10" Command="{Binding SaveCommand}"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="Отмена" HorizontalAlignment="Center" Margin="10" Command="{Binding CancelCommand}"></Button>
+        </Grid>
+</Window>
