@@ -17,7 +17,7 @@
                         <ListBox.DataTemplates>
                                 <DataTemplate x:DataType="models:Position">
                                         <StackPanel Orientation="Horizontal">
-                                                <RadioButton GroupName="1" IsChecked="{Binding IsSelected}"></RadioButton>
+                                                <RadioButton GroupName="1" IsChecked="{Binding IsChecked}"></RadioButton>
                                                 <TextBlock Text="{Binding Title}"></TextBlock>
                                         </StackPanel>
                                 </DataTemplate>

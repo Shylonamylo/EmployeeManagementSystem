@@ -81,7 +81,7 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         
         if (result is not null)
         {
-            if (result.IsSelected)
+            if (result.IsChecked)
             {
                 SelectedPosition = result; 
             }

@@ -5,18 +5,13 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class PositionSelectorWindowViewModel : SelectorWindowViewModel<Position>
+public partial class EmployeeSelectorWindowViewModel : SelectorWindowViewModel<Employee>
 {
     [RelayCommand]
     private void Save()
     {
         foreach (var position in Items)
         {
-            if (position.IsChecked)
-            {
-                Result = position;
-                break;
-            }
         }
         _currentWindow.Close();
     }
@@ -26,8 +21,7 @@ public partial class PositionSelectorWindowViewModel : SelectorWindowViewModel<P
     {
         _currentWindow.Close();
     }
-    
-    public PositionSelectorWindowViewModel(IServiceProvider serviceProvider, List<Position> items) : base(serviceProvider, items)
+    public EmployeeSelectorWindowViewModel(IServiceProvider serviceProvider, List<Employee> items) : base(serviceProvider, items)
     {
     }
 }

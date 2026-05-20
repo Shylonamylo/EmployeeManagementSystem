@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -20,7 +23,7 @@ public partial class BonusEditWindowViewModel : ViewModelBase
     [ObservableProperty] private string _reason;
     [ObservableProperty] private DateTimeOffset _appointmentDate;
     [ObservableProperty] private decimal _additionalSalary;
-    [ObservableProperty] private Employee _employee;
+    [ObservableProperty] private Employee _selectedEmployee;
     
     [RelayCommand]
     private void Save()
@@ -45,6 +48,39 @@ public partial class BonusEditWindowViewModel : ViewModelBase
     private void Cancel()
     {
         _currentWindow.Close();
+    }
+
+    [RelayCommand]
+    private async Task OpenEmployeeSelector()
+    {
+        List<Employee> items = new();
+        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+        {
+            items = repo.GetAll();
+        }
+        var vm = ActivatorUtilities.CreateInstance<EmployeeSelectorWindowViewModel>(_serviceProvider, items);
+        var win = ActivatorUtilities.CreateInstance<EmployeeSelectorWindow>(_serviceProvider, vm);
+        
+        Employee result = new();
+        
+        win.Closing += (s, e) =>
+        {
+            result = vm.Result;
+        };
+        
+        await win.ShowDialog(_currentWindow);
+        
+        if (result is not null)
+        {
+            if (result.IsChecked)
+            {
+                SelectedEmployee = result; 
+            }
+            else
+            {
+                SelectedEmployee = items[0];
+            }
+        }
     }
 
     public BonusEditWindowViewModel(IServiceProvider serviceProvider)

@@ -35,6 +35,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeSelectorWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EmployeeView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
