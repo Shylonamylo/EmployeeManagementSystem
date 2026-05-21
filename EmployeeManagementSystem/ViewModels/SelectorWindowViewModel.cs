@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Principal;
 using Avalonia.Controls;
 using AvaloniaApplication14_autoTest_190326.Models;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class SelectorWindowViewModel<T> : ViewModelBase where T : new()
+public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj, new()
 {
     protected IServiceProvider _serviceProvider;
     protected Window _currentWindow;
@@ -23,6 +24,26 @@ public partial class SelectorWindowViewModel<T> : ViewModelBase where T : new()
     [ObservableProperty] private T _selectedItem;
     [ObservableProperty] private ObservableCollection<T> _items;
     [ObservableProperty] private string _searchText;
+
+    [RelayCommand]
+    private void Save()
+    {
+        foreach (DBObj item in Items)
+        {
+            if (item.IsChecked)
+            {
+                Result = Items.FirstOrDefault(a => a.Id == item.Id);
+            }
+        }
+        
+        _currentWindow.Close();
+    }
+    
+    [RelayCommand]
+    private void Cancel()
+    {
+        _currentWindow.Close();
+    }
 
     partial void OnSearchTextChanged(string? oldValue, string newValue)
     {

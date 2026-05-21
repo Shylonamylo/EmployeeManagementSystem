@@ -13,6 +13,7 @@ public class Settings
     public DatabaseSettings DatabaseSettings {get; set;}
     public TaxSettings TaxSettings {get; set;}
     public bool DeveloperMode { get; set; }
+    public int PageSize { get; set; }
     
     public void LoadSettings()
     {
@@ -23,6 +24,7 @@ public class Settings
             DatabaseSettings = deserialized.DatabaseSettings;
             TaxSettings = deserialized.TaxSettings;
             DeveloperMode = deserialized.DeveloperMode;
+            PageSize = deserialized.PageSize;
         }
         catch (Exception e)
         {
@@ -30,6 +32,7 @@ public class Settings
             DatabaseSettings = new DatabaseSettings();
             TaxSettings = new TaxSettings();
             DeveloperMode = false;
+            PageSize = 10;
             
             File.WriteAllText("appsettings.json", JsonSerializer.Serialize(this));
         }

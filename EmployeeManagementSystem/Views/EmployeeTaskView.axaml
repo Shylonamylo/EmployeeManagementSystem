@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EmployeeManagementSystem.Views.TasksView"
-             x:DataType="viewModels:TasksViewModel">
+             x:Class="EmployeeManagementSystem.Views.EmployeeTaskView"
+             x:DataType="viewModels:EmployeeTaskViewModel">
     
     <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
         
@@ -22,6 +22,7 @@
                     <DataGridTextColumn Header="Назначенный сотрудник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата начала" Binding="{Binding  StartDate}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата конца" Binding="{Binding EndDate}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Выполнена" Binding="{Binding IsDone}" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

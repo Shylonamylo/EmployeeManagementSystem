@@ -30,48 +30,36 @@ public partial class BonusViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetBonuses(CurrentPage, CurrentPage-1);
+        GetBonuses(CurrentPage);
     }
-    partial void OnCurrentPageChanged(int newValue, int oldValue)
+    partial void OnCurrentPageChanged(int value)
     {
-        GetBonuses(newValue, oldValue);
+        GetBonuses(value);
     }
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        GetBonuses(CurrentPage, CurrentPage-1);
+        GetBonuses(CurrentPage);
     }
     
-    private void GetBonuses(int newValue, int oldValue)
+    private void GetBonuses(int value)
     {
         if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-            
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Bonuses = new ObservableCollection<Bonus>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
         }
         else
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
-            
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Bonuses = new ObservableCollection<Bonus>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }
@@ -100,7 +88,7 @@ public partial class BonusViewModel : ViewModelBase
         
         DeveloperMode = _settings.DeveloperMode;
         
-        CurrentPageSize = 10;
+        CurrentPageSize = _settings.PageSize;
         CurrentPage = 1;
 
     }

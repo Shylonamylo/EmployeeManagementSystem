@@ -2,11 +2,11 @@
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public class TaskEditViewModel : ViewModelBase
+public class EmployeeTaskEditViewModel : ViewModelBase
 {
     IServiceProvider _serviceProvider;
 
-    public TaskEditViewModel(IServiceProvider serviceProvider)
+    public EmployeeTaskEditViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         

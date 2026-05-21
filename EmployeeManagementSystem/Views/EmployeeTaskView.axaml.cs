@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace EmployeeManagementSystem.Views;
 
-public partial class TasksView : UserControl
+public partial class EmployeeTaskView : UserControl
 {
-    public TasksView()
+    public EmployeeTaskView()
     {
         InitializeComponent();
     }

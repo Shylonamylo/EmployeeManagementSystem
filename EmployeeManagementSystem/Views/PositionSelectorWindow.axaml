@@ -7,22 +7,26 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EmployeeManagementSystem.Views.PositionSelectorWindow"
         Title="PositionSelectorWindow"
-        x:DataType="viewModels:PositionSelectorWindowViewModel">
+        x:DataType="viewModels:PositionSelectorWindowViewModel"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight">
         
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions="* *">
                 
-                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchText}"></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SearchText}"></TextBox>
                 
-                <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Items}">
-                        <ListBox.DataTemplates>
-                                <DataTemplate x:DataType="models:Position">
-                                        <StackPanel Orientation="Horizontal">
-                                                <RadioButton GroupName="1" IsChecked="{Binding IsChecked}"></RadioButton>
-                                                <TextBlock Text="{Binding Title}"></TextBlock>
-                                        </StackPanel>
-                                </DataTemplate>
-                        </ListBox.DataTemplates>
-                </ListBox>
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <ListBox ItemsSource="{Binding Items}">
+                                <ListBox.DataTemplates>
+                                        <DataTemplate x:DataType="models:Position">
+                                                <StackPanel Orientation="Horizontal">
+                                                        <RadioButton GroupName="1" IsChecked="{Binding IsChecked}"></RadioButton>
+                                                        <TextBlock Text="{Binding Title}"></TextBlock>
+                                                </StackPanel>
+                                        </DataTemplate>
+                                </ListBox.DataTemplates>
+                        </ListBox>
+                </ScrollViewer>
                 
                 <Button Grid.Row="2" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Margin="10" Command="{Binding SaveCommand}"></Button>
                 <Button Grid.Row="2" Grid.Column="1" Content="Отмена" HorizontalAlignment="Center" Margin="10" Command="{Binding CancelCommand}"></Button>

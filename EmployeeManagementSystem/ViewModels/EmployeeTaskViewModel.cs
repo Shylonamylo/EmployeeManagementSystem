@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class TasksViewModel : ViewModelBase
+public partial class EmployeeTaskViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
@@ -30,47 +30,38 @@ public partial class TasksViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetTasks(CurrentPage, CurrentPage-1);
+        GetTasks(CurrentPage);
     }
     
-    partial void OnCurrentPageChanged(int newValue, int oldValue)
+    partial void OnCurrentPageChanged(int value)
     {
-        GetTasks(newValue, oldValue);
+        GetTasks(value);
     }
 
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        GetTasks(CurrentPage, CurrentPage-1);
+        GetTasks(CurrentPage);
     }
 
-    private void GetTasks(int newValue, int oldValue)
+    private void GetTasks(int value)
     {
         if (string.IsNullOrWhiteSpace(_searchString) || string.IsNullOrEmpty(_searchString))
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
             }
         }
         else
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
             using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Tasks = new ObservableCollection<EmployeeTask>(repo.GetPageWithSearch(CurrentPageSize,CurrentPage-1, SearchString));
             }
         }
@@ -85,7 +76,7 @@ public partial class TasksViewModel : ViewModelBase
         }
     }
     
-    public TasksViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
+    public EmployeeTaskViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
         _mainWindow = mainWindow;
         
@@ -94,7 +85,7 @@ public partial class TasksViewModel : ViewModelBase
         
         _serviceProvider = serviceProvider;
 
-        CurrentPageSize = 10;
+        CurrentPageSize = _settings.PageSize;
         CurrentPage = 1;
     }
 }

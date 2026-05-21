@@ -23,6 +23,8 @@ public partial class SettingsViewModel : ViewModelBase
 
     [ObservableProperty] private bool _developerMode;
     
+    [ObservableProperty] private int _pageSize;
+    
     [ObservableProperty] private string _connectionTestString;
 
     [RelayCommand]
@@ -68,8 +70,22 @@ public partial class SettingsViewModel : ViewModelBase
         _settings.DatabaseSettings.ConnectionString = sb.ConnectionString;
         
         _settings.DeveloperMode = DeveloperMode;
+
+        _settings.PageSize = PageSize;
         
         _settings.SaveSettings();
+    }
+
+    partial void OnPageSizeChanged(int oldValue, int newValue)
+    {
+        if (newValue <= 0)
+        {
+            _pageSize = oldValue;
+        }
+        else
+        {
+            _pageSize = newValue;
+        }
     }
 
     public SettingsViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
@@ -86,6 +102,7 @@ public partial class SettingsViewModel : ViewModelBase
             Login = _settings.DatabaseSettings.ConnectionString.Split(';')[2].Split('=')[1];
             Password = _settings.DatabaseSettings.ConnectionString.Split(';')[3].Split('=')[1];
             DeveloperMode = _settings.DeveloperMode;
+            PageSize = _settings.PageSize;
         }
         catch (Exception e)
         {

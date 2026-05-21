@@ -32,6 +32,9 @@
                 <TextBlock Text="Расширенный режим"></TextBlock>
                 <CheckBox IsChecked="{Binding DeveloperMode}"></CheckBox>
             
+                <TextBlock Text="Размер выдачи"></TextBlock>
+                <TextBox Text="{Binding PageSize}"></TextBox>
+            
                 <Button Content="Сохранить" Margin="5,20,5,0" Command="{Binding SaveSettingsCommand}"></Button>
 
         </StackPanel>

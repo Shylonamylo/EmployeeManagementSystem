@@ -30,48 +30,33 @@ public partial class SalaryViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetSalary(CurrentPage, CurrentPage-1);
+        GetSalary(CurrentPage);
     }
     
-    partial void OnCurrentPageChanged(int newValue, int oldValue)
+    partial void OnCurrentPageChanged(int value)
     {
-        GetSalary(newValue, oldValue);
-    }
-
-    partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
-    {
-        GetSalary(CurrentPage, CurrentPage-1);
+        GetSalary(value);
     }
     
-    private void GetSalary(int newValue, int oldValue)
+    private void GetSalary(int value)
     {
         if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Salaries = new ObservableCollection<Salary>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
         }
         else
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(MaxPage/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Salaries = new ObservableCollection<Salary>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }
@@ -96,7 +81,7 @@ public partial class SalaryViewModel : ViewModelBase
         
         DeveloperMode = _settings.DeveloperMode;
         
-        CurrentPageSize = 10;
+        CurrentPageSize = _settings.PageSize;
         CurrentPage = 1;
     }
 }

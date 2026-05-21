@@ -31,46 +31,37 @@ public partial class EmployeeViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetEmployees(_currentPage, _currentPage-1);
+        GetEmployees(CurrentPage);
     }
-    partial void OnCurrentPageChanged(int newValue, int oldValue)
+    partial void OnCurrentPageChanged(int value)
     {
-        GetEmployees(newValue, oldValue);
+        GetEmployees(value);
     }
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
-        GetEmployees(CurrentPage, CurrentPage-1);
+        GetEmployees(CurrentPage);
     }
 
-    private void GetEmployees(int newValue, int oldValue)
+    private void GetEmployees(int value)
     {
         if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
 
             using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
         }
         else
         {
-            if (newValue == oldValue)
-            {
-                return;
-            }
-
             using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
             {
                 MaxPage = repo.GetCount();
-                MaxPageText = $"Из {MaxPage/CurrentPageSize}";
-                CurrentPage = Math.Clamp(newValue, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
+                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+                _currentPage = Math.Clamp(value, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
                 Employees = new ObservableCollection<Employee>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1,SearchString));
             }
         }
@@ -113,7 +104,7 @@ public partial class EmployeeViewModel : ViewModelBase
         
         DeveloperMode = _settings.DeveloperMode;
         
-        CurrentPageSize = 10;
+        CurrentPageSize = _settings.PageSize;
         CurrentPage = 1;
     }
 }
