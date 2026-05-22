@@ -13,11 +13,11 @@
     <Grid RowDefinitions="Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
         
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Причина премии"></TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding }"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Reason}"></TextBox>
         
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Сотрудник"></TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEmployee.FullName}"></TextBlock>
-        <Button Grid.Row="1" Grid.Column="0" Command="{Binding OpenEmployeeSelectorCommand}"></Button>
+        <Button Grid.Row="1" Grid.Column="2" Content="Выбрать сотрудника" Command="{Binding OpenEmployeeSelectorCommand}"></Button>
         
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата назначения премии"></TextBlock>
         <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding AppointmentDate}"></DatePicker>

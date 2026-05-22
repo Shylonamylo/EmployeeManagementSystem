@@ -44,26 +44,27 @@ public partial class EmployeeViewModel : ViewModelBase
 
     private void GetEmployees(int value)
     {
-        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+        using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
         {
-
-            using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+            MaxPage = repo.GetCount();
+            
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : MaxPage / CurrentPageSize + 1);
+            
+            MaxPageText = $"Из {NewMaxPage}";
+            
+            _currentPage = Math.Clamp(value, 1, repo.GetCount());
+            
+            if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
-        }
-        else
-        {
-            using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+            else
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(repo.GetCount()/CurrentPageSize)+1);
                 Employees = new ObservableCollection<Employee>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1,SearchString));
             }
+            
         }
     }
 

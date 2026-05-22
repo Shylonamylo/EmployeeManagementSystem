@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -43,25 +44,24 @@ public partial class BonusViewModel : ViewModelBase
     
     private void GetBonuses(int value)
     {
-        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+        using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
         {
-            using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+            MaxPage = repo.GetCount();
+            int newMaxPage = (MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : (MaxPage / CurrentPageSize) + 1);
+            MaxPageText = $"Из {newMaxPage}";
+            _currentPage = Math.Clamp(value, 1, newMaxPage);
+            
+            if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Bonuses = new ObservableCollection<Bonus>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
-        }
-        else
-        {
-            using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+            else
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Bonuses = new ObservableCollection<Bonus>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
+            
         }
     }
 
@@ -75,8 +75,19 @@ public partial class BonusViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenEditWindow(Bonus? item = null)
+    private async Task OpenEditWindow(Bonus? item = null)
     {
+        BonusEditWindowViewModel vm;
+        if (item == null)
+        {
+            vm = ActivatorUtilities.CreateInstance<BonusEditWindowViewModel>(_serviceProvider);   
+        }
+        else
+        {
+            vm = ActivatorUtilities.CreateInstance<BonusEditWindowViewModel>(_serviceProvider, item);
+        }
+        var win = ActivatorUtilities.CreateInstance<BonusEditWindow>(_serviceProvider, vm);
+        await win.ShowDialog(_mainWindow);
     }
     public BonusViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {

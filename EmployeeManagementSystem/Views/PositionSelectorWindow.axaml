@@ -16,13 +16,10 @@
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SearchText}"></TextBox>
                 
                 <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <ListBox ItemsSource="{Binding Items}">
+                        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                                 <ListBox.DataTemplates>
                                         <DataTemplate x:DataType="models:Position">
-                                                <StackPanel Orientation="Horizontal">
-                                                        <RadioButton GroupName="1" IsChecked="{Binding IsChecked}"></RadioButton>
-                                                        <TextBlock Text="{Binding Title}"></TextBlock>
-                                                </StackPanel>
+                                                <TextBlock Text="{Binding Title}"></TextBlock>
                                         </DataTemplate>
                                 </ListBox.DataTemplates>
                         </ListBox>

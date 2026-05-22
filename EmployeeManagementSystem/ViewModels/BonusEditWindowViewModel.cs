@@ -28,17 +28,24 @@ public partial class BonusEditWindowViewModel : ViewModelBase
     [RelayCommand]
     private void Save()
     {
-        if (_edit)
+        using (var repo = _serviceProvider.GetService<BonusRepository>())
         {
+            if (_edit)
+            {
             
-        }
-        else
-        {
-            _bonus = new Bonus();
+            }
+            else
+            {
+                _bonus = new Bonus();
             
-            _bonus.Reason = _reason;
-            _bonus.AppointmentDate = new DateOnly(AppointmentDate.Year, AppointmentDate.Month, AppointmentDate.Day);
-            _bonus.AdditionalSalary = _additionalSalary;
+                _bonus.Reason = _reason;
+                _bonus.AppointmentDate = new DateOnly(AppointmentDate.Year, AppointmentDate.Month, AppointmentDate.Day);
+                _bonus.AdditionalSalary = _additionalSalary;
+                _bonus.EmployeeId = _selectedEmployee.Id;
+                _bonus.SalaryId = 0;
+                
+                repo.Add(_bonus);
+            }
         }
         
         _currentWindow.Close();
@@ -58,28 +65,26 @@ public partial class BonusEditWindowViewModel : ViewModelBase
         {
             items = repo.GetAll();
         }
+
         var vm = ActivatorUtilities.CreateInstance<EmployeeSelectorWindowViewModel>(_serviceProvider, items);
         var win = ActivatorUtilities.CreateInstance<EmployeeSelectorWindow>(_serviceProvider, vm);
-        
+    
         Employee result = new();
-        
+    
         win.Closing += (s, e) =>
         {
             result = vm.Result;
         };
-        
+    
         await win.ShowDialog(_currentWindow);
-        
+    
         if (result is not null)
         {
-            if (result.IsChecked)
-            {
-                SelectedEmployee = result; 
-            }
-            else
-            {
-                SelectedEmployee = items[0];
-            }
+            SelectedEmployee = result; 
+        }
+        else
+        {
+            SelectedEmployee = items[0];
         }
     }
 
@@ -87,6 +92,14 @@ public partial class BonusEditWindowViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         
+        List<Employee> items = new();
+        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+        {
+            items = repo.GetAll();
+        }
+        SelectedEmployee = items[0];
+        
+        AppointmentDate = DateTimeOffset.Now;
         _edit = false;
     }
 
@@ -95,7 +108,9 @@ public partial class BonusEditWindowViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         
         _edit = true;
-        _bonus = bonus;
+        AppointmentDate = DateTimeOffset.Parse(bonus.AppointmentDate.ToString());
+        Reason = bonus.Reason;
+        SelectedEmployee = bonus.Employee;
     }
     
     public void SetWindow(BonusEditWindow window)

@@ -78,7 +78,36 @@ public class PositionRepository : BaseRepository<Position>, IDisposable
 
     public override List<Position>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {
-        throw new NotImplementedException();
+        string sql = "SELECT p.Id, p.Title FROM EmployeeManagementSystem.`Position` p WHERE p.Id > 0 AND concat(p.id, ' ', p.Title) = concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
+
+        List<Position> result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@limit", pageSize);
+                mc.Parameters.AddWithValue("@offset", pageNumber*pageSize);
+                mc.Parameters.AddWithValue("@searchString", searchString);
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Position()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Title = reader.GetString("Title")
+                        });
+                    }
+                }
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     public override Position? GetById(int id)
@@ -98,7 +127,21 @@ public class PositionRepository : BaseRepository<Position>, IDisposable
 
     public override bool Add(Position item)
     {
-        throw new NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.`Position` (Title) VALUES(@title)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@title", item.Title);
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override int GetCount()

@@ -40,23 +40,21 @@ public partial class SalaryViewModel : ViewModelBase
     
     private void GetSalary(int value)
     {
-        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+        using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
         {
-            using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+            MaxPage = repo.GetCount();
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : MaxPage / CurrentPageSize + 1);
+            MaxPageText = $"Из {NewMaxPage}";
+            _currentPage = Math.Clamp(value, 1, NewMaxPage);
+            
+            if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Salaries = new ObservableCollection<Salary>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
-        }
-        else
-        {
-            using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+            else
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Salaries = new ObservableCollection<Salary>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }

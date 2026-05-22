@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -28,39 +29,51 @@ public partial class PositionViewModel : ViewModelBase
     [ObservableProperty] private string _maxPageText;
     [ObservableProperty] private int _currentPageSize;
 
+    [RelayCommand]
+    private async Task OpenEditWindow(Position? item = null)
+    {
+        PositionEditWindowViewModel vm;
+        if (item == null)
+        {
+            vm = ActivatorUtilities.CreateInstance<PositionEditWindowViewModel>(_serviceProvider);
+        }
+        else
+        {
+            vm = ActivatorUtilities.CreateInstance<PositionEditWindowViewModel>(_serviceProvider, item);
+        }
+
+        var win = ActivatorUtilities.CreateInstance<PositionEditWindow>(_serviceProvider, vm);
+        
+        await win.ShowDialog(_mainWindow);
+    }
+
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
         GetPositions(CurrentPage);
     }
     
-    partial void OnCurrentPageChanged(int newValue, int oldValue)
+    partial void OnCurrentPageChanged(int value)
     {
-        GetPositions(newValue);
+        GetPositions(value);
     }
     
     private void GetPositions(int value)
     {
-        if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+        using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
         {
-
-            using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
-            {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
+            MaxPage = repo.GetCount()-1;
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : (MaxPage / CurrentPageSize) + 1);
+            MaxPageText = $"Из {NewMaxPage}";
+            _currentPage = Math.Clamp(value, 1, NewMaxPage);
             
+            if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+            {
                 Positions = new ObservableCollection<Position>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
-        }
-        else
-        {
-
-            using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
+            else
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
-            
                 Positions = new ObservableCollection<Position>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }

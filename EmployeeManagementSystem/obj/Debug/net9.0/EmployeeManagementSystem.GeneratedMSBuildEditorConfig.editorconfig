@@ -45,6 +45,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/PositionEditWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/student/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/PositionSelectorWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

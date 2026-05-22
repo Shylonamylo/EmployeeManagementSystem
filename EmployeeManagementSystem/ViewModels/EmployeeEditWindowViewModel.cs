@@ -81,14 +81,11 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         
         if (result is not null)
         {
-            if (result.IsChecked)
-            {
-                SelectedPosition = result; 
-            }
-            else
-            {
-                SelectedPosition = positions[0];
-            }
+            SelectedPosition = result; 
+        }
+        else
+        {
+            SelectedPosition = Positions[0];
         }
     }
     public EmployeeEditWindowViewModel(IServiceProvider serviceProvider)

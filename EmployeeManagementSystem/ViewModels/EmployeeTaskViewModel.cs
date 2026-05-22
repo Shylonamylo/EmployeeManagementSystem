@@ -45,23 +45,17 @@ public partial class EmployeeTaskViewModel : ViewModelBase
 
     private void GetTasks(int value)
     {
-        if (string.IsNullOrWhiteSpace(_searchString) || string.IsNullOrEmpty(_searchString))
+        using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
         {
-            using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
+            MaxPage = repo.GetCount();
+            MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
+            _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
+            if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
             }
-        }
-        else
-        {
-            using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
+            else
             {
-                MaxPage = repo.GetCount();
-                MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-                _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
                 Tasks = new ObservableCollection<EmployeeTask>(repo.GetPageWithSearch(CurrentPageSize,CurrentPage-1, SearchString));
             }
         }

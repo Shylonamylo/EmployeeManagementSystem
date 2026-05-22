@@ -28,13 +28,7 @@ public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj,
     [RelayCommand]
     private void Save()
     {
-        foreach (DBObj item in Items)
-        {
-            if (item.IsChecked)
-            {
-                Result = Items.FirstOrDefault(a => a.Id == item.Id);
-            }
-        }
+        Result = SelectedItem;
         
         _currentWindow.Close();
     }
