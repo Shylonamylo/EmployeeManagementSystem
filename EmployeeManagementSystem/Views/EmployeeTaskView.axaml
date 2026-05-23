@@ -15,7 +15,7 @@
             <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер задачи" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Задача" Binding="{Binding Goal}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
@@ -27,6 +27,8 @@
             </DataGrid>
         </ScrollViewer>
         
+        <Button Grid.Row="2" Grid.Column="0" Content="Добавить" Command="{Binding OpenEditWindowCommand}" VerticalAlignment="Bottom"></Button>
+        
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>
@@ -35,5 +37,6 @@
             </StackPanel>
             <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
         </StackPanel>
+        
     </Grid>
 </UserControl>

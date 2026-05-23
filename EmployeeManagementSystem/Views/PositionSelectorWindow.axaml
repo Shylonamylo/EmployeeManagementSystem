@@ -15,7 +15,7 @@
                 
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SearchText}"></TextBox>
                 
-                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MaxHeight="500">
                         <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                                 <ListBox.DataTemplates>
                                         <DataTemplate x:DataType="models:Position">

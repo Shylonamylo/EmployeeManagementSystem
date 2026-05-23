@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -38,14 +39,9 @@ public partial class EmployeeTaskViewModel : ViewModelBase
         GetTasks(value);
     }
 
-    partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
-    {
-        GetTasks(CurrentPage);
-    }
-
     private void GetTasks(int value)
     {
-        using (var repo = _serviceProvider.GetRequiredService<EmployeeTasksRepository>())
+        using (var repo = _serviceProvider.GetRequiredService<EmployeeTaskRepository>())
         {
             MaxPage = repo.GetCount();
             MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
@@ -68,6 +64,29 @@ public partial class EmployeeTaskViewModel : ViewModelBase
         {
             CurrentPage += result;
         }
+    }
+    
+    [RelayCommand]
+    private async Task OpenEditWindow(Employee? item = null)
+    {
+        EmployeeTaskEditWindowViewModel vm;
+        if (item == null)
+        {
+            vm = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindowViewModel>(_serviceProvider);
+        }
+        else
+        {
+            vm = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindowViewModel>(_serviceProvider, item);
+        }
+    
+        var win = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindow>(_serviceProvider, vm);
+        
+        win.Closed += (s, e) =>
+        {
+            GetTasks(CurrentPage);
+        };
+        
+        await win.ShowDialog(_mainWindow);
     }
     
     public EmployeeTaskViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)

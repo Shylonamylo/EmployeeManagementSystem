@@ -87,6 +87,12 @@ public partial class BonusViewModel : ViewModelBase
             vm = ActivatorUtilities.CreateInstance<BonusEditWindowViewModel>(_serviceProvider, item);
         }
         var win = ActivatorUtilities.CreateInstance<BonusEditWindow>(_serviceProvider, vm);
+        
+        win.Closed += (s, e) =>
+        {
+            GetBonuses(CurrentPage);
+        };
+        
         await win.ShowDialog(_mainWindow);
     }
     public BonusViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)

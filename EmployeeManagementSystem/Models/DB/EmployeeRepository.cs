@@ -79,7 +79,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public override List<Employee>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId LIMIT @limit OFFSET @offset";
+        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 LIMIT @limit OFFSET @offset";
         List<Employee> result = new();
 
         try
@@ -121,7 +121,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public override List<Employee>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {
-        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE concat(e.Id, ' ', e.FullName, ' ', e.HireDate, ' ', e.BirthDate, ' ', e.PositionId, ' ', e.Salary, ' ', p.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
+        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.`Employee` e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 AND concat(e.Id, ' ', e.FullName, ' ', e.HireDate, ' ', e.BirthDate, ' ', e.PositionId, ' ', e.Salary, ' ', p.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
         
         List<Employee> result = new();
 

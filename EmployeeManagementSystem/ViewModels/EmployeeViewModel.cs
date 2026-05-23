@@ -92,6 +92,11 @@ public partial class EmployeeViewModel : ViewModelBase
 
         var win = ActivatorUtilities.CreateInstance<EmployeeEditWindow>(_serviceProvider, vm);
         
+        win.Closed += (s, e) =>
+        {
+            GetEmployees(CurrentPage);
+        };
+        
         await win.ShowDialog(_mainWindow);
     }
 

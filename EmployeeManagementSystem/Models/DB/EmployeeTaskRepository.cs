@@ -6,16 +6,16 @@ using MySqlConnector;
 
 namespace EmployeeManagementSystem.Models.DB;
 
-public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
+public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
 {
-    public EmployeeTasksRepository(Settings Settings) : base(Settings)
+    public EmployeeTaskRepository(Settings Settings) : base(Settings)
     {
         OpenConnection();
     }
 
     public override List<EmployeeTask>? GetAll()
     {
-        string sql = "SELECT t.Id, t.Title, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id";
+        string sql = "SELECT t.Id, t.Title, t.Description, t.IsDone, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id";
 
         List <EmployeeTask> result = new();
         
@@ -30,7 +30,7 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Title = reader.GetString("Title"),
+                            Goal = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),
@@ -54,7 +54,8 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                             {
                                 Id = reader.GetInt32("UrgencyId"),
                                 Title = reader.GetString("UrgencyTitle"),
-                            }
+                            },
+                            IsDone = reader.GetBoolean("IsDone"),
                         });
                     }
                 }
@@ -71,7 +72,7 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override List<EmployeeTask>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {
-        string sql = "SELECT t.Id, t.Title, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id WHERE concat(t.Id, t.Title, t.Description, t.UrgencyId, t.StartDate, t.EndDate, e.Id, e.FullName, e.HireDate, e.BirthDate, e.PositionId, e.Salary, p.Title, u.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
+        string sql = "SELECT t.Id, t.Title, t.Description, t.IsDone, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id WHERE concat(t.Id, t.Title, t.Description, t.UrgencyId, t.StartDate, t.EndDate, e.Id, e.FullName, e.HireDate, e.BirthDate, e.PositionId, e.Salary, p.Title, u.Title) like concat('%',@searchString,'%') LIMIT @limit OFFSET @offset";
 
         List <EmployeeTask> result = new();
         
@@ -89,7 +90,7 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Title = reader.GetString("Title"),
+                            Goal = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),
@@ -113,7 +114,8 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                             {
                                 Id = reader.GetInt32("UrgencyId"),
                                 Title = reader.GetString("UrgencyTitle"),
-                            }
+                            },
+                            IsDone = reader.GetBoolean("IsDone"),
                         });
                     }
                 }
@@ -145,17 +147,18 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override bool Add(EmployeeTask item)
     {
-        string sql = "INSERT INTO EmployeeManagementSystem.Task (Title, Description, EmployeeId, UrgencyId, StartDate, EndDate) VALUES(@title, @description, @employeeId, @urgencyId, @startDate, @endDate)";
+        string sql = "INSERT INTO EmployeeManagementSystem.Task (Title, Description, EmployeeId, UrgencyId, StartDate, EndDate, IsDone) VALUES(@title, @description, @employeeId, @urgencyId, @startDate, @endDate, @isDone)";
         try
         {
             using (var mc = new MySqlCommand(sql, connection))
             {
-                mc.Parameters.AddWithValue("@title", item.Title);
+                mc.Parameters.AddWithValue("@title", item.Goal);
                 mc.Parameters.AddWithValue("@description", item.Description);
                 mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
                 mc.Parameters.AddWithValue("@urgencyId", item.UrgencyId);
                 mc.Parameters.AddWithValue("@startDate", item.StartDate);
                 mc.Parameters.AddWithValue("@endDate", item.EndDate);
+                mc.Parameters.AddWithValue("IsDone", item.IsDone);
                 
                 mc.ExecuteNonQuery();
             }
@@ -197,7 +200,7 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override List<EmployeeTask>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT t.Id, t.Title, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id LIMIT @limit OFFSET @offset";
+        string sql = "SELECT t.Id, t.Title, t.IsDone, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id LIMIT @limit OFFSET @offset";
 
         List <EmployeeTask> result = new();
         
@@ -214,7 +217,7 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Title = reader.GetString("Title"),
+                            Goal = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),
@@ -238,7 +241,8 @@ public class EmployeeTasksRepository : BaseRepository<EmployeeTask>, IDisposable
                             {
                                 Id = reader.GetInt32("UrgencyId"),
                                 Title = reader.GetString("UrgencyTitle"),
-                            }
+                            },
+                            IsDone = reader.GetBoolean("IsDone"),
                         });
                     }
                 }

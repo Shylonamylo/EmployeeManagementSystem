@@ -27,10 +27,11 @@ sealed class Program
                 s.AddTransient<EmployeeEditWindowViewModel>();
                 
                 s.AddTransient<EmployeeRepository>();
-                s.AddTransient<EmployeeTasksRepository>();
+                s.AddTransient<EmployeeTaskRepository>();
                 s.AddTransient<BonusRepository>();
                 s.AddTransient<SalaryRepository>();
                 s.AddTransient<PositionRepository>();
+                s.AddTransient<UrgencyRepository>();
                 
                 
                 s.AddSingleton<Settings>();

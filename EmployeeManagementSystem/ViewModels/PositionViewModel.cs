@@ -43,7 +43,11 @@ public partial class PositionViewModel : ViewModelBase
         }
 
         var win = ActivatorUtilities.CreateInstance<PositionEditWindow>(_serviceProvider, vm);
-        
+
+        win.Closed += (s, e) =>
+        {
+            GetPositions(CurrentPage);
+        };
         await win.ShowDialog(_mainWindow);
     }
 
@@ -99,6 +103,7 @@ public partial class PositionViewModel : ViewModelBase
         DeveloperMode = _settings.DeveloperMode;
         
         CurrentPageSize = _settings.PageSize;
+        
         CurrentPage = 1;
     }
     
