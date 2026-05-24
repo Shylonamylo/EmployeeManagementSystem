@@ -28,6 +28,7 @@
         
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}"></Button>
+            <Button Content="Редактировать" Command="{Binding OpenEditWindowCommand}" CommandParameter="{Binding SelectedBonus}" IsEnabled="{Binding CanEdit}"></Button>
         </StackPanel>
         
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">

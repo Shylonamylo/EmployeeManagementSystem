@@ -23,11 +23,26 @@ public partial class BonusViewModel : ViewModelBase
     [ObservableProperty] private bool _developerMode;
     
     [ObservableProperty] private ObservableCollection<Bonus> _bonuses;
+    [ObservableProperty] private Bonus _selectedBonus;
+    
+    [ObservableProperty] private bool _canEdit;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
     [ObservableProperty] private string _maxPageText;
     [ObservableProperty] private int _currentPageSize;
+
+    partial void OnSelectedBonusChanged(Bonus value)
+    {
+        if (value != null)
+        {
+            CanEdit=true;
+        }
+        else
+        {
+            CanEdit=false;
+        }
+    }
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
@@ -107,6 +122,7 @@ public partial class BonusViewModel : ViewModelBase
         
         CurrentPageSize = _settings.PageSize;
         CurrentPage = 1;
-
+        
+        CanEdit=false;
     }
 }

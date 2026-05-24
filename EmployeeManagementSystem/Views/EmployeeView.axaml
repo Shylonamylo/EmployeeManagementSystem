@@ -12,7 +12,7 @@
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
         
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <DataGrid ItemsSource="{Binding Employees}">
+            <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер Сотрудника" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" IsReadOnly="True"></DataGridTextColumn>
@@ -26,6 +26,7 @@
         
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}"></Button>
+            <Button Content="Редактировать" Command="{Binding OpenEditWindowCommand}" CommandParameter="{Binding SelectedEmployee}" IsEnabled="{Binding CanEdit}"></Button>
         </StackPanel>
         
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">

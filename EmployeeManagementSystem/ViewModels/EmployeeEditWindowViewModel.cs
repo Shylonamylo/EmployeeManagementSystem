@@ -117,15 +117,9 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         Salary = employee.Salary;
         BirthDate = new DateTimeOffset(employee.BirthDate, TimeOnly.FromDateTime(DateTime.Now), TimeSpan.Zero);
         HireDate = new DateTimeOffset(employee.HireDate, TimeOnly.FromDateTime(DateTime.Now), TimeSpan.Zero);
+        SelectedPosition = employee.EmployeePosition;
         
         _edit = true;
-        
-        using (var repo = _serviceProvider.GetService<PositionRepository>())
-        {
-            Positions = new ObservableCollection<Position>(repo.GetAllUnSafe());
-        }
-        
-        SelectedPosition = Positions[0];
     }
 
     public void SetWindow(EmployeeEditWindow window)

@@ -23,6 +23,9 @@ public partial class EmployeeViewModel : ViewModelBase
     [ObservableProperty] private bool _developerMode;
     
     [ObservableProperty] private ObservableCollection<Employee> _employees;
+    [ObservableProperty] private Employee _selectedEmployee;
+
+    [ObservableProperty] private bool _canEdit;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
@@ -40,6 +43,14 @@ public partial class EmployeeViewModel : ViewModelBase
     partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
     {
         GetEmployees(CurrentPage);
+    }
+
+    partial void OnSelectedEmployeeChanged(Employee value)
+    {
+        if (value != null)
+        {
+            CanEdit=true;
+        }
     }
 
     private void GetEmployees(int value)
@@ -111,6 +122,9 @@ public partial class EmployeeViewModel : ViewModelBase
         DeveloperMode = _settings.DeveloperMode;
         
         CurrentPageSize = _settings.PageSize;
+
+        CanEdit = false;
+        
         CurrentPage = 1;
     }
 }

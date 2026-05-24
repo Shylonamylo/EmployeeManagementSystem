@@ -22,7 +22,10 @@ public partial class PositionViewModel : ViewModelBase
     
     [ObservableProperty] private bool _developerMode;
     
+    [ObservableProperty] private bool _canEdit;
+    
     [ObservableProperty] private ObservableCollection<Position> _positions;
+    [ObservableProperty] private Position _selectedPosition;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
@@ -60,7 +63,19 @@ public partial class PositionViewModel : ViewModelBase
     {
         GetPositions(value);
     }
-    
+
+    partial void OnSelectedPositionChanged(Position value)
+    {
+        if (value != null)
+        {
+            CanEdit=true;
+        }
+        else
+        {
+            CanEdit=false;
+        }
+    }
+
     private void GetPositions(int value)
     {
         using (var repo = _serviceProvider.GetRequiredService<PositionRepository>())
@@ -105,6 +120,8 @@ public partial class PositionViewModel : ViewModelBase
         CurrentPageSize = _settings.PageSize;
         
         CurrentPage = 1;
+
+        CanEdit = false;
     }
     
 }
