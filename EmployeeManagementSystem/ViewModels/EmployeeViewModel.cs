@@ -49,7 +49,11 @@ public partial class EmployeeViewModel : ViewModelBase
     {
         if (value != null)
         {
-            CanEdit=true;
+            CanEdit = true;
+        }
+        else
+        {
+            CanEdit = false;
         }
     }
 
@@ -65,7 +69,7 @@ public partial class EmployeeViewModel : ViewModelBase
             
             MaxPageText = $"Из {NewMaxPage}";
             
-            _currentPage = Math.Clamp(value, 1, repo.GetCount());
+            _currentPage = Math.Clamp(value, 1, NewMaxPage);
             
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {

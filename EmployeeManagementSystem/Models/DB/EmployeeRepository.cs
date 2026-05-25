@@ -175,7 +175,27 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public override bool Update(Employee item)
     {
-        throw new System.NotImplementedException();
+        string sql = "UPDATE EmployeeManagementSystem.Employee SET PositionId=@positionId, Salary=@salary, FullName=@fullName, BirthDate=@birthDate, HireDate=@hireDate WHERE Id=@id";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@positionId", item.PositionId);
+                mc.Parameters.AddWithValue("@salary", item.Salary);
+                mc.Parameters.AddWithValue("@fullName", item.FullName);
+                mc.Parameters.AddWithValue("@birthDate", item.BirthDate);
+                mc.Parameters.AddWithValue("@hireDate", item.HireDate);
+                mc.Parameters.AddWithValue("@id", item.Id);
+                
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Add(Employee item)

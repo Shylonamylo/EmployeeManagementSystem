@@ -122,7 +122,23 @@ public class PositionRepository : BaseRepository<Position>, IDisposable
 
     public override bool Update(Position item)
     {
-        throw new NotImplementedException();
+        string sql = "UPDATE EmployeeManagementSystem.`Position` SET Title=@title WHERE Id=@id";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@title", item.Title);
+                mc.Parameters.AddWithValue("@id", item.Id);
+                
+                mc.ExecuteNonQuery(); 
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Add(Position item)

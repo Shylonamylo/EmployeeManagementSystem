@@ -8,7 +8,7 @@ public class Bonus : DBObj
     public int EmployeeId { get; set; }
     public DateOnly AppointmentDate { get; set; }
     public decimal AdditionalSalary { get; set; }
-    public int SalaryId { get; set; }
+    public int SalaryId { get; set; } = -1;
     
     public Employee Employee { get; set; }
     public Salary Salary { get; set; }

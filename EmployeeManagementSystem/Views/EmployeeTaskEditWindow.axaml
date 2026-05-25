@@ -20,7 +20,7 @@
                 <Button Grid.Row="2" Grid.Column="2" Content="Выбрать" Command="{Binding OpenEmployeeSelectorCommand}"></Button>
                 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Срочность: "></TextBlock>
-                <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding UrgencyList}">
+                <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding UrgencyList}" SelectedItem="{Binding SelectedUrgency}">
                         <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                         <TextBlock Text="{Binding Title}"></TextBlock>

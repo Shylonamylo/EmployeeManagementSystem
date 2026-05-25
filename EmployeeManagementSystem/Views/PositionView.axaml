@@ -12,7 +12,7 @@
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
         
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <DataGrid ItemsSource="{Binding Positions}">
+            <DataGrid ItemsSource="{Binding Positions}" SelectedItem="{Binding SelectedPosition}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер должности" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Название должности" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>

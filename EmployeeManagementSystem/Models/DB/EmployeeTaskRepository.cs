@@ -30,7 +30,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Goal = reader.GetString("Title"),
+                            Title = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),
@@ -90,7 +90,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Goal = reader.GetString("Title"),
+                            Title = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),
@@ -142,7 +142,29 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override bool Update(EmployeeTask item)
     {
-        throw new System.NotImplementedException();
+        string sql = "UPDATE EmployeeManagementSystem.Task SET Title=@title, Description=@description, EmployeeId=@employeeId, UrgencyId=@urgencyId, StartDate=@startDate, EndDate=@endDate, IsDone=@isDone WHERE Id=@id";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@title", item.Title);
+                mc.Parameters.AddWithValue("@description", item.Description);
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@urgencyId", item.UrgencyId);
+                mc.Parameters.AddWithValue("@startDate", item.StartDate);
+                mc.Parameters.AddWithValue("@endDate", item.EndDate);
+                mc.Parameters.AddWithValue("@isDone", item.IsDone);
+                mc.Parameters.AddWithValue("@id", item.Id);
+
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Add(EmployeeTask item)
@@ -152,7 +174,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
         {
             using (var mc = new MySqlCommand(sql, connection))
             {
-                mc.Parameters.AddWithValue("@title", item.Goal);
+                mc.Parameters.AddWithValue("@title", item.Title);
                 mc.Parameters.AddWithValue("@description", item.Description);
                 mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
                 mc.Parameters.AddWithValue("@urgencyId", item.UrgencyId);
@@ -217,7 +239,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
                         result.Add(new EmployeeTask()
                         {
                             Id = reader.GetInt32("Id"),
-                            Goal = reader.GetString("Title"),
+                            Title = reader.GetString("Title"),
                             Description = reader.GetString("Description"),
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             UrgencyId = reader.GetInt32("UrgencyId"),

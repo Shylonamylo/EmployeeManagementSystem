@@ -22,7 +22,10 @@ public partial class EmployeeTaskViewModel : ViewModelBase
     
     [ObservableProperty] private bool _developerMode;
     
+    [ObservableProperty] private bool _canEdit;
+    
     [ObservableProperty] private ObservableCollection<EmployeeTask> _tasks;
+    [ObservableProperty] private EmployeeTask _selectedTask;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
@@ -39,13 +42,31 @@ public partial class EmployeeTaskViewModel : ViewModelBase
         GetTasks(value);
     }
 
+    partial void OnSelectedTaskChanged(EmployeeTask value)
+    {
+        if (value != null)
+        {
+            CanEdit = true;
+        }
+        else
+        {
+            CanEdit = false;
+        }
+    }
+
     private void GetTasks(int value)
     {
         using (var repo = _serviceProvider.GetRequiredService<EmployeeTaskRepository>())
         {
             MaxPage = repo.GetCount();
-            MaxPageText = $"Из {(MaxPage/CurrentPageSize)+1}";
-            _currentPage = Math.Clamp(value, 1, (int)(MaxPage/CurrentPageSize)+1);
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : MaxPage / CurrentPageSize + 1);
+            
+            MaxPageText = $"Из {NewMaxPage}";
+            
+            _currentPage = Math.Clamp(value, 1, NewMaxPage);
+            
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
                 Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
@@ -67,9 +88,10 @@ public partial class EmployeeTaskViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    private async Task OpenEditWindow(Employee? item = null)
+    private async Task OpenEditWindow(EmployeeTask? item = null)
     {
         EmployeeTaskEditWindowViewModel vm;
+        
         if (item == null)
         {
             vm = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindowViewModel>(_serviceProvider);

@@ -32,21 +32,24 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
     [RelayCommand]
     private void Save()
     {
-        if (_edit)
+        Employee employee = new();
+        
+        employee.Id = _employee.Id;
+        employee.FullName = FullName;
+        employee.Salary = Salary;
+        employee.BirthDate = new DateOnly(BirthDate.Year, BirthDate.Month, BirthDate.Day);
+        employee.HireDate = new DateOnly(HireDate.Year, HireDate.Month, HireDate.Day);
+        employee.PositionId = SelectedPosition.Id;
+        
+        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
         {
-            
-        }
-        else
-        {
-            _employee.FullName = _fullName;
-            _employee.Salary = _salary;
-            _employee.BirthDate = new DateOnly(_birthDate.Year, _birthDate.Month, _birthDate.Day);
-            _employee.HireDate = new DateOnly(_hireDate.Year, _hireDate.Month, _hireDate.Day);
-            _employee.PositionId = _selectedPosition.Id;
-            
-            using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+            if (_edit)
             {
-                repo.Add(_employee);
+                repo.Update(employee);
+            }
+            else
+            {
+                repo.Add(employee);
             }
         }
         
@@ -112,7 +115,7 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
 
         _employee = employee;
-        
+         
         FullName = employee.FullName;
         Salary = employee.Salary;
         BirthDate = new DateTimeOffset(employee.BirthDate, TimeOnly.FromDateTime(DateTime.Now), TimeSpan.Zero);

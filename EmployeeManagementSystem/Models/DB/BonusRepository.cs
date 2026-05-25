@@ -171,7 +171,29 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
 
     public override bool Update(Bonus item)
     {
-        throw new NotImplementedException();
+        string sql = "UPDATE EmployeeManagementSystem.Bonus SET Reason=@reason, EmployeeId=@employeeId, AppointmentDate=@appointmentDate, AdditionalSalary=@additionalSalary, SalaryId=@salaryId WHERE Id=@id";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@id", item.Id);
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@appointmentDate", item.AppointmentDate);
+                mc.Parameters.AddWithValue("@additionalSalary", item.AdditionalSalary);
+                mc.Parameters.AddWithValue("@salaryId", item.SalaryId);
+
+                mc.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            
+            return false;
+        }
     }
 
     public override bool Add(Bonus item)

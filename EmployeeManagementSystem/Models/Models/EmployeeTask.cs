@@ -4,7 +4,7 @@ namespace AvaloniaApplication14_Inventory_300326.Models.Models;
 
 public class EmployeeTask : DBObj
 {
-    public string Goal { get; set; }
+    public string Title { get; set; }
     public string Description { get; set; }
     public int EmployeeId { get; set; }
     public int UrgencyId { get; set; }

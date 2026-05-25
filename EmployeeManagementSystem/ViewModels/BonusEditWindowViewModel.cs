@@ -30,21 +30,20 @@ public partial class BonusEditWindowViewModel : ViewModelBase
     {
         using (var repo = _serviceProvider.GetService<BonusRepository>())
         {
+            var bonus = new Bonus();
+            
+            bonus.Reason = _reason;
+            bonus.AppointmentDate = new DateOnly(AppointmentDate.Year, AppointmentDate.Month, AppointmentDate.Day);
+            bonus.AdditionalSalary = _additionalSalary;
+            bonus.EmployeeId = _selectedEmployee.Id;
+            bonus.SalaryId = 0;
             if (_edit)
             {
-            
+                repo.Update(bonus);
             }
             else
             {
-                _bonus = new Bonus();
-            
-                _bonus.Reason = _reason;
-                _bonus.AppointmentDate = new DateOnly(AppointmentDate.Year, AppointmentDate.Month, AppointmentDate.Day);
-                _bonus.AdditionalSalary = _additionalSalary;
-                _bonus.EmployeeId = _selectedEmployee.Id;
-                _bonus.SalaryId = 0;
-                
-                repo.Add(_bonus);
+                repo.Add(bonus);
             }
         }
         
@@ -108,6 +107,9 @@ public partial class BonusEditWindowViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         
         _edit = true;
+        
+        _bonus = bonus;
+        
         AppointmentDate = DateTimeOffset.Parse(bonus.AppointmentDate.ToString());
         Reason = bonus.Reason;
         SelectedEmployee = bonus.Employee;

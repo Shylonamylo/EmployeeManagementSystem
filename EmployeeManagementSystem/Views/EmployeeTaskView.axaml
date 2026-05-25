@@ -12,10 +12,10 @@
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
         
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
-            <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedTask}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер задачи" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Задача" Binding="{Binding Goal}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Задача" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
@@ -27,7 +27,10 @@
             </DataGrid>
         </ScrollViewer>
         
-        <Button Grid.Row="2" Grid.Column="0" Content="Добавить" Command="{Binding OpenEditWindowCommand}" VerticalAlignment="Bottom"></Button>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+            <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}" VerticalAlignment="Bottom"></Button>
+            <Button Content="Редактировать" Command="{Binding OpenEditWindowCommand}" CommandParameter="{Binding SelectedTask}" IsEnabled="{Binding CanEdit}" VerticalAlignment="Bottom"></Button>
+        </StackPanel>
         
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>

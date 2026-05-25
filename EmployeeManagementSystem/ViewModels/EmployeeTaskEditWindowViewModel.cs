@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -17,7 +18,7 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     
     EmployeeTaskEditWindow _currentWindow;
 
-    private EmployeeTask _task = new();
+    private EmployeeTask _task;
 
     private bool _edit;
 
@@ -25,7 +26,7 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     [ObservableProperty] private string _taskDescription;
     
     [ObservableProperty] private Urgency _selectedUrgency;
-    [ObservableProperty] private ObservableCollection<Urgency> _urgencyList = new();
+    [ObservableProperty] private ObservableCollection<Urgency> _urgencyList;
     
     [ObservableProperty] private Employee _selectedEmployee;
     
@@ -36,25 +37,31 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     [RelayCommand]
     private void Save()
     {
-        if (_edit)
+        EmployeeTask task = new();
+        
+        task.Id = _task.Id;
+        task.Title = TaskGoal;
+        task.Description = TaskDescription;
+        
+        task.UrgencyId = SelectedUrgency.Id;
+        task.EmployeeId = SelectedEmployee.Id;
+        
+        task.StartDate = DateTime.Now;
+        task.EndDate = DeadLine.DateTime;
+        task.IsDone = IsDone;
+        
+        
+        using (var repo = _serviceProvider.GetService<EmployeeTaskRepository>())
         {
-            
-        }
-        else
-        {
-            _task.Goal = TaskGoal;
-            _task.Description = TaskDescription;
-            _task.Urgency = SelectedUrgency;
-            _task.StartDate = DateTime.Now;
-            _task.EndDate = DeadLine.DateTime;
-            _task.IsDone = IsDone;
-            
-            using (var repo = _serviceProvider.GetService<EmployeeTaskRepository>())
+            if (_edit)
             {
-                repo.Add(_task);
+                repo.Update(task);
+            }
+            else
+            {
+                repo.Add(task);
             }
         }
-        
         _currentWindow.Close();
     }
 
@@ -104,14 +111,17 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
         {
             items1 = repo.GetAll();
         }
+        
         SelectedEmployee = items1[0];
         
-        List <Urgency> items2 = new();
         using (var repo = _serviceProvider.GetService<UrgencyRepository>())
         {
-            items2 = repo.GetAll();
+            UrgencyList = new ObservableCollection<Urgency>(repo.GetAll());
         }
-        SelectedUrgency = items2[0];
+        
+        SelectedUrgency = UrgencyList[0];
+
+        _task = new();
         
         _edit = false;
     }
@@ -120,11 +130,21 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         
+        using (var repo = _serviceProvider.GetService<UrgencyRepository>())
+        {
+            UrgencyList = new ObservableCollection<Urgency>(repo.GetAll());
+        }
+        
         DeadLine = new DateTimeOffset(task.EndDate);
-        SelectedUrgency = task.Urgency;
-        TaskGoal = task.Goal;
+        TaskGoal = task.Title;
         TaskDescription = task.Description;
         IsDone = task.IsDone;
+
+        SelectedUrgency = UrgencyList.FirstOrDefault();
+        
+        SelectedEmployee = task.Employee;
+        
+        _task = task;
 
         _edit = true;
     }
@@ -132,10 +152,5 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     public void SetWindow(EmployeeTaskEditWindow window)
     {
         _currentWindow = window;
-        
-        using (var repo = _serviceProvider.GetService<UrgencyRepository>())
-        {
-            UrgencyList = new ObservableCollection<Urgency>(repo.GetAll());
-        }
     }
 }
