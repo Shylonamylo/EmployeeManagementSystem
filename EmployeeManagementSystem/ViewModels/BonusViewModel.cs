@@ -110,6 +110,18 @@ public partial class BonusViewModel : ViewModelBase
         
         await win.ShowDialog(_mainWindow);
     }
+
+    [RelayCommand]
+    private void Remove()
+    {
+        if (SelectedBonus != null)
+        {
+            using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+            {
+                repo.Delete(SelectedBonus.Id);
+            }
+        }
+    }
     public BonusViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
         _mainWindow = mainWindow;

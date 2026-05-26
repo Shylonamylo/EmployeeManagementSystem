@@ -166,7 +166,22 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
 
     public override bool Delete(int id)
     {
-        throw new NotImplementedException();
+        string sql = "DELETE FROM EmployeeManagementSystem.Bonus WHERE Id=@id";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@id", id);
+
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Update(Bonus item)

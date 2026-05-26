@@ -6,7 +6,10 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EmployeeManagementSystem.Views.EmployeeTaskEditWindow"
         Title="EmployeeTaskEditWindow"
-        x:DataType="viewModels:EmployeeTaskEditWindowViewModel">
+        x:DataType="viewModels:EmployeeTaskEditWindowViewModel"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+        
         <Grid RowDefinitions="Auto Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
                 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Задача"></TextBlock>

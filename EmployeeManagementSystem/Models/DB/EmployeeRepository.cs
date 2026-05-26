@@ -225,6 +225,7 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public void Dispose()
     {
+        CloseConnection();
         base.Dispose();
     }
 }

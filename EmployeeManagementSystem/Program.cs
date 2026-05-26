@@ -31,7 +31,6 @@ sealed class Program
                 s.AddTransient<BonusRepository>();
                 s.AddTransient<SalaryRepository>();
                 s.AddTransient<PositionRepository>();
-                s.AddTransient<UrgencyRepository>();
                 
                 
                 s.AddSingleton<Settings>();

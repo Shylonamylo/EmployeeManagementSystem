@@ -209,4 +209,9 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
         }
         return null;
     }
+
+    public void Dispose()
+    {
+        base.Dispose();
+    }
 }
