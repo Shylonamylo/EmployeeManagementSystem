@@ -10,12 +10,13 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner">
         
-        <Grid RowDefinitions="Auto *" ColumnDefinitions="Auto *">
+        <Grid RowDefinitions="Auto *" ColumnDefinitions="Auto Auto *">
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Название"></TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}"></TextBox>
                 
-                <Button Grid.Row="1" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
+                <Button Grid.Row="1" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="5,0,5,10"></Button>
                 <Button Grid.Row="1" Grid.Column="1" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
+                <Button Grid.Row="1" Grid.Column="2" Content="Удалить" HorizontalAlignment="Center" Command="{Binding DeleteCommand}" Margin="0,0,5,10"></Button>
         </Grid>
         
 </Window>

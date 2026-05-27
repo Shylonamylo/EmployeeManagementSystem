@@ -222,7 +222,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
 
     public override List<EmployeeTask>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT t.Id, t.Title, t.IsDone, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id LIMIT @limit OFFSET @offset";
+        string sql = "SELECT t.Id, t.Title, t.IsDone, t.Description, t.EmployeeId, t.UrgencyId, t.StartDate, t.EndDate, e.BirthDate, e.FullName, e.Fired, e.HireDate, e.PositionId, e.Salary, u.Title as UrgencyTitle, p.Title as PositionTitle FROM EmployeeManagementSystem.Task t  JOIN EmployeeManagementSystem.Employee e ON t.EmployeeId = e.Id JOIN EmployeeManagementSystem.Urgency u ON t.UrgencyId = u.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id LIMIT @limit OFFSET @offset";
 
         List <EmployeeTask> result = new();
         
@@ -253,6 +253,7 @@ public class EmployeeTaskRepository : BaseRepository<EmployeeTask>, IDisposable
                                 HireDate = reader.GetDateOnly("HireDate"),
                                 PositionId = reader.GetInt32("PositionId"),
                                 Salary = reader.GetDecimal("Salary"),
+                                Fired = reader.GetBoolean("Fired"),
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("PositionId"),

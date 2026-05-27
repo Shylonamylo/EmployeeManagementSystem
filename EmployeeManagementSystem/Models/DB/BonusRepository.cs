@@ -118,6 +118,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                 PositionId = reader.GetInt32("EmployeePositionId"),
                                 FullName = reader.GetString("EmployeeFullName"),
                                 Salary = reader.GetDecimal("Salary"),
+                                Fired = reader.GetBoolean("EmployeeFired"),
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
@@ -138,6 +139,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                     PositionId = reader.GetInt32("EmployeePositionId"),
                                     FullName = reader.GetString("EmployeeFullName"),
                                     Salary = reader.GetDecimal("Salary"),
+                                    Fired = reader.GetBoolean("EmployeeFired"),
                                     EmployeePosition = new Position()
                                     {
                                         Id = reader.GetInt32("EmployeePositionId"),
@@ -263,7 +265,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
 
     public override List<Bonus>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT b.Id, b.Reason, b.EmployeeId, b.AppointmentDate, b.AdditionalSalary, b.SalaryId,  e.FullName as EmployeeFullName, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle, s.Summ as SalarySumm, s.AppointmentDate as SalaryAppointmentDate FROM EmployeeManagementSystem.Bonus b JOIN EmployeeManagementSystem.`Employee` e ON e.Id = b.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId JOIN EmployeeManagementSystem.`Salary` s ON s.Id  = b.SalaryId LIMIT @limit OFFSET @offset";
+        string sql = "SELECT b.Id, b.Reason, b.EmployeeId, b.AppointmentDate, b.AdditionalSalary, b.SalaryId,  e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle, s.Summ as SalarySumm, s.AppointmentDate as SalaryAppointmentDate FROM EmployeeManagementSystem.Bonus b JOIN EmployeeManagementSystem.`Employee` e ON e.Id = b.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId JOIN EmployeeManagementSystem.`Salary` s ON s.Id  = b.SalaryId LIMIT @limit OFFSET @offset";
         
         List<Bonus> result = new List<Bonus>();
 
@@ -293,6 +295,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                 PositionId = reader.GetInt32("EmployeePositionId"),
                                 FullName = reader.GetString("EmployeeFullName"),
                                 Salary = reader.GetDecimal("EmployeeSalary"),
+                                Fired = reader.GetBoolean("EmployeeFired"),
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
@@ -313,6 +316,7 @@ public class BonusRepository : BaseRepository<Bonus>, IDisposable
                                     PositionId = reader.GetInt32("EmployeePositionId"),
                                     FullName = reader.GetString("EmployeeFullName"),
                                     Salary = reader.GetDecimal("EmployeeSalary"),
+                                    Fired = reader.GetBoolean("EmployeeFired"),
                                     EmployeePosition = new Position()
                                     {
                                         Id = reader.GetInt32("EmployeePositionId"),

@@ -25,6 +25,8 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
     [ObservableProperty] private decimal _salary;
     [ObservableProperty] private DateTimeOffset _birthDate;
     [ObservableProperty] private DateTimeOffset _hireDate;
+
+    [ObservableProperty] private bool _fired;
     
     [ObservableProperty] private ObservableCollection<Position> _positions;
     [ObservableProperty] private Position _selectedPosition;
@@ -40,6 +42,7 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         employee.BirthDate = new DateOnly(BirthDate.Year, BirthDate.Month, BirthDate.Day);
         employee.HireDate = new DateOnly(HireDate.Year, HireDate.Month, HireDate.Day);
         employee.PositionId = SelectedPosition.Id;
+        employee.Fired = Fired;
         
         using (var repo = _serviceProvider.GetService<EmployeeRepository>())
         {

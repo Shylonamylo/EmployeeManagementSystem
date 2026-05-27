@@ -73,13 +73,12 @@ public partial class EmployeeViewModel : ViewModelBase
             
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                Employees = new ObservableCollection<Employee>(repo.GetPage(CurrentPageSize, CurrentPage-1));
+                Employees = new ObservableCollection<Employee>(repo.GetPageFired(CurrentPageSize, CurrentPage-1, DeveloperMode));
             }
             else
             {
-                Employees = new ObservableCollection<Employee>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1,SearchString));
+                Employees = new ObservableCollection<Employee>(repo.GetPageWithSearchFired(CurrentPageSize, CurrentPage-1, SearchString, DeveloperMode));
             }
-            
         }
     }
 

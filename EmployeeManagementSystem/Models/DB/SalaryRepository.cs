@@ -161,7 +161,7 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
 
     public override List<Salary>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT s.Id, s.Summ, s.EmployeeId, s.AppointmentDate, e.FullName as EmployeeFullName, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle FROM EmployeeManagementSystem.`Salary` s JOIN EmployeeManagementSystem.`Employee` e ON e.Id = s.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 LIMIT @limit OFFSET @offset";
+        string sql = "SELECT s.Id, s.Summ, s.EmployeeId, s.AppointmentDate, e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle FROM EmployeeManagementSystem.`Salary` s JOIN EmployeeManagementSystem.`Employee` e ON e.Id = s.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 LIMIT @limit OFFSET @offset";
         
         List<Salary> result = new();
 
@@ -189,6 +189,7 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
                                 HireDate = reader.GetDateOnly("EmployeeHireDate"),
                                 PositionId = reader.GetInt32("EmployeePositionId"),
                                 Salary = reader.GetDecimal("EmployeeSalary"),
+                                Fired = reader.GetBoolean("EmployeeFired"),
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),

@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
         
-        <Grid RowDefinitions="Auto Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
+        <Grid RowDefinitions="Auto Auto Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
                 <Label Grid.Row="0" Grid.Column="0" Content="ФИО" Margin="5,10,10,10"></Label>
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding FullName}" HorizontalAlignment="Left" Width="300" Margin="0,10,5,10"></TextBox>
                 
@@ -27,8 +27,11 @@
                 <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedPosition.Title}"></Label>
                 <Button Grid.Row="4" Grid.Column="2" Content="Выбрать" Command="{Binding OpenPositionSelectorCommand}"></Button>
                 
-                <Button Grid.Row="5" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
-                <Button Grid.Row="5" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
+                <Label Grid.Row="5" Grid.Column="0" Content="Уволен: "></Label>
+                <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding Fired}"></CheckBox>
+                
+                <Button Grid.Row="6" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
+                <Button Grid.Row="6" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
         </Grid>
         
 </Window>

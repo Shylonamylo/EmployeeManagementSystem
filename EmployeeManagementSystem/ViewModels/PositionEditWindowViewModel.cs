@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia.Models;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -28,7 +33,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         {
             if (_isEdit)
             { 
-                repo.Update(_position);   
+                repo.Update(_position);
             }
             else
             {
@@ -42,6 +47,49 @@ public partial class PositionEditWindowViewModel : ViewModelBase
     private void Cancel()
     {
         _currentWindow.Close();
+    }
+
+    [RelayCommand]
+    private async Task Delete()
+    {
+        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+        {
+            var EmployeesWithCurrentPosition = repo.GetEmployeesByPositionId(_position.Id);
+            if (EmployeesWithCurrentPosition.Count != 0)
+            {
+                await MessageBoxManager.GetMessageBoxStandard("Невозможно удалить", "На этой должности находятся работники, смените их должности для удаления", ButtonEnum.Ok, Icon.Error).ShowWindowDialogAsync(_currentWindow);
+                var win = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams()
+                {
+                    ButtonDefinitions = new ButtonDefinition[2]{new ButtonDefinition(){IsCancel = false, IsDefault = false, Name = "Да"}, new ButtonDefinition(){IsCancel = true, IsDefault = true, Name = "Нет"}},
+                    CanResize = true,
+                    CloseOnClickAway = true,
+                    ContentHeader = "",
+                    ContentMessage = "Программа может сама сменить должности необходимых работников на 'Не назначено'. \n Переназначить?",
+                    ContentTitle = "Возможное решение"
+                });
+                var result = await win.ShowWindowDialogAsync(_currentWindow);
+                //var result = await MessageBoxManager.GetMessageBoxStandard("Возможное решение", "Программа может сама сменить должности необходимых работников на 'Не назначено'. \n Переназначить?", ButtonEnum.YesNo, Icon.Info).ShowWindowDialogAsync(_currentWindow);
+                if (result=="Да")
+                {
+                    EmployeesWithCurrentPosition.ForEach(a =>
+                    {
+                        Employee employee = new(a);
+                        
+                        employee.PositionId = -1;
+                        
+                        repo.Update(employee);
+                    });
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+        using (var repo = _serviceProvider.GetService<PositionRepository>())
+        {
+            Console.WriteLine("УСПЕХ!!!");
+        }
     }
     
     public PositionEditWindowViewModel(IServiceProvider serviceProvider)

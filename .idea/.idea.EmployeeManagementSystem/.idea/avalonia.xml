@@ -22,6 +22,7 @@
         <entry key="EmployeeManagementSystem/Views/SettingsView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/TaskEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/TasksView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/YesNoWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
       </map>
     </option>
   </component>
