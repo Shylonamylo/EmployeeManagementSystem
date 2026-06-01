@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
@@ -6,11 +6,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
+using EmployeeManagementSystem.Views.EditViews;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
 
-public partial class EmployeeTaskViewModel : ViewModelBase
+public partial class DayOffViewModel : ViewModelBase
 {
     private IServiceProvider _serviceProvider;
     
@@ -22,10 +23,10 @@ public partial class EmployeeTaskViewModel : ViewModelBase
     
     [ObservableProperty] private bool _developerMode;
     
+    [ObservableProperty] private ObservableCollection<DayOff> _dayOffs;
+    [ObservableProperty] private Penalty _selectedDayOff;
+
     [ObservableProperty] private bool _canEdit;
-    
-    [ObservableProperty] private ObservableCollection<EmployeeTask> _tasks;
-    [ObservableProperty] private EmployeeTask _selectedTask;
     
     [ObservableProperty] private int _currentPage;
     [ObservableProperty] private int _maxPage;
@@ -34,15 +35,18 @@ public partial class EmployeeTaskViewModel : ViewModelBase
 
     partial void OnSearchStringChanged(string? oldValue, string newValue)
     {
-        GetTasks(CurrentPage);
+        GetDayOffs(CurrentPage);
     }
-    
     partial void OnCurrentPageChanged(int value)
     {
-        GetTasks(value);
+        GetDayOffs(value);
+    }
+    partial void OnCurrentPageSizeChanged(int newValue, int oldValue)
+    {
+        GetDayOffs(CurrentPage);
     }
 
-    partial void OnSelectedTaskChanged(EmployeeTask value)
+    partial void OnSelectedDayOffChanged(Penalty value)
     {
         if (value != null)
         {
@@ -54,12 +58,15 @@ public partial class EmployeeTaskViewModel : ViewModelBase
         }
     }
 
-    private void GetTasks(int value)
+    private void GetDayOffs(int value)
     {
-        using (var repo = _serviceProvider.GetRequiredService<EmployeeTaskRepository>())
+        using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
         {
             MaxPage = repo.GetCount();
-            int NewMaxPage = (MaxPage % CurrentPageSize == 0
+            
+            int NewMaxPage = MaxPage==0?(MaxPage % CurrentPageSize == 0
+                ? MaxPage / CurrentPageSize
+                : MaxPage / CurrentPageSize + 1)+1:(MaxPage % CurrentPageSize == 0
                 ? MaxPage / CurrentPageSize
                 : MaxPage / CurrentPageSize + 1);
             
@@ -69,15 +76,15 @@ public partial class EmployeeTaskViewModel : ViewModelBase
             
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {
-                Tasks = new ObservableCollection<EmployeeTask>(repo.GetPage(CurrentPageSize,CurrentPage-1));
+                DayOffs = new ObservableCollection<DayOff>(repo.GetPage(CurrentPageSize, CurrentPage-1));
             }
             else
             {
-                Tasks = new ObservableCollection<EmployeeTask>(repo.GetPageWithSearch(CurrentPageSize,CurrentPage-1, SearchString));
+                DayOffs = new ObservableCollection<DayOff>(repo.GetPageWithSearch(CurrentPageSize, CurrentPage-1, SearchString));
             }
         }
     }
-    
+
     [RelayCommand]
     private void ChangePage(string value)
     {
@@ -88,39 +95,43 @@ public partial class EmployeeTaskViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    private async Task OpenEditWindow(EmployeeTask? item = null)
+    private async Task OpenEditWindow(Penalty? item = null)
     {
-        EmployeeTaskEditWindowViewModel vm;
-        
+        DayOffEditWindowViewModel vm;
         if (item == null)
         {
-            vm = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindowViewModel>(_serviceProvider);
+            vm = ActivatorUtilities.CreateInstance<DayOffEditWindowViewModel>(_serviceProvider);
         }
         else
         {
-            vm = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindowViewModel>(_serviceProvider, item);
+            vm = ActivatorUtilities.CreateInstance<DayOffEditWindowViewModel>(_serviceProvider, item);
         }
-    
-        var win = ActivatorUtilities.CreateInstance<EmployeeTaskEditWindow>(_serviceProvider, vm);
+
+        var win = ActivatorUtilities.CreateInstance<DayOffEditWindow>(_serviceProvider, vm);
         
         win.Closed += (s, e) =>
         {
-            GetTasks(CurrentPage);
+            GetDayOffs(CurrentPage);
         };
         
         await win.ShowDialog(_mainWindow);
     }
     
-    public EmployeeTaskViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
+    public DayOffViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
+        _serviceProvider = serviceProvider;
+        
         _mainWindow = mainWindow;
         
         _settings = serviceProvider.GetRequiredService<Settings>();
+        
         DeveloperMode = _settings.DeveloperMode;
         
-        _serviceProvider = serviceProvider;
-
         CurrentPageSize = _settings.PageSize;
+
+        CanEdit = false;
+        
         CurrentPage = 1;
     }
+    
 }

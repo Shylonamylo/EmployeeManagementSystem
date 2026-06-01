@@ -28,4 +28,55 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
         <PackageReference Include="MySqlConnector" Version="2.5.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\EditViews\BonusEditWindow.axaml.cs">
+        <DependentUpon>BonusEditWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EditViews\EmployeeEditWindow.axaml.cs">
+        <DependentUpon>EmployeeEditWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EditViews\EmployeeTaskEditWindow.axaml.cs">
+        <DependentUpon>EmployeeTaskEditWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EditViews\PositionEditWindow.axaml.cs">
+        <DependentUpon>PositionEditWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\EmployeeTaskView.axaml.cs">
+        <DependentUpon>EmployeeTaskView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\BonusView.axaml.cs">
+        <DependentUpon>BonusView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\EmployeeView.axaml.cs">
+        <DependentUpon>EmployeeView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\PositionView.axaml.cs">
+        <DependentUpon>PositionView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\SalaryView.axaml.cs">
+        <DependentUpon>SalaryView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MainViews\SettingsView.axaml.cs">
+        <DependentUpon>SettingsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\AuxiliaryViews\EmployeeSelectorWindow.axaml.cs">
+        <DependentUpon>EmployeeSelectorWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\AuxiliaryViews\PositionSelectorWindow.axaml.cs">
+        <DependentUpon>PositionSelectorWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

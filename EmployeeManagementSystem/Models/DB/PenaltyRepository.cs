@@ -85,7 +85,28 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
 
     public override int GetCount()
     {
-        throw new System.NotImplementedException();
+        string sql = "SELECT count(p.ID) as Result FROM EmployeeManagementSystem.Penalty p ";
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return reader.GetInt32("Result");
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return -1;
+        }
+
+        return -1;
     }
 
     public override List<Penalty>? GetPage(int pageSize, int pageNumber)
