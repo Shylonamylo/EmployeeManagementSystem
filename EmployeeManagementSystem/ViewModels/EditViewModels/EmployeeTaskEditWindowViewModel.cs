@@ -107,6 +107,7 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         
         List<Employee> items1 = new();
+        
         using (var repo = _serviceProvider.GetService<EmployeeRepository>())
         {
             items1 = repo.GetAll();

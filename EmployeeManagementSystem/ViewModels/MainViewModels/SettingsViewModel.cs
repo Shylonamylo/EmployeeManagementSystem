@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -90,6 +91,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     public SettingsViewModel(IServiceProvider serviceProvider, MainWindow mainWindow)
     {
+        
         _mainWindow = mainWindow;
         
         _serviceProvider = serviceProvider;

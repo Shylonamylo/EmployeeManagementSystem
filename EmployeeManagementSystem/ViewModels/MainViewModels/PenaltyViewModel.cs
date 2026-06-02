@@ -10,7 +10,7 @@ using EmployeeManagementSystem.Views;
 using EmployeeManagementSystem.Views.EditViews;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PenaltyManagementSystem.ViewModels;
+namespace EmployeeManagementSystem.ViewModels;
 
 public partial class PenaltyViewModel : ViewModelBase
 {
@@ -68,6 +68,11 @@ public partial class PenaltyViewModel : ViewModelBase
             int NewMaxPage = (MaxPage % CurrentPageSize == 0
                 ? MaxPage / CurrentPageSize
                 : MaxPage / CurrentPageSize + 1);
+            
+            if (NewMaxPage == 0)
+            {
+                NewMaxPage = 1;
+            }
             
             MaxPageText = $"Из {NewMaxPage}";
             

@@ -46,7 +46,14 @@ public partial class SalaryViewModel : ViewModelBase
             int NewMaxPage = (MaxPage % CurrentPageSize == 0
                 ? MaxPage / CurrentPageSize
                 : MaxPage / CurrentPageSize + 1);
+            
+            if (NewMaxPage == 0)
+            {
+                NewMaxPage = 1;
+            }
+            
             MaxPageText = $"Из {NewMaxPage}";
+            
             _currentPage = Math.Clamp(value, 1, NewMaxPage);
             
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))

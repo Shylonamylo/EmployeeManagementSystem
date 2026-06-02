@@ -67,6 +67,11 @@ public partial class EmployeeViewModel : ViewModelBase
                 ? MaxPage / CurrentPageSize
                 : MaxPage / CurrentPageSize + 1);
             
+            if (NewMaxPage == 0)
+            {
+                NewMaxPage = 1;
+            }
+            
             MaxPageText = $"Из {NewMaxPage}";
             
             _currentPage = Math.Clamp(value, 1, NewMaxPage);

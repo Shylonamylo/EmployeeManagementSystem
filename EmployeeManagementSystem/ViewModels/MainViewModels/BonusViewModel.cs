@@ -62,11 +62,18 @@ public partial class BonusViewModel : ViewModelBase
         using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
         {
             MaxPage = repo.GetCount();
-            int newMaxPage = (MaxPage % CurrentPageSize == 0
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
                 ? MaxPage / CurrentPageSize
                 : (MaxPage / CurrentPageSize) + 1);
-            MaxPageText = $"Из {newMaxPage}";
-            _currentPage = Math.Clamp(value, 1, newMaxPage);
+            
+            if (NewMaxPage == 0)
+            {
+                NewMaxPage = 1;
+            }
+            
+            MaxPageText = $"Из {NewMaxPage}";
+            
+            _currentPage = Math.Clamp(value, 1, NewMaxPage);
             
             if (string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
             {

@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace EmployeeManagementSystem.Views.MainViews;
+namespace EmployeeManagementSystem.Views;
 
 public partial class DayOffView : UserControl
 {

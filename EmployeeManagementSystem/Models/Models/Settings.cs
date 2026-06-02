@@ -14,7 +14,7 @@ public class Settings
     public TaxSettings TaxSettings {get; set;}
     public bool DeveloperMode { get; set; }
     public int PageSize { get; set; }
-    
+
     public void LoadSettings()
     {
         try

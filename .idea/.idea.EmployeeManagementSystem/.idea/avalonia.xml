@@ -7,6 +7,7 @@
         <entry key="EmployeeManagementSystem/Views/BonusEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/EditViews/BonusEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EditViews/DayOffEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EditViews/EmployeeEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EditViews/PenaltyEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
@@ -17,7 +18,11 @@
         <entry key="EmployeeManagementSystem/Views/EmployeeTaskView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/EmployeeView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/MainViews/DayOffView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/MainViews/EmployeeTaskView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/MainViews/EmployeeView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/MainViews/PenaltyView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/MainViews/PositionView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/MainViews/SettingsView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/MainWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/PositionEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/PositionEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />

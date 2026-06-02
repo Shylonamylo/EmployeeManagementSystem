@@ -119,10 +119,11 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
         {
             using (var mc = new MySqlCommand(sql, connection))
             {
+                mc.Parameters.AddWithValue("@limit", pageSize);
+                mc.Parameters.AddWithValue("@offset", pageNumber*pageSize);
+                
                 using (var reader = mc.ExecuteReader())
                 {
-                    mc.Parameters.AddWithValue("@limit", pageSize);
-                    mc.Parameters.AddWithValue("@offset", pageNumber*pageSize);
                     
                     while (reader.Read())
                     {

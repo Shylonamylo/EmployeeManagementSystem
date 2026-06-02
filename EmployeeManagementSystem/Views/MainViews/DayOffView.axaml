@@ -4,9 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EmployeeManagementSystem.Views.MainViews.DayOffView"
+             x:Class="EmployeeManagementSystem.Views.DayOffView"
              x:DataType="viewModels:DayOffViewModel">
     
+            <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
+        
+            <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
             
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <DataGrid ItemsSource="{Binding DayOffs}" SelectedItem="{Binding SelectedDayOff}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Номер пропуска" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Дата пропуска" Binding="{Binding Date}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Причина" Binding="{Binding Reason}" IsReadOnly="True" MaxWidth="500"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+            
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}"></Button>
+                <Button Content="Редактировать" Command="{Binding OpenEditWindowCommand}" CommandParameter="{Binding SelectedDayOff}" IsEnabled="{Binding CanEdit}"></Button>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
+                <StackPanel>
+                    <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>
+                    <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center" Margin="10"></TextBlock>
+                </StackPanel>
+                <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
+            </StackPanel>
+        </Grid>
     
 </UserControl>

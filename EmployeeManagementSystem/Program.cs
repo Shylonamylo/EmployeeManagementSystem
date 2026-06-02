@@ -28,6 +28,7 @@ sealed class Program
                 
                 s.AddTransient<EmployeeRepository>();
                 s.AddTransient<EmployeeTaskRepository>();
+                s.AddTransient<UrgencyRepository>();
                 s.AddTransient<BonusRepository>();
                 s.AddTransient<SalaryRepository>();
                 s.AddTransient<PositionRepository>();

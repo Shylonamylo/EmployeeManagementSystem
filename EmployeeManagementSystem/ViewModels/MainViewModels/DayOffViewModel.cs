@@ -63,12 +63,15 @@ public partial class DayOffViewModel : ViewModelBase
         using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
         {
             MaxPage = repo.GetCount();
-            
-            int NewMaxPage = MaxPage==0?(MaxPage % CurrentPageSize == 0
-                ? MaxPage / CurrentPageSize
-                : MaxPage / CurrentPageSize + 1)+1:(MaxPage % CurrentPageSize == 0
+
+            int NewMaxPage = (MaxPage % CurrentPageSize == 0
                 ? MaxPage / CurrentPageSize
                 : MaxPage / CurrentPageSize + 1);
+
+            if (NewMaxPage == 0)
+            {
+                NewMaxPage = 1;
+            }
             
             MaxPageText = $"Из {NewMaxPage}";
             

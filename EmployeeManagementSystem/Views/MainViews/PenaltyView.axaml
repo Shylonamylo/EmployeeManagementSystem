@@ -3,9 +3,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
-             xmlns:viewModels1="clr-namespace:PenaltyManagementSystem.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EmployeeManagementSystem.Views.MainViews.PenaltyView"
-             x:DataType="viewModels1:PenaltyViewModel">
+             x:Class="EmployeeManagementSystem.Views.PenaltyView"
+             x:DataType="viewModels:PenaltyViewModel">
+    
+    <Grid RowDefinitions="Auto Auto *" ColumnDefinitions="* * *">
+        
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Watermark="Поиск записей" Margin="10" Text="{Binding SearchString}"></TextBox>
+        
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <DataGrid ItemsSource="{Binding Penalties}" SelectedItem="{Binding SelectedPenalty}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер штрафа" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Сумма штрафа" Binding="{Binding Summ}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Причина" Binding="{Binding Reason}" IsReadOnly="True" MaxWidth="500"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="Добавить" Command="{Binding OpenEditWindowCommand}"></Button>
+            <Button Content="Редактировать" Command="{Binding OpenEditWindowCommand}" CommandParameter="{Binding SelectedPenalty}" IsEnabled="{Binding CanEdit}"></Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
+            <StackPanel>
+                <TextBox Watermark="Страница" Text="{Binding CurrentPage}" TextAlignment="Center" HorizontalAlignment="Center" ></TextBox>
+                <TextBlock Text="{Binding MaxPageText}" HorizontalAlignment="Center" Margin="10"></TextBlock>
+            </StackPanel>
+            <Button Content="+" VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="1"></Button>
+        </StackPanel>
+    </Grid>
     
 </UserControl>

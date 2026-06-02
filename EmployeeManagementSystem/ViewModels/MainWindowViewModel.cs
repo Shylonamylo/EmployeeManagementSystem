@@ -8,7 +8,6 @@ using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
-using PenaltyManagementSystem.ViewModels;
 using Task = System.Threading.Tasks.Task;
 
 namespace EmployeeManagementSystem.ViewModels;

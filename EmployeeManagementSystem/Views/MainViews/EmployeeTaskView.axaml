@@ -15,8 +15,8 @@
             <DataGrid ItemsSource="{Binding Tasks}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedTask}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Номер задачи" Binding="{Binding Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Задача" Binding="{Binding Title}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Задача" Binding="{Binding Title}" IsReadOnly="True" MaxWidth="300"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True" MaxWidth="500"></DataGridTextColumn>
                     <DataGridTextColumn Header="Срочность" Binding="{Binding Urgency.Title}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Номер сотрудника" Binding="{Binding Employee.Id}" IsReadOnly="True" IsVisible="{Binding DeveloperMode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Назначенный сотрудник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
