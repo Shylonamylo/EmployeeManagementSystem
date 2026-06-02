@@ -72,7 +72,7 @@ public partial class DayOffEditWindowViewModel : ViewModelBase
             employees = repo.GetAll();
         }
         var vm = ActivatorUtilities.CreateInstance<EmployeeSelectorWindowViewModel>(_serviceProvider, employees);
-        var win = ActivatorUtilities.CreateInstance<PositionSelectorWindow>(_serviceProvider, vm);
+        var win = ActivatorUtilities.CreateInstance<EmployeeSelectorWindow>(_serviceProvider, vm);
         
         Employee result = new();
         

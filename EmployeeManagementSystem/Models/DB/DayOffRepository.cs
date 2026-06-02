@@ -74,12 +74,49 @@ public class DayOffRepository : BaseRepository<DayOff>, IDisposable
 
     public override bool Update(DayOff item)
     {
-        throw new NotImplementedException();
+        string sql = "UPDATE EmployeeManagementSystem.DayOff SET EmployeeId=@employeeId, `Date`=@date, Reason=@reason WHERE Id=@id";
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@date", item.Date);
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+                mc.Parameters.AddWithValue("@id", item.Id);
+                
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Add(DayOff item)
     {
-        throw new NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.DayOff (EmployeeId, `Date`, Reason) VALUES(@employeeId, @date, @reason)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@date", item.Date);
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+
+                mc.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override int GetCount()
@@ -143,7 +180,7 @@ public class DayOffRepository : BaseRepository<DayOff>, IDisposable
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
-                                    Title = reader.GetString("EmployeePositionTitle"),
+                                    Title = reader.GetString("PositionTitle"),
                                 } 
                             }
                             
@@ -195,7 +232,7 @@ public class DayOffRepository : BaseRepository<DayOff>, IDisposable
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
-                                    Title = reader.GetString("EmployeePositionTitle"),
+                                    Title = reader.GetString("PositionTitle"),
                                 } 
                             }
                         });

@@ -24,7 +24,7 @@ public partial class DayOffViewModel : ViewModelBase
     [ObservableProperty] private bool _developerMode;
     
     [ObservableProperty] private ObservableCollection<DayOff> _dayOffs;
-    [ObservableProperty] private Penalty _selectedDayOff;
+    [ObservableProperty] private DayOff _selectedDayOff;
 
     [ObservableProperty] private bool _canEdit;
     
@@ -46,7 +46,7 @@ public partial class DayOffViewModel : ViewModelBase
         GetDayOffs(CurrentPage);
     }
 
-    partial void OnSelectedDayOffChanged(Penalty value)
+    partial void OnSelectedDayOffChanged(DayOff value)
     {
         if (value != null)
         {
@@ -98,7 +98,7 @@ public partial class DayOffViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    private async Task OpenEditWindow(Penalty? item = null)
+    private async Task OpenEditWindow(DayOff? item = null)
     {
         DayOffEditWindowViewModel vm;
         if (item == null)
