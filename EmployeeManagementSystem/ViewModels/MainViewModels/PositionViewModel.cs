@@ -51,6 +51,7 @@ public partial class PositionViewModel : ViewModelBase
         {
             GetPositions(CurrentPage);
         };
+        
         await win.ShowDialog(_mainWindow);
     }
 

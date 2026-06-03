@@ -6,6 +6,27 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EmployeeManagementSystem.Views.EditViews.PenaltyEditWindow"
         Title="PenaltyEditWindow"
-        x:DataType="viewModels:PenaltyEditWindowViewModel">
+        x:DataType="viewModels:PenaltyEditWindowViewModel"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight">
+        
+        <Grid RowDefinitions="Auto Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
+        
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Сотрудник"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEmployee.FullName}"></TextBlock>
+                <Button Grid.Row="1" Grid.Column="2" Content="Выбрать сотрудника" Command="{Binding OpenEmployeeSelectorCommand}" HorizontalAlignment="Right"></Button>
+        
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата штрафа"></TextBlock>
+                <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" SelectedDate="{Binding PenaltyDate}"></DatePicker>
+                
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Причина штрафа"></TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reason}"></TextBox>
+                
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Сумма штрафа"></TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Summ}"></TextBox>
+                
+                <Button Grid.Row="5" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
+                <Button Grid.Row="5" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
+        </Grid>
         
 </Window>

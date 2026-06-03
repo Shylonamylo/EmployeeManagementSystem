@@ -75,12 +75,52 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
 
     public override bool Update(Penalty item)
     {
-        throw new System.NotImplementedException();
+        string slq = "UPDATE EmployeeManagementSystem.Penalty SET EmployeeId=@employeeId, `Date`=@date, Summ=@summ, Reason=@reason WHERE Id=@id";
+
+        try
+        {
+            using (var mc = new MySqlCommand(slq, connection))
+            {
+                mc.Parameters.AddWithValue("@employeeId", item.EmployeeId);
+                mc.Parameters.AddWithValue("@date", item.Date);
+                mc.Parameters.AddWithValue("@summ", item.Summ);
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+                mc.Parameters.AddWithValue("@id", item.Id);
+
+                mc.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public override bool Add(Penalty item)
     {
-        throw new System.NotImplementedException();
+        string sql = "INSERT INTO EmployeeManagementSystem.Penalty (EmployeeId, `Date`, Summ, Reason, SalaryId) VALUES(@employeeId, @date, @summ, @reason, -1)";
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@employeeId",item.EmployeeId);
+                mc.Parameters.AddWithValue("@date", item.Date);
+                mc.Parameters.AddWithValue("@summ", item.Summ);
+                mc.Parameters.AddWithValue("@reason", item.Reason);
+
+                mc.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+        
     }
 
     public override int GetCount()
@@ -111,7 +151,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
 
     public override List<Penalty>? GetPage(int pageSize, int pageNumber)
     {
-        string sql = "SELECT pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId, e.Id as EmployeeId, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary,po.Title as PositinTitle,s.AppointmentDate as SalaryAppointmentDate, s.Summ as SalarySumm FROM EmployeeManagementSystem.Penalty pe JOIN EmployeeManagementSystem.Employee e ON pe.EmployeeId = e.Id JOIN EmployeeManagementSystem.`Position` po ON e.PositionId = po.Id JOIN EmployeeManagementSystem.Salary s ON pe.SalaryId = s.Id LIMIT @limit OFFSET @offset";
+        string sql = "SELECT pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId, e.Id as EmployeeId, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary,po.Title as PositionTitle,s.AppointmentDate as SalaryAppointmentDate, s.Summ as SalarySumm FROM EmployeeManagementSystem.Penalty pe JOIN EmployeeManagementSystem.Employee e ON pe.EmployeeId = e.Id JOIN EmployeeManagementSystem.`Position` po ON e.PositionId = po.Id JOIN EmployeeManagementSystem.Salary s ON pe.SalaryId = s.Id LIMIT @limit OFFSET @offset";
         
         List<Penalty> result = new List<Penalty>();
         
@@ -133,7 +173,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                             EmployeeId = reader.GetInt32("EmployeeId"),
                             Date = reader.GetDateOnly("Date"),
                             Reason = reader.GetString("Reason"),
-                            Summ = reader.GetInt32("Summ"),
+                            Summ = reader.GetDecimal("Summ"),
                             SalaryId = reader.GetInt32("SalaryId"),
                             Employee = new Employee()
                             {
@@ -146,7 +186,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
-                                    Title = reader.GetString("EmployeePositionTitle"),
+                                    Title = reader.GetString("PositionTitle"),
                                 } 
                             },
                             Salary = new Salary()
@@ -165,7 +205,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                     EmployeePosition = new Position()
                                     {
                                         Id = reader.GetInt32("EmployeePositionId"),
-                                        Title = reader.GetString("EmployeePositionTitle"),
+                                        Title = reader.GetString("PositionTitle"),
                                     } 
                                 },
                                 Summ = reader.GetInt32("SalarySumm"),
@@ -188,7 +228,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
 
     public override List<Penalty>? GetPageWithSearch(int pageSize, int pageNumber, string searchString)
     {
-        string sql = "SELECT pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId,  e.Id as EmployeeId, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary,  po.Title as PositinTitle,  s.AppointmentDate as SalaryAppointmentDate, s.Summ as SalarySumm FROM EmployeeManagementSystem.Penalty pe   JOIN EmployeeManagementSystem.Employee e ON pe.EmployeeId = e.Id JOIN EmployeeManagementSystem.`Position` po ON e.PositionId = po.Id JOIN EmployeeManagementSystem.Salary s ON pe.SalaryId = s.Id WHERE concat(pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId, e.Id, e.BirthDate, e.HireDate, e.PositionId, e.Salary, po.Title, s.AppointmentDate, s.Summ) LIKE concat('%',@search,'%') LIMIT @limit OFFSET @offset";
+        string sql = "SELECT pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId,  e.Id as EmployeeId, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary,  po.Title as PositionTitle,  s.AppointmentDate as SalaryAppointmentDate, s.Summ as SalarySumm FROM EmployeeManagementSystem.Penalty pe   JOIN EmployeeManagementSystem.Employee e ON pe.EmployeeId = e.Id JOIN EmployeeManagementSystem.`Position` po ON e.PositionId = po.Id JOIN EmployeeManagementSystem.Salary s ON pe.SalaryId = s.Id WHERE concat(pe.Id, pe.EmployeeId, pe.Reason, pe.Summ, pe.`Date`, pe.SalaryId, e.Id, e.BirthDate, e.HireDate, e.PositionId, e.Salary, po.Title, s.AppointmentDate, s.Summ) LIKE concat('%',@search,'%') LIMIT @limit OFFSET @offset";
         
         List<Penalty> result = new List<Penalty>();
         
@@ -223,7 +263,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                 EmployeePosition = new Position()
                                 {
                                     Id = reader.GetInt32("EmployeePositionId"),
-                                    Title = reader.GetString("EmployeePositionTitle"),
+                                    Title = reader.GetString("PositionTitle"),
                                 } 
                             },
                             Salary = new Salary()
@@ -242,7 +282,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                     EmployeePosition = new Position()
                                     {
                                         Id = reader.GetInt32("EmployeePositionId"),
-                                        Title = reader.GetString("EmployeePositionTitle"),
+                                        Title = reader.GetString("PositionTitle"),
                                     } 
                                 },
                                 Summ = reader.GetInt32("SalarySumm"),
