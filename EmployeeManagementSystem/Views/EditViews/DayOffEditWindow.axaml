@@ -6,19 +6,21 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EmployeeManagementSystem.Views.EditViews.DayOffEditWindow"
         Title="DayOffEditWindow"
-        x:DataType="viewModels:DayOffEditWindowViewModel">
+        x:DataType="viewModels:DayOffEditWindowViewModel"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight">
         
         <Grid RowDefinitions="Auto Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
         
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Сотрудник"></TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEmployee.FullName}"></TextBlock>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выбрать сотрудника" Command="{Binding OpenEmployeeSelectorCommand}"></Button>
+                <Button Grid.Row="1" Grid.Column="2" Content="Выбрать сотрудника" Command="{Binding OpenEmployeeSelectorCommand}" HorizontalAlignment="Right"></Button>
         
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата пропуска"></TextBlock>
-                <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding DayOffDate}"></DatePicker>
+                <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" SelectedDate="{Binding DayOffDate}"></DatePicker>
                 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Причина пропуска"></TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Reason}"></TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reason}"></TextBox>
         
                 <Button Grid.Row="4" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Command="{Binding SaveCommand}" Margin="0,0,5,10"></Button>
                 <Button Grid.Row="4" Grid.Column="2" Content="Отмена" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Margin="0,0,5,10"></Button>
