@@ -21,6 +21,9 @@
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
+        
+        <Button Grid.Row="2" Grid.Column="0" Content="Посчитать зарплаты" Command="{Binding CalculateSalariesCommand}"></Button>
+        
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>

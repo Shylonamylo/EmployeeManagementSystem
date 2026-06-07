@@ -11,6 +11,8 @@ public class Employee : DBObj
     public string FullName { get; set; }
     public DateOnly BirthDate { get; set; } = DateOnly.FromDateTime(DateTime.Now).AddYears(-18);
     public DateOnly HireDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+    public DateTime LastSalaryAppointment { get; set; } = DateTime.Parse("1990-01-01 00:00:00");
     
     public Position EmployeePosition { get; set; }
 

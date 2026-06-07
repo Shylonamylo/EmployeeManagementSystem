@@ -12,19 +12,29 @@
         WindowStartupLocation="CenterOwner">
         
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions="* *">
-                
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SearchText}"></TextBox>
                 
                 <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MaxHeight="500">
-                        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
-                                <ListBox.DataTemplates>
-                                        <DataTemplate x:DataType="models:Employee">
-                                                <TextBlock Text="{Binding FullName}"></TextBlock>
-                                        </DataTemplate>
-                                </ListBox.DataTemplates>
-                        </ListBox>
+                        <Grid RowDefinitions="*">
+                                <DataGrid ItemsSource="{Binding Items}" IsVisible="{Binding MultiCheck}">
+                                        <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Header="Выбран" Binding="{Binding IsChecked}"></DataGridCheckBoxColumn>
+                                                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Последняя выдача ЗП" Binding="{Binding LastSalaryAppointment}"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                </DataGrid>
+                        
+                                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsVisible="{Binding !MultiCheck}">                                                                                                            
+                                        <ListBox.DataTemplates>
+                                                <DataTemplate x:DataType="models:Employee">
+                                                        <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding FullName}"></TextBlock>
+                                                        </StackPanel>
+                                                </DataTemplate>
+                                        </ListBox.DataTemplates>
+                                </ListBox>
+                        </Grid>
                 </ScrollViewer>
-                
                 <Button Grid.Row="2" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" Margin="10" Command="{Binding SaveCommand}"></Button>
                 <Button Grid.Row="2" Grid.Column="1" Content="Отмена" HorizontalAlignment="Center" Margin="10" Command="{Binding CancelCommand}"></Button>
         </Grid>

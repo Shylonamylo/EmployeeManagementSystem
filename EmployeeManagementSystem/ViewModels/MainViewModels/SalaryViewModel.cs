@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -36,6 +38,44 @@ public partial class SalaryViewModel : ViewModelBase
     partial void OnCurrentPageChanged(int value)
     {
         GetSalary(value);
+    }
+
+    [RelayCommand]
+    private void CalculateSalaries()
+    {
+        List<Employee> employees = new();
+        using (var repo = _serviceProvider.GetRequiredService<EmployeeRepository>())
+        {
+            employees = repo.GetAllSafe();
+        }
+
+        List<Salary> salaries = new();
+        using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+        {
+            salaries = repo.GetAll();
+        }
+
+        foreach (var salary in salaries)
+        {
+            foreach (var employee in employees)
+            {
+                if (employee.Id == salary.EmployeeId)
+                {
+                    employee.LastSalaryAppointment = salary.AppointmentDate;
+                }
+            }
+        }
+        
+        List<Employee> checkedEmployees = new();
+        var vm = ActivatorUtilities.CreateInstance<EmployeeSelectorWindowViewModel>(_serviceProvider, employees, true);
+        var win = ActivatorUtilities.CreateInstance<EmployeeSelectorWindow>(_serviceProvider, vm);
+        
+        win.Show();
+        
+        win.Closed += (s, e) =>
+        {
+            checkedEmployees = vm.Results;
+        };
     }
     
     private void GetSalary(int value)

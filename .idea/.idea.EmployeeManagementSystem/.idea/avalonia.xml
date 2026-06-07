@@ -4,6 +4,7 @@
     <option name="projectPerEditor">
       <map>
         <entry key="EmployeeManagementSystem/App.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
+        <entry key="EmployeeManagementSystem/Views/AuxiliaryViews/EmployeeSelectorWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/AuxiliaryViews/PositionSelectorWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusEditView.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />
         <entry key="EmployeeManagementSystem/Views/BonusEditWindow.axaml" value="EmployeeManagementSystem/EmployeeManagementSystem.csproj" />

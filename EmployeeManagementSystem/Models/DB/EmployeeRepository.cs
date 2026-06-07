@@ -52,6 +52,46 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
         
         return result;
     }
+    
+    public List<Employee>? GetAllSafe()
+    {
+        string sql = "SELECT e.Id, e.PositionId, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.Employee e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.Id > 0";
+        List<Employee> result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Employee()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            FullName = reader.GetString("FullName"),
+                            BirthDate = reader.GetDateOnly("BirthDate"),
+                            HireDate = reader.GetDateOnly("HireDate"),
+                            PositionId = reader.GetInt32("PositionId"),
+                            Salary = reader.GetDecimal("Salary"),
+                            EmployeePosition = new Position()
+                            {
+                                Id = reader.GetInt32("PositionId"),
+                                Title = reader.GetString("Title")
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        
+        return result;
+    }
 
     public override int GetCount()
     {

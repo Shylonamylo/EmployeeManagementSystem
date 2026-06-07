@@ -19,7 +19,11 @@ public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj,
     protected Window _currentWindow;
     protected List<T> _baseItems;
 
-    public T Result { get; protected set; } = new T();
+    public T Result { get; protected set; } = new();
+    
+    public List<T> Results { get; protected set; } = new();
+
+    [ObservableProperty] private bool _multiCheck;
     
     [ObservableProperty] private T _selectedItem;
     [ObservableProperty] private ObservableCollection<T> _items;
@@ -28,7 +32,14 @@ public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj,
     [RelayCommand]
     private void Save()
     {
-        Result = SelectedItem;
+        if (MultiCheck)
+        {
+            Results = _items.Where(a => a.IsChecked).ToList();
+        }
+        else
+        {
+            Result = SelectedItem;
+        }
         
         _currentWindow.Close();
     }
@@ -59,8 +70,9 @@ public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj,
         }
     }
     
-    public SelectorWindowViewModel(IServiceProvider serviceProvider, List<T> items)
+    public SelectorWindowViewModel(IServiceProvider serviceProvider, List<T> items, bool multiCheck = false)
     {
+        MultiCheck = multiCheck;
         _serviceProvider = serviceProvider;
         _baseItems = items;
         Items = new ObservableCollection<T>(_baseItems);
