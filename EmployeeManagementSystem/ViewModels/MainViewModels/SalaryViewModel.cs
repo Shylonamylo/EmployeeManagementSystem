@@ -75,7 +75,37 @@ public partial class SalaryViewModel : ViewModelBase
         win.Closed += (s, e) =>
         {
             checkedEmployees = vm.Results;
+            
+            foreach (var employee in checkedEmployees)
+            {
+                CalculateEmployeeSalary(employee);
+            }
         };
+    }
+
+    private decimal CalculateEmployeeSalary(Employee employee)
+    {
+        decimal result = 0;
+        
+        using (var repo = _serviceProvider.GetRequiredService<PenaltyRepository>())
+        {
+            result -= repo.GetByEmployeeId(employee.Id).Sum(a => a.Summ);
+        }
+
+        DateTime curDate = DateTime.Now;
+        
+        int daysInMonth = DateTime.DaysInMonth(curDate.Year, curDate.Month);
+
+        using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
+        {
+            
+        }
+        
+        int diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days;
+        
+        
+        
+        return result;
     }
     
     private void GetSalary(int value)

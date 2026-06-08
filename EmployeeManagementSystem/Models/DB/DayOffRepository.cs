@@ -144,6 +144,56 @@ public class DayOffRepository : BaseRepository<DayOff>, IDisposable
 
         return -1;
     }
+    
+    public List<DayOff>? GetByEmployeeId(int employeeId)
+    {
+        string sql = "SELECT d.Id, d.EmployeeId, d.`Date`, d.Reason, e.Id as EmployeeId, e.FullName as EmployeeFullName, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, e.Fired as EmployeeFired, e.Salary as EmployeeSalary, e.PositionId as EmployeePositionId, p.Title as PositionTitle FROM EmployeeManagementSystem.DayOff d JOIN EmployeeManagementSystem.Employee e ON d.EmployeeId = e.Id JOIN EmployeeManagementSystem.`Position` p ON e.PositionId = p.Id WHERE e.Id = @employeeId";
+        
+        List<DayOff> result = new List<DayOff>();
+        
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                
+                using (var reader = mc.ExecuteReader())
+                {
+                    
+                    while (reader.Read())
+                    {
+                        result.Add(new DayOff()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            EmployeeId = reader.GetInt32("EmployeeId"),
+                            Date = reader.GetDateOnly("Date"),
+                            Reason = reader.GetString("Reason"),
+                            Employee = new Employee()
+                            {
+                                Id = reader.GetInt32("EmployeeId"),
+                                FullName = reader.GetString("EmployeeFullName"),
+                                HireDate = reader.GetDateOnly("EmployeeHireDate"),
+                                BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
+                                PositionId = reader.GetInt32("EmployeePositionId"),
+                                Fired = reader.GetBoolean("EmployeeFired"),
+                                EmployeePosition = new Position()
+                                {
+                                    Id = reader.GetInt32("EmployeePositionId"),
+                                    Title = reader.GetString("PositionTitle"),
+                                } 
+                            }
+                            
+                        });
+                    }
+                }
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
 
     public override List<DayOff>? GetPage(int pageSize, int pageNumber)
     {

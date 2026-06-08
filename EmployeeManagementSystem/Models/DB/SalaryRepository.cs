@@ -113,6 +113,11 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
         return null;
     }
 
+    public Salary? GetSalaryByEmployeeId(int employeeId)
+    {
+        string sql =
+            "SELECT s.Id,s.Summ ,s.EmployeeId ,s.AppointmentDate FROM Salary s WHERE s.EmployeeId = @employeeId ORDER BY id DESC LIMIT 1;";
+    }
     public override Salary? GetById(int id)
     {
         throw new NotImplementedException();
