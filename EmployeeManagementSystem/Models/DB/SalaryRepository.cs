@@ -115,8 +115,54 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
 
     public Salary? GetSalaryByEmployeeId(int employeeId)
     {
-        string sql =
-            "SELECT s.Id,s.Summ ,s.EmployeeId ,s.AppointmentDate FROM Salary s WHERE s.EmployeeId = @employeeId ORDER BY id DESC LIMIT 1;";
+        string sql = "SELECT s.Id,s.Summ ,s.EmployeeId ,s.AppointmentDate FROM Salary s WHERE s.EmployeeId = @employeeId ORDER BY id DESC LIMIT 1";
+        
+        Salary result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                
+                mc.Parameters.AddWithValue("@employeeId", employeeId);
+                
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = new Salary()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Summ = reader.GetDecimal("Summ"),
+                            AppointmentDate = reader.GetDateTime("AppointmentDate"),
+                            EmployeeId = reader.GetInt32("EmployeeId"),
+                            Employee = new Employee()
+                            {
+                                Id = reader.GetInt32("EmployeeId"),
+                                BirthDate = reader.GetDateOnly("EmployeeBirthDate"),
+                                FullName = reader.GetString("EmployeeFullName"),
+                                HireDate = reader.GetDateOnly("EmployeeHireDate"),
+                                PositionId = reader.GetInt32("EmployeePositionId"),
+                                Salary = reader.GetDecimal("EmployeeSalary"),
+                                Fired = reader.GetBoolean("EmployeeFired"),
+                                EmployeePosition = new Position()
+                                {
+                                    Id = reader.GetInt32("EmployeePositionId"),
+                                    Title = reader.GetString("PositionTitle"),
+                                }
+                            },
+                        };
+                    }
+                }
+            }
+            
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
     public override Salary? GetById(int id)
     {
