@@ -78,7 +78,7 @@ public partial class SalaryViewModel : ViewModelBase
             
             foreach (var employee in checkedEmployees)
             {
-                CalculateEmployeeSalary(employee);
+                Console.WriteLine(CalculateEmployeeSalary(employee));
             }
         };
     }
@@ -106,7 +106,7 @@ public partial class SalaryViewModel : ViewModelBase
 
         int diffDays = 0;
 
-        if (lastSalary == null)
+        if (lastSalary.Id == 0)
         {
             diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days;
         }
@@ -115,7 +115,7 @@ public partial class SalaryViewModel : ViewModelBase
             diffDays = curDate.Subtract(lastSalary.AppointmentDate).Days;
         }
 
-        result += (diffDays / daysInMonth)*employee.Salary;
+        result += (decimal)(diffDays / 30.5)*employee.Salary;
         
         return result;
     }
