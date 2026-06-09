@@ -96,14 +96,26 @@ public partial class SalaryViewModel : ViewModelBase
         
         int daysInMonth = DateTime.DaysInMonth(curDate.Year, curDate.Month);
 
+        Salary lastSalary = new();
+        
         using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
         {
-            
+            lastSalary = repo.GetSalaryByEmployeeId(employee.Id);
         }
-        
-        int diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days;
-        
-        
+
+
+        int diffDays = 0;
+
+        if (lastSalary == null)
+        {
+            diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days;
+        }
+        else
+        {
+            diffDays = curDate.Subtract(lastSalary.AppointmentDate).Days;
+        }
+
+        result += (diffDays / daysInMonth)*employee.Salary;
         
         return result;
     }
