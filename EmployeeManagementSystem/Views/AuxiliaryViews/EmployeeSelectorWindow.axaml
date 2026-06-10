@@ -20,7 +20,7 @@
                                         <DataGrid.Columns>
                                                 <DataGridCheckBoxColumn Header="Выбран" Binding="{Binding IsChecked}"></DataGridCheckBoxColumn>
                                                 <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"></DataGridTextColumn>
-                                                <DataGridTextColumn Header="Последняя выдача ЗП" Binding="{Binding LastSalaryAppointment}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Последняя выдача ЗП" Binding="{Binding LastSalaryAppointmentDaysString}"></DataGridTextColumn>
                                         </DataGrid.Columns>
                                 </DataGrid>
                         

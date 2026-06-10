@@ -24,6 +24,8 @@
         
         <Button Grid.Row="2" Grid.Column="0" Content="Посчитать зарплаты" Command="{Binding CalculateSalariesCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Button>
         
+        <Button Grid.Row="2" Grid.Column="0" Content="Экспорт в Excel" Command="{Binding OpenExcelExportWindowCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+        
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Content="-"  VerticalAlignment="Top" Command="{Binding ChangePageCommand}" CommandParameter="-1"></Button>
             <StackPanel>

@@ -13,4 +13,8 @@ public static class TimeFactory
     {
         return new DateOnly(date.Year, date.Month, date.Day);
     }
+    public static DateOnly DOfromDT(DateTime date)
+    {
+        return new DateOnly(date.Year, date.Month, date.Day);
+    }
 }

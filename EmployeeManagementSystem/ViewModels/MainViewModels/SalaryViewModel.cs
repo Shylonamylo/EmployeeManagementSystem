@@ -5,8 +5,10 @@ using System.Linq;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EmployeeManagementSystem.Models;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
+using EmployeeManagementSystem.Views.AuxiliaryViews;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeManagementSystem.ViewModels;
@@ -41,6 +43,14 @@ public partial class SalaryViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenExcelExportWindow()
+    {
+        var vm = ActivatorUtilities.CreateInstance<ExcelExportWindowViewModel>(_serviceProvider);
+        var win = ActivatorUtilities.CreateInstance<ExcelExportWindow>(_serviceProvider, vm);
+        win.ShowDialog(_mainWindow);
+    }
+
+    [RelayCommand]
     private void CalculateSalaries()
     {
         List<Employee> employees = new();
@@ -53,12 +63,6 @@ public partial class SalaryViewModel : ViewModelBase
         using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
         {
             salaries = repo.GetAll();
-        }
-
-        List<DayOff> dayOffs = new();
-        using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
-        {
-            dayOffs = repo.GetAll();
         }
 
         foreach (var salary in salaries)
@@ -81,15 +85,22 @@ public partial class SalaryViewModel : ViewModelBase
         win.Closed += (s, e) =>
         {
             checkedEmployees = vm.Results;
-            
-            foreach (var employee in checkedEmployees)
+
+            using (var repo = _serviceProvider.GetRequiredService<SalaryRepository>())
             {
-                Console.WriteLine(CalculateEmployeeSalary(employee));
+                foreach (var employee in checkedEmployees)
+                {
+                    Salary salary = new();
+                    salary = CalculateEmployeeSalary(employee);
+                    Console.WriteLine(repo.Add(salary));
+                }
             }
+            
+            GetSalary(CurrentPage);
         };
     }
 
-    private decimal CalculateEmployeeSalary(Employee employee)
+    private Salary CalculateEmployeeSalary(Employee employee)
     {
         decimal result = 0;
         
@@ -97,7 +108,7 @@ public partial class SalaryViewModel : ViewModelBase
         {
             result -= repo.GetByEmployeeId(employee.Id).Sum(a => a.Summ);
         }
-
+        
         DateTime curDate = DateTime.Now;
         
         int daysInMonth = DateTime.DaysInMonth(curDate.Year, curDate.Month);
@@ -114,16 +125,32 @@ public partial class SalaryViewModel : ViewModelBase
 
         if (lastSalary.Id == 0)
         {
-            diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days;
+            List<DayOff> dayOffs = new();
+            using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
+            {
+                dayOffs = repo.GetByEmployeeId(employee.Id, DateOnly.Parse("1900.01.01"));
+            }
+            diffDays = curDate.Subtract(employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days-dayOffs.Count;
         }
         else
         {
-            diffDays = curDate.Subtract(lastSalary.AppointmentDate).Days;
+            List<DayOff> dayOffs = new();
+            using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
+            {
+                dayOffs = repo.GetByEmployeeId(employee.Id, TimeFactory.DOfromDT(lastSalary.AppointmentDate));
+            }
+            diffDays = curDate.Subtract(lastSalary.AppointmentDate).Days-dayOffs.Count;
         }
 
         result += (decimal)(diffDays / 30.5)*employee.Salary;
         
-        return result;
+        return new Salary()
+        {
+            AppointmentDate = curDate,
+            EmployeeId = employee.Id,
+            Employee = employee,
+            Summ = result
+        };
     }
     
     private void GetSalary(int value)

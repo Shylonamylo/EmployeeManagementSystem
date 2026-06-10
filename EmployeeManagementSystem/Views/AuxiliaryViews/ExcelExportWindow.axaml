@@ -1,0 +1,30 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:EmployeeManagementSystem.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="EmployeeManagementSystem.Views.AuxiliaryViews.ExcelExportWindow"
+        Title="ExcelExportWindow"
+        x:DataType="viewModels:ExcelExportWindowViewModel"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+        
+        <Grid RowDefinitions="Auto Auto Auto *" ColumnDefinitions="Auto Auto *">
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Папка экспорта"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" MaxWidth="300" Text="{Binding FilePath}"></TextBox>
+                <Button Grid.Row="0" Grid.Column="2" Content="Выбрать Папку" Command="{Binding OpenPathSelectorCommand}"></Button>
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Начальная дата"></TextBlock>
+                <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding DateStart}"></DatePicker>
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Конечная дата"></TextBlock>
+                <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding DateEnd}"></DatePicker>
+                
+                <Button Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Content="Экспортировать" Command="{Binding ExportCommand}"></Button>
+                <Button Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Content="Отмена" Command="{Binding CancelCommand}"></Button>
+                
+        </Grid>
+        
+</Window>

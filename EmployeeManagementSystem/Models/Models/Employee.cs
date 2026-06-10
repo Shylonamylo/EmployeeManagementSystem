@@ -14,6 +14,8 @@ public class Employee : DBObj
 
     public DateTime LastSalaryAppointment { get; set; } = DateTime.Parse("1990-01-01 00:00:00");
     
+    public string LastSalaryAppointmentDaysString { get => DateTime.Now.Subtract(LastSalaryAppointment).Days + " дней назад"; }
+    
     public Position EmployeePosition { get; set; }
 
     public Employee(Employee e)

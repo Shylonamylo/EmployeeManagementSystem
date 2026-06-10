@@ -7,7 +7,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class EmployeeSelectorWindowViewModel : SelectorWindowViewModel<Employee>
 {
-    public EmployeeSelectorWindowViewModel(IServiceProvider serviceProvider, List<Employee> items, bool multiCheck) : base(serviceProvider, items, multiCheck)
+    public EmployeeSelectorWindowViewModel(IServiceProvider serviceProvider, List<Employee> items, bool multiCheck = false) : base(serviceProvider, items, multiCheck)
     {
     }
 }
