@@ -55,6 +55,12 @@ public partial class SalaryViewModel : ViewModelBase
             salaries = repo.GetAll();
         }
 
+        List<DayOff> dayOffs = new();
+        using (var repo = _serviceProvider.GetRequiredService<DayOffRepository>())
+        {
+            dayOffs = repo.GetAll();
+        }
+
         foreach (var salary in salaries)
         {
             foreach (var employee in employees)
