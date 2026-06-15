@@ -5,4 +5,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public abstract class ViewModelBase : ObservableObject
 {
+    
+    protected DateTimeOffset _now = DateTimeOffset.Now;
+    
 }

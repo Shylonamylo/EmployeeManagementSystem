@@ -92,13 +92,22 @@ public partial class DayOffEditWindowViewModel : ViewModelBase
             SelectedEmployee = employees[0];
         }
     }
+
+    partial void OnDayOffDateChanged(DateTimeOffset value)
+    {
+        if (value > _now)
+        {
+            DayOffDate = _now;
+        }
+    }
+
     public DayOffEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
         _dayOff = new DayOff();
         
-        DayOffDate = DateTimeOffset.Now;
+        DayOffDate = _now;
         
         _edit = false;
 

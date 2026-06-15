@@ -94,6 +94,15 @@ public partial class PenaltyEditWindowViewModel : ViewModelBase
             SelectedEmployee = employees[0];
         }
     }
+
+    partial void OnPenaltyDateChanged(DateTimeOffset value)
+    {
+        if (value > _now)
+        {
+            PenaltyDate = _now;
+        }
+    }
+
     public PenaltyEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;

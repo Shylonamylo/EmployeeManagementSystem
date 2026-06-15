@@ -102,6 +102,14 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
         }
     }
 
+    partial void OnDeadLineChanged(DateTimeOffset value)
+    {
+        if (value < _now)
+        {
+            DeadLine = _now;
+        }
+    }
+
     public EmployeeTaskEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;

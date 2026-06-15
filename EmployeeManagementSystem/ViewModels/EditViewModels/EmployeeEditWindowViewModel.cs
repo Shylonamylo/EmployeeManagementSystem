@@ -94,14 +94,23 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
             SelectedPosition = Positions[0];
         }
     }
+
+    partial void OnHireDateChanged(DateTimeOffset value)
+    {
+        if (value > _now)
+        {
+            HireDate = _now;
+        }
+    }
+
     public EmployeeEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         
         _employee = new Employee();
         
-        BirthDate = DateTimeOffset.Now;
-        HireDate = DateTimeOffset.Now;
+        BirthDate = _now.AddYears(-14);
+        HireDate = _now;
         
         _edit = false;
 

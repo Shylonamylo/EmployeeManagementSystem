@@ -243,7 +243,7 @@ public class SalaryRepository : BaseRepository<Salary>, IDisposable
 
     public List<Salary>? GetSalariesBetweenDates(DateTime startDate, DateTime endDate)
     {
-        string sql = "SELECT s.Id, s.Summ, s.EmployeeId, s.AppointmentDate, e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle FROM EmployeeManagementSystem.`Salary` s JOIN EmployeeManagementSystem.`Employee` e ON e.Id = s.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 AND s.AppointmentDate > @startDate AND s.AppointmentDate < @endDate";
+        string sql = "SELECT s.Id, s.Summ, s.EmployeeId, s.AppointmentDate, e.FullName as EmployeeFullName, e.Fired as EmployeeFired, e.PositionId as EmployeePositionId, e.Salary as EmployeeSalary, e.BirthDate as EmployeeBirthDate, e.HireDate as EmployeeHireDate, p.Title as PositionTitle FROM EmployeeManagementSystem.`Salary` s JOIN EmployeeManagementSystem.`Employee` e ON e.Id = s.EmployeeId JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.id > 0 AND s.AppointmentDate >= @startDate AND s.AppointmentDate <= @endDate";
 
         List<Salary>? result = new();
 

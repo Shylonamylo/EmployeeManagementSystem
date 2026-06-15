@@ -106,6 +106,14 @@ public partial class BonusEditWindowViewModel : ViewModelBase
         }
     }
 
+    partial void OnAppointmentDateChanged(DateTimeOffset value)
+    {
+        if (value > _now)
+        {
+            AppointmentDate = _now;
+        }
+    }
+
     public BonusEditWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -120,7 +128,7 @@ public partial class BonusEditWindowViewModel : ViewModelBase
 
         _bonus = new Bonus();
 
-        AppointmentDate = DateTimeOffset.Now;
+        AppointmentDate = _now;
         _edit = false;
     }
 
