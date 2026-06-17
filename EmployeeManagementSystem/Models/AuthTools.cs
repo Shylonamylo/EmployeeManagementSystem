@@ -17,7 +17,7 @@ public static class AuthTools
             if (File.Exists("AuthData"))
             {
                 AuthData authData = JsonSerializer.Deserialize<AuthData>(File.ReadAllText("AuthData"));
-                if (authData.Login.Length == 30 && authData.Password.Length == 30)
+                if (authData.Login.Length == 64 && authData.Password.Length == 64)
                 {
                     return true;
                 }
@@ -36,8 +36,8 @@ public static class AuthTools
     {
         AuthData data = JsonSerializer.Deserialize<AuthData>(File.ReadAllText("AuthData"));
         SHA256 sha256 = SHA256.Create();
-        string LoginHash = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(login)));
-        string PasswordHash = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
+        string LoginHash = Convert.ToHexString(sha256.ComputeHash(Encoding.ASCII.GetBytes(login)));
+        string PasswordHash = Convert.ToHexString(sha256.ComputeHash(Encoding.ASCII.GetBytes(password)));
         if (data.Login == LoginHash && data.Password == PasswordHash)
         {
             return true;
@@ -50,8 +50,8 @@ public static class AuthTools
         SHA256 sha256 = SHA256.Create();
         AuthData data = new()
         {
-            Login = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(login))),
-            Password = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)))
+            Login = Convert.ToHexString(sha256.ComputeHash(Encoding.UTF8.GetBytes(login))),
+            Password = Convert.ToHexString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)))
         };
         
         var fileStream = File.Create("AuthData");
