@@ -88,7 +88,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         }
         using (var repo = _serviceProvider.GetService<PositionRepository>())
         {
-            Console.WriteLine("УСПЕХ!!!");
+            repo.Delete(_position.Id);
         }
     }
     

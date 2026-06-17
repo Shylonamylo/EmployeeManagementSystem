@@ -26,31 +26,34 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryViews/EmployeeSelectorWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryWindows/AuthWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryViews/ExcelExportWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryWindows/EmployeeSelectorWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryViews/PositionSelectorWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryWindows/ExcelExportWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/BonusEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/AuxiliaryWindows/PositionSelectorWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/DayOffEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/BonusEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/EmployeeEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/DayOffEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/EmployeeTaskEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/EmployeeEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/PenaltyEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/EmployeeTaskEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditViews/PositionEditWindow.axaml]
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/PenaltyEditWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/EditWindows/PositionEditWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Shylonamylo/RiderProjects/EmployeeManagementSystem/EmployeeManagementSystem/Views/MainViews/BonusView.axaml]

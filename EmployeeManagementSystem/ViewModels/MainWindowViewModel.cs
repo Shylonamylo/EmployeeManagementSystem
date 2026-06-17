@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using AvaloniaApplication14_Inventory_300326.Models.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EmployeeManagementSystem.Models;
 using EmployeeManagementSystem.Views;
+using EmployeeManagementSystem.Views.AuxiliaryWindows;
 using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
@@ -122,5 +124,28 @@ public partial class MainWindowViewModel : ViewModelBase
     public void SetWindow(MainWindow window)
     {
         _currentWindow = window;
+
+        _currentWindow.Loaded += async (sender, args) =>
+        {
+            window.Hide();
+
+            var authWindowVm =
+                ActivatorUtilities.CreateInstance<AuthWindowViewModel>(_serviceProvider, !AuthTools.IsRegistered());
+            var authWindow = ActivatorUtilities.CreateInstance<AuthWindow>(_serviceProvider, authWindowVm);
+
+            authWindow.Show();
+
+            authWindow.Closed += (sender, args) =>
+            {
+                if (authWindowVm.Success == false)
+                {
+                    _currentWindow.Close();
+                }
+                else
+                {
+                    _currentWindow.Show();
+                }
+            };
+        };
     }
 }
