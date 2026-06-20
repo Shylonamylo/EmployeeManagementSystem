@@ -11,42 +11,50 @@ namespace AvaloniaApplication14_Inventory_300326.Models.Models;
 public class Settings
 {
     public DatabaseSettings DatabaseSettings {get; set;}
-    public TaxSettings TaxSettings {get; set;}
     public bool DeveloperMode { get; set; }
     public int PageSize { get; set; }
 
-    public void LoadSettings()
+    public Settings()
+    {
+        DatabaseSettings = new DatabaseSettings();
+    }
+
+    public bool LoadSettings()
     {
         try
         {
             Settings deserialized = JsonSerializer.Deserialize<Settings>(File.ReadAllText("appsettings.json"));
             
             DatabaseSettings = deserialized.DatabaseSettings;
-            TaxSettings = deserialized.TaxSettings;
             DeveloperMode = deserialized.DeveloperMode;
             PageSize = deserialized.PageSize;
+
+            return true;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             DatabaseSettings = new DatabaseSettings();
-            TaxSettings = new TaxSettings();
             DeveloperMode = false;
             PageSize = 10;
             
             File.WriteAllText("appsettings.json", JsonSerializer.Serialize(this));
+
+            return false;
         }
     }
-
-    public void SaveSettings()
+    
+    public bool SaveSettings()
     {
         try
         {
             File.WriteAllText("appsettings.json", JsonSerializer.Serialize(this));
+            return true;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
+            return false;
         }
     }
     

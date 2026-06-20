@@ -208,7 +208,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                         Title = reader.GetString("PositionTitle"),
                                     } 
                                 },
-                                Summ = reader.GetInt32("SalarySumm"),
+                                Summ = reader.GetDecimal("SalarySumm"),
                                 
                             }
                             
@@ -284,7 +284,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                         Title = reader.GetString("PositionTitle"),
                                     } 
                                 },
-                                Summ = reader.GetInt32("SalarySumm"),
+                                Summ = reader.GetDecimal("SalarySumm"),
                                 
                             }
                             
@@ -361,7 +361,7 @@ public class PenaltyRepository : BaseRepository<Penalty>, IDisposable
                                         Title = reader.GetString("PositionTitle"),
                                     } 
                                 },
-                                Summ = reader.GetInt32("SalarySumm"),
+                                Summ = reader.GetDecimal("SalarySumm"),
                                 
                             }
                             

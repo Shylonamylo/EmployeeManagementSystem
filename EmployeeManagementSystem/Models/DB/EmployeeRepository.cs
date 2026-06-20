@@ -360,7 +360,47 @@ public class EmployeeRepository : BaseRepository<Employee>, IDisposable
 
     public override Employee? GetById(int id)
     {
-        throw new System.NotImplementedException();
+        string sql = "SELECT e.Id, e.PositionId, e.Fired, e.Salary, e.FullName, e.BirthDate, e.HireDate, p.Title FROM EmployeeManagementSystem.Employee e JOIN EmployeeManagementSystem.`Position` p ON p.Id = e.PositionId WHERE e.Id=@Id";
+        
+        Employee result = new();
+        
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@Id", id);
+                
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = new Employee()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            FullName = reader.GetString("FullName"),
+                            BirthDate = reader.GetDateOnly("BirthDate"),
+                            HireDate = reader.GetDateOnly("HireDate"),
+                            PositionId = reader.GetInt32("PositionId"),
+                            Salary = reader.GetDecimal("Salary"),
+                            Fired = reader.GetBoolean("Fired"),
+                            EmployeePosition = new Position()
+                            {
+                                Id = reader.GetInt32("PositionId"),
+                                Title = reader.GetString("Title")
+                            }
+                        };
+                    }
+                }
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        
+        return result;
     }
 
     public override bool Delete(int id)

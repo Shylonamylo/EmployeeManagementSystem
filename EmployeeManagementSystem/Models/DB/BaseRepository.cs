@@ -44,6 +44,34 @@ public abstract class BaseRepository<T> : IRepository<T>, IDisposable where T : 
         }
     }
 
+    public int GetLastInsertedId()
+    {
+        string sql = "SELECT LAST_INSERT_ID() as result";
+        
+        int result = 0;
+
+        try
+        {
+            using (MySqlCommand mc = new MySqlCommand(sql, connection))
+            {
+                using (MySqlDataReader reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                         result = reader.GetInt32("result");
+                    }
+                }
+            }
+            
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return 0;
+        }
+    }
+
     public abstract List<T>? GetAll();
     public abstract int GetCount();
     public abstract List<T>? GetPage(int pageSize, int pageNumber);

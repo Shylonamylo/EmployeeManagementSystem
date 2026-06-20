@@ -108,10 +108,12 @@ public partial class SalaryViewModel : ViewModelBase
         {
             result -= repo.GetByEmployeeId(employee.Id).Sum(a => a.Summ);
         }
+        using (var repo = _serviceProvider.GetRequiredService<BonusRepository>())
+        {
+            result += repo.GetByEmployeeId(employee.Id).Sum(a => a.AdditionalSalary);
+        }
         
         DateTime curDate = DateTime.Now;
-        
-        int daysInMonth = DateTime.DaysInMonth(curDate.Year, curDate.Month);
 
         Salary lastSalary = new();
         
