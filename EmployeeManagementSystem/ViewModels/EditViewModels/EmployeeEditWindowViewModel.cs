@@ -8,6 +8,8 @@ using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -28,7 +30,7 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
     [ObservableProperty] private Position _selectedPosition;
 
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
         Employee employee = new();
         
@@ -39,6 +41,12 @@ public partial class EmployeeEditWindowViewModel : ViewModelBase
         employee.HireDate = new DateOnly(HireDate.Year, HireDate.Month, HireDate.Day);
         employee.PositionId = SelectedPosition.Id;
         employee.Fired = Fired;
+
+        if (employee.BirthDate > employee.HireDate)
+        {
+            await MessageBoxManager.GetMessageBoxStandard("Ошибка", "Сотрудника нельзя нанять до его рождения", ButtonEnum.Ok, Icon.Error).ShowWindowDialogAsync(_currentWindow);
+            return;
+        }
         
         using (var repo = _serviceProvider.GetService<EmployeeRepository>())
         {

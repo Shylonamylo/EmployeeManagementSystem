@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
 using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -31,7 +33,7 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
     [ObservableProperty] private bool _isDone;
     
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
         EmployeeTask task = new();
         
@@ -45,6 +47,12 @@ public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
         task.StartDate = DateTime.Now;
         task.EndDate = DeadLine.DateTime;
         task.IsDone = IsDone;
+
+        if (task.StartDate > task.EndDate)
+        {
+            await MessageBoxManager.GetMessageBoxStandard("Ошибка", "Дата сдачи задачи не может быть раньше чем ее начало", ButtonEnum.Ok, Icon.Error).ShowWindowDialogAsync(_currentWindow);
+            return;
+        }
         
         
         using (var repo = _serviceProvider.GetService<EmployeeTaskRepository>())

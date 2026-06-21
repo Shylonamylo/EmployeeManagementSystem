@@ -70,6 +70,14 @@ public partial class SalaryViewModel : ViewModelBase
             }
         }
         
+        foreach (var employee in employees)
+        {
+            if (employee.LastSalaryAppointment == DateTime.Parse("1990-01-01 00:00:00"))
+            {
+                employee.LastSalaryAppointment = TimeFactory.DTfromDO(employee.HireDate);
+            }
+        }
+        
         List<Employee> checkedEmployees = new();
         var vm = ActivatorUtilities.CreateInstance<EmployeeSelectorWindowViewModel>(_serviceProvider, employees, true);
         var win = ActivatorUtilities.CreateInstance<EmployeeSelectorWindow>(_serviceProvider, vm);

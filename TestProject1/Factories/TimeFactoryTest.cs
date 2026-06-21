@@ -86,4 +86,4 @@ public class TimeFactoryTest
             Assert.That( dateOnlyToDateTimeOffsetsResults[i], Is.EqualTo(TimeFactory.DTOffsetfromDO(dateOnly[i])));
         }
     }
-}   
+}

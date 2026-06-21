@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace AvaloniaApplication14_Inventory_300326.Models.Models;
 
@@ -28,9 +29,24 @@ public class Employee : DBObj
         BirthDate = e.BirthDate;
         HireDate = e.HireDate;
         EmployeePosition = e.EmployeePosition;
+        LastSalaryAppointment = e.LastSalaryAppointment;
     }
     public Employee()
     {
     }
-    
+
+    public override string ToString()
+    {
+        StringBuilder builder = new();
+        builder.AppendLine($"{Id}");
+        builder.AppendLine($"{PositionId}");
+        builder.AppendLine($"{Salary}");
+        builder.AppendLine($"{Fired}");
+        builder.AppendLine($"{FullName}");
+        builder.AppendLine($"{BirthDate}");
+        builder.AppendLine($"{HireDate}");
+        builder.AppendLine($"{EmployeePosition}");
+        builder.AppendLine($"{LastSalaryAppointment}");
+        return builder.ToString();
+    }
 }
