@@ -15,7 +15,6 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class SelectorWindowViewModel<T> : ViewModelBase where T : DBObj, new()
 {
-    protected IServiceProvider _serviceProvider;
     protected Window _currentWindow;
     protected List<T> _baseItems;
 

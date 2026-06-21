@@ -16,11 +16,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class DayOffEditWindowViewModel : ViewModelBase
 {
-    private IServiceProvider _serviceProvider;
-    
     private DayOff _dayOff;
-    
-    private bool _edit;
     
     private DayOffEditWindow _currentWindow;
     

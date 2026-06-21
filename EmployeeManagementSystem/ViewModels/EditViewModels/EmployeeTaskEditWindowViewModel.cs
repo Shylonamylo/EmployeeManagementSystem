@@ -14,13 +14,9 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class EmployeeTaskEditWindowViewModel : ViewModelBase
 {
-    IServiceProvider _serviceProvider;
-    
     EmployeeTaskEditWindow _currentWindow;
 
     private EmployeeTask _task;
-
-    private bool _edit;
 
     [ObservableProperty] private string _taskGoal;
     [ObservableProperty] private string _taskDescription;

@@ -15,13 +15,9 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class PositionEditWindowViewModel : ViewModelBase
 {
-    IServiceProvider _serviceProvider;
-
     private PositionEditWindow _currentWindow;
     
     private Position _position;
-
-    private bool _isEdit;
 
     [ObservableProperty] private string _title;
     
@@ -31,7 +27,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         _position.Title = Title;
         using (var repo = _serviceProvider.GetService<PositionRepository>())
         {
-            if (_isEdit)
+            if (_edit)
             { 
                 repo.Update(_position);
             }
@@ -90,6 +86,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         {
             repo.Delete(_position.Id);
         }
+        _currentWindow.Close();
     }
     
     public PositionEditWindowViewModel(IServiceProvider serviceProvider)
@@ -97,7 +94,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         
         _position = new Position();
-        _isEdit = false;
+        _edit = false;
     }
     
     public PositionEditWindowViewModel(IServiceProvider serviceProvider, Position position)
@@ -106,7 +103,7 @@ public partial class PositionEditWindowViewModel : ViewModelBase
         
         _position = position;
         Title = _position.Title;
-        _isEdit = true;
+        _edit = true;
     }
 
     public void SetWindow(PositionEditWindow window)

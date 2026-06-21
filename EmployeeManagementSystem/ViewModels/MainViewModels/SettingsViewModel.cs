@@ -11,12 +11,6 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    private Settings _settings;
-    
-    private IServiceProvider _serviceProvider;
-    
-    private MainWindow _mainWindow;
-    
     [ObservableProperty] private string _address;
     [ObservableProperty] private string _port;
     [ObservableProperty] private string _login;

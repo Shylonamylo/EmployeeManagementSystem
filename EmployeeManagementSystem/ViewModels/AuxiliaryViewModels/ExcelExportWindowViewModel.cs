@@ -21,7 +21,6 @@ namespace EmployeeManagementSystem.ViewModels;
 public partial class ExcelExportWindowViewModel : ViewModelBase
 {
     private ExcelExportWindow _currentWindow;
-    private IServiceProvider _serviceProvider;
 
     [ObservableProperty] private string _folderPath;
     [ObservableProperty] private DateTimeOffset _dateStart = DateTimeOffset.Now.AddYears(-1);

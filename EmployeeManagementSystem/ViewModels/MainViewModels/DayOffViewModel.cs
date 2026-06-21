@@ -13,12 +13,6 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class DayOffViewModel : ViewModelBase
 {
-    private IServiceProvider _serviceProvider;
-    
-    private Settings _settings;
-    
-    private MainWindow _mainWindow;
-    
     [ObservableProperty] private string _searchString;
     
     [ObservableProperty] private bool _developerMode;

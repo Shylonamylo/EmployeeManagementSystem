@@ -36,8 +36,8 @@ public static class AuthTools
     {
         AuthData data = JsonSerializer.Deserialize<AuthData>(File.ReadAllText("AuthData"));
         SHA256 sha256 = SHA256.Create();
-        string LoginHash = Convert.ToHexString(sha256.ComputeHash(Encoding.ASCII.GetBytes(login)));
-        string PasswordHash = Convert.ToHexString(sha256.ComputeHash(Encoding.ASCII.GetBytes(password)));
+        string LoginHash = Convert.ToHexString(sha256.ComputeHash(Encoding.UTF8.GetBytes(login)));
+        string PasswordHash = Convert.ToHexString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
         if (data.Login == LoginHash && data.Password == PasswordHash)
         {
             return true;

@@ -14,11 +14,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class BonusEditWindowViewModel : ViewModelBase
 {
-    IServiceProvider _serviceProvider;
-
     private BonusEditWindow _currentWindow;
-
-    private bool _edit;
 
     private Bonus _bonus;
 

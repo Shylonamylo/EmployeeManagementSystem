@@ -16,11 +16,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class PenaltyEditWindowViewModel : ViewModelBase
 {
-    private IServiceProvider _serviceProvider;
-    
     private Penalty _penalty;
-    
-    private bool _edit;
     
     private PenaltyEditWindow _currentWindow;
     

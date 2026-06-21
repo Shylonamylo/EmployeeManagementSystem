@@ -19,8 +19,6 @@ public partial class MainWindowViewModel : ViewModelBase
     
     private MainWindow _currentWindow;
     
-    private (int, double) asd = new(10, 10);
-    
     IServiceProvider _serviceProvider;
     private Settings _settings;
     

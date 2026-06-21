@@ -10,9 +10,9 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
         
-        <Grid ColumnDefinitions="* *" RowDefinitions="Auto Auto *">
-                <TextBox Grid.Row="0" Grid.Column="0" Watermark="Логин" Text="{Binding Login}" HorizontalAlignment="Center"></TextBox>
-                <TextBox Grid.Row="1" Grid.Column="0" Watermark="Пароль" Text="{Binding Password}" HorizontalAlignment="Center" PasswordChar="*" RevealPassword="{Binding ShowPassword}"></TextBox>
+        <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto Auto *">
+                <TextBox Grid.Row="0" Grid.Column="0" Watermark="Логин" Text="{Binding Login}" HorizontalAlignment="Stretch" MinWidth="150"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="0" Watermark="Пароль" Text="{Binding Password}" HorizontalAlignment="Stretch" PasswordChar="*" RevealPassword="{Binding ShowPassword}" MinWidth="150"></TextBox>
                 <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding ShowPassword}" HorizontalAlignment="Left" Margin="10,0,0,0"></CheckBox>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding EnterCommand}" Content="{Binding ButtonText}"></Button>
         </Grid>

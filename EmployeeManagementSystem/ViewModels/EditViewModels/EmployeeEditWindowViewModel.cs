@@ -13,11 +13,7 @@ namespace EmployeeManagementSystem.ViewModels;
 
 public partial class EmployeeEditWindowViewModel : ViewModelBase
 {
-    private IServiceProvider _serviceProvider;
-    
     private Employee _employee;
-    
-    private bool _edit;
     
     private EmployeeEditWindow _currentWindow;
     
