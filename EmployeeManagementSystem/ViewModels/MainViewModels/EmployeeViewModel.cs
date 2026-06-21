@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace EmployeeManagementSystem.ViewModels;
 
 public partial class EmployeeViewModel : ViewModelBase
-{
+{   
     [ObservableProperty] private string _searchString;
     
     [ObservableProperty] private bool _developerMode;

@@ -22,7 +22,7 @@
                     <DataGridTextColumn Header="Назначенный сотрудник" Binding="{Binding Employee.FullName}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата начала" Binding="{Binding  StartDate}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Дата конца" Binding="{Binding EndDate}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Выполнена" Binding="{Binding IsDone}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Выполнена" Binding="{Binding IsDoneString}" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

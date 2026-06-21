@@ -11,6 +11,8 @@ using EmployeeManagementSystem.Models.DB;
 using EmployeeManagementSystem.Views;
 using EmployeeManagementSystem.Views.EditViews;
 using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace EmployeeManagementSystem.ViewModels;
 
@@ -25,7 +27,6 @@ public partial class PenaltyEditWindowViewModel : ViewModelBase
     [ObservableProperty] private DateTimeOffset _penaltyDate;
     
     [ObservableProperty] private Employee _selectedEmployee;
-    [ObservableProperty] private ObservableCollection<Employee> _employees;
 
     [RelayCommand]
     private void Save()
@@ -90,7 +91,19 @@ public partial class PenaltyEditWindowViewModel : ViewModelBase
             SelectedEmployee = employees[0];
         }
     }
-
+    
+    partial void OnSummChanged(decimal oldValue, decimal newValue)
+    {
+        if (newValue != oldValue)
+        {
+            if (newValue < 0)
+            {
+                MessageBoxManager.GetMessageBoxStandard("Ошибка", "Штраф не может быть отрицательным", ButtonEnum.Ok, Icon.Error).ShowWindowDialogAsync(_currentWindow);
+            }
+            Summ = Math.Clamp(newValue, 0, decimal.MaxValue);
+        }
+    }
+    
     partial void OnPenaltyDateChanged(DateTimeOffset value)
     {
         if (value > _now)
@@ -109,31 +122,37 @@ public partial class PenaltyEditWindowViewModel : ViewModelBase
 
         Summ = 0m;
         
-        _edit = false;
-
+        List<Employee> items = new();
+        
         using (var repo = _serviceProvider.GetService<EmployeeRepository>())
         {
-            Employees = new ObservableCollection<Employee>(repo.GetAll());
+            items = repo.GetAll();
         }
         
-        SelectedEmployee = Employees[0];
+        SelectedEmployee = items[0];
+        
+        _edit = false;
         
     }
     
     public PenaltyEditWindowViewModel(IServiceProvider serviceProvider, Penalty penalty)
     {
         _serviceProvider = serviceProvider;
-
-        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
-        {
-            Employees = new ObservableCollection<Employee>(repo.GetAll());
-        }
         
         _penalty = penalty;
 
         PenaltyDate = TimeFactory.DTOffsetfromDO(penalty.Date);
         Reason = penalty.Reason;
-        SelectedEmployee = Employees.FirstOrDefault(a => a.Id == penalty.EmployeeId);
+        
+        List<Employee> items = new();
+        
+        using (var repo = _serviceProvider.GetService<EmployeeRepository>())
+        {
+            items = repo.GetAll();
+        }
+        
+        SelectedEmployee = items[0];
+        
         Summ = penalty.Summ;
         
         _edit = true;

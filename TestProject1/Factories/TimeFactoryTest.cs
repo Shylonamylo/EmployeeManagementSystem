@@ -68,6 +68,7 @@ public class TimeFactoryTest
             Assert.That(dateTimesToDateOnlyResults[i], Is.EqualTo(TimeFactory.DOfromDT(dateTimes[i])));
         }
     }
+    
     [Test]
     public void TestDateOnlyFromDateTimeOffset()
     {
@@ -76,5 +77,13 @@ public class TimeFactoryTest
             Assert.That( dateTimeOffsetsToDateOnlyResults[i], Is.EqualTo(TimeFactory.DOfromDTOffset(dateTimeOffsets[i])));
         }
     }
-    
-}
+
+    [Test]
+    public void TestDateOnlyToDateTimeOffset()
+    {
+        for (int i = 0; i < dateTimeOffsets.Count; i++)
+        {
+            Assert.That( dateOnlyToDateTimeOffsetsResults[i], Is.EqualTo(TimeFactory.DTOffsetfromDO(dateOnly[i])));
+        }
+    }
+}   

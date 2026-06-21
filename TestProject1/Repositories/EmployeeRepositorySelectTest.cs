@@ -30,10 +30,12 @@ public class EmployeeRepositorySelectTest
     [Test]
     public void TestSelectFromDatabase()
     {
-        EmployeeRepository repository = new EmployeeRepository(settings);
-        var result = repository.GetById(-1);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Id, Is.EqualTo(-1));
-        Assert.That(result.FullName, Is.EqualTo("-"));
+        using (EmployeeRepository repository = new EmployeeRepository(settings))
+        {
+            var result = repository.GetById(-1);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(-1));
+            Assert.That(result.FullName, Is.EqualTo("-"));
+        }
     }
 }

@@ -112,7 +112,34 @@ public class PositionRepository : BaseRepository<Position>, IDisposable
 
     public override Position? GetById(int id)
     {
-        throw new NotImplementedException();
+        string sql = "SELECT p.Id, p.Title FROM EmployeeManagementSystem.`Position` p WHERE p.Id = @Id";
+
+        Position result = new();
+
+        try
+        {
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@Id", id);
+                using (var reader = mc.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result=new Position()
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Title = reader.GetString("Title")
+                        };
+                    }
+                }
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     public override bool Delete(int id)

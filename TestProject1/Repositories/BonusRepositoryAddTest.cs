@@ -33,27 +33,27 @@ public class BonusRepositoryAddTest
     {
         DateOnly now = TimeFactory.DOfromDT(DateTime.Now);
         
-        BonusRepository repository = new BonusRepository(settings);
+        using (BonusRepository repository = new BonusRepository(settings))
+        {
+            Bonus bonus = new Bonus();
+            bonus.Reason = "Test";
+            bonus.AdditionalSalary = 10000;
+            bonus.EmployeeId = -1;
+            bonus.AppointmentDate = now;
+            bonus.SalaryId = -1;
+            
+            Assert.That(repository.Add(bonus), Is.True);
         
-        Bonus bonus = new Bonus();
-        bonus.Reason = "Test";
-        bonus.AdditionalSalary = 10000;
-        bonus.EmployeeId = -1;
-        bonus.AppointmentDate = now;
-        bonus.SalaryId = -1;
+            int lastInsertedId = repository.GetLastInsertedId();
         
-        Assert.That(repository.Add(bonus), Is.True);
+            Bonus bonusFromDB = repository.GetById(lastInsertedId);
         
-        int lastInsertedId = repository.GetLastInsertedId();
-        
-        Bonus bonusFromDB = repository.GetById(lastInsertedId);
-        
-        Assert.That(bonusFromDB.Id, Is.EqualTo(repository.GetLastInsertedId()));
-        Assert.That(bonusFromDB.EmployeeId, Is.EqualTo(bonus.EmployeeId));
-        Assert.That(bonusFromDB.AppointmentDate, Is.EqualTo(bonus.AppointmentDate));
-        Assert.That(bonusFromDB.SalaryId, Is.EqualTo(bonus.SalaryId));
-        Assert.That(bonusFromDB.Reason, Is.EqualTo(bonus.Reason));
-        
+            Assert.That(bonusFromDB.Id, Is.EqualTo(repository.GetLastInsertedId()));
+            Assert.That(bonusFromDB.EmployeeId, Is.EqualTo(bonus.EmployeeId));
+            Assert.That(bonusFromDB.AppointmentDate, Is.EqualTo(bonus.AppointmentDate));
+            Assert.That(bonusFromDB.SalaryId, Is.EqualTo(bonus.SalaryId));
+            Assert.That(bonusFromDB.Reason, Is.EqualTo(bonus.Reason));
+        }
     }
 
     

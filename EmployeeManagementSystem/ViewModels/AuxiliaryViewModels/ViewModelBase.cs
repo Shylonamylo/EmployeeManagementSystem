@@ -16,10 +16,6 @@ public abstract class ViewModelBase : ObservableObject
     
     protected MainWindow _mainWindow;
     
-    protected string _searchString;
-    
-    protected bool _developerMode;
-    
     protected bool _edit;
     
 }
